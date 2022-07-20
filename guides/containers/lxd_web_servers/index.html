@@ -1,0 +1,5171 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Ezequiel Bruni">
+      
+      
+        <link rel="canonical" href="https://docs.achmadfhbw.my.id/guides/containers/lxd_web_servers/">
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>LXD Beginners Guide-Multiple Servers - Linux Learning Material</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Quicksand";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#building-a-network-of-websitesweb-servers-with-lxd-for-beginners" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Linux Learning Material" class="md-header__button md-logo" aria-label="Linux Learning Material" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Linux Learning Material
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LXD Beginners Guide-Multiple Servers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../books/" class="md-tabs__link">
+        Books
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../gemstones/" class="md-tabs__link">
+        Gemstones
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        Guides
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../learning/GitHub/github/" class="md-tabs__link">
+        Learning
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tutorials/" class="md-tabs__link">
+        Tutorials
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Linux Learning Material" class="md-nav__button md-logo" aria-label="Linux Learning Material" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Linux Learning Material
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../books/">Books</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Books" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Books
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Admin guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Admin guide" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Admin guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/00-toc/" class="md-nav__link">
+        Learning Linux With Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/01-presentation/" class="md-nav__link">
+        Introduction to Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/03-commands/" class="md-nav__link">
+        Linux Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/04-advanced-commands/" class="md-nav__link">
+        Advanced Linux Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/05-vi/" class="md-nav__link">
+        VI Text Editor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/06-users/" class="md-nav__link">
+        User Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/07-file-systems/" class="md-nav__link">
+        File System
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/08-process/" class="md-nav__link">
+        Process Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/09-backups/" class="md-nav__link">
+        Backup and Restore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/10-boot/" class="md-nav__link">
+        System Startup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/11-tasks/" class="md-nav__link">
+        Task Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/12-network/" class="md-nav__link">
+        Implementing the Network
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/13-softwares/" class="md-nav__link">
+        Software Management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Disa stig
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Disa stig" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Disa stig
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/disa_stig/disa_stig_part1/" class="md-nav__link">
+        DISA STIG On Rocky Linux 8 - Part 1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Learning ansible
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning ansible" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Learning ansible
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/00-toc/" class="md-nav__link">
+        Learning Ansible with Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/01-basic/" class="md-nav__link">
+        Ansible Basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/02-advanced/" class="md-nav__link">
+        Ansible Intermediate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/03-working-with-files/" class="md-nav__link">
+        File Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/04-ansible-galaxy/" class="md-nav__link">
+        Ansible Galaxy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/05-deployments/" class="md-nav__link">
+        Deploy With Ansistrano
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/06-large-scale-infrastructure/" class="md-nav__link">
+        Large Scale infrastructure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/07-working-with-filters/" class="md-nav__link">
+        Working With Filters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/08-management-server-optimizations/" class="md-nav__link">
+        Management server optimizations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          Learning bash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning bash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Learning bash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/00-toc/" class="md-nav__link">
+        Learning bash with Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/01-first-script/" class="md-nav__link">
+        Bash - First script
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/02-using-variables/" class="md-nav__link">
+        Bash - Using Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/03-data-entry-and-manipulations/" class="md-nav__link">
+        Bash - Data entry and manipulations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/04-check-your-knowledge/" class="md-nav__link">
+        Bash - Check your knowledge
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/05-tests/" class="md-nav__link">
+        Bash - Tests
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/06-conditional-structures/" class="md-nav__link">
+        Bash - Conditional structures if and case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/07-loops/" class="md-nav__link">
+        Bash - Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/08-check-your-knowledge/" class="md-nav__link">
+        Bash - Check your knowledge
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_10" type="checkbox" id="__nav_2_5_10" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_10">
+          Appendix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Appendix" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_10">
+          <span class="md-nav__icon md-icon"></span>
+          Appendix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/appendix/02-variables-logs/" class="md-nav__link">
+        Variables - Use With Logs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          Learning rsync
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning rsync" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Learning rsync
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/01_rsync_overview/" class="md-nav__link">
+        rsync brief description
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/02_rsync_demo01/" class="md-nav__link">
+        rsync demo 01
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/03_rsync_demo02/" class="md-nav__link">
+        rsync demo 02
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/04_rsync_configure/" class="md-nav__link">
+        rsync configuration file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/05_rsync_authentication-free_login/" class="md-nav__link">
+        rsync password-free authentication login
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/06_rsync_inotify/" class="md-nav__link">
+        inotify-tools installation and use
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/07_rsync_unison_use/" class="md-nav__link">
+        Use unison
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../gemstones/">Gemstones</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Gemstones" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Gemstones
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/bash_stub/" class="md-nav__link">
+        bash - Script Stub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/htop/" class="md-nav__link">
+        htop-Process Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/https_rsa_keygen/" class="md-nav__link">
+        https - RSA Key Generation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/mtr/" class="md-nav__link">
+        mtr - Network Diagnostics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/nmcli/" class="md-nav__link">
+        nmcli - set connection autoconnect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/nmtui/" class="md-nav__link">
+        nmtui - Network Management Tool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/perl_search_replace/" class="md-nav__link">
+        Perl - Search and Replace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/sed_search_replace/" class="md-nav__link">
+        sed - Search and Replace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/setup_local_repo/" class="md-nav__link">
+        Setup Local Rocky Repositories
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/view_kernel_conf/" class="md-nav__link">
+        View Current Kernel Configuration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Guides</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../custom-linux-kernel/" class="md-nav__link">
+        Building and Installing Custom Linux Kernels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Automation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Automation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Automation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/anacron/" class="md-nav__link">
+        anacron - Automating commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/cron_jobs_howto/" class="md-nav__link">
+        cron - Automating Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/cronie/" class="md-nav__link">
+        cronie - Timed Tasks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/olivetin/" class="md-nav__link">
+        OliveTin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/templates-automation-packer-vsphere/" class="md-nav__link">
+        Automatic Template Creation - Packer - Ansible - VMware vSphere
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Backup
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Backup" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Backup
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backup/mirroring_lsyncd/" class="md-nav__link">
+        Mirroring Solution - lsyncd
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backup/rsnapshot_backup/" class="md-nav__link">
+        Backup Solution - Rsnapshot
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backup/rsync_ssh/" class="md-nav__link">
+        Synchronization With rsync
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          Cms
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cms" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cms
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cms/cloud_server_using_nextcloud/" class="md-nav__link">
+        Cloud Server Using Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cms/dokuwiki_server/" class="md-nav__link">
+        DokuWiki
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Communications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communications" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Communications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../communications/asterisk_installation/" class="md-nav__link">
+        Installing Asterisk
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_7">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_7">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lxd_server/" class="md-nav__link">
+        LXD Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          LXD Beginners Guide-Multiple Servers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        LXD Beginners Guide-Multiple Servers
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites-and-assumptions" class="md-nav__link">
+    Prerequisites And Assumptions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-host-server-environment" class="md-nav__link">
+    Setting Up The Host Server Environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up The Host Server Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-the-epel-repository" class="md-nav__link">
+    Install the EPEL Repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-snapd" class="md-nav__link">
+    Install snapd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-lxd" class="md-nav__link">
+    Install LXD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lxd-initialization" class="md-nav__link">
+    LXD Initialization
+  </a>
+  
+    <nav class="md-nav" aria-label="LXD Initialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-user-privileges" class="md-nav__link">
+    Setting Up User Privileges
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-your-firewall" class="md-nav__link">
+    Setting Up Your Firewall
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-containers" class="md-nav__link">
+    Setting Up The Containers
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up The Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-the-image-you-want" class="md-nav__link">
+    Finding the Image You Want
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-containers" class="md-nav__link">
+    Creating the Containers
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating the Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-word-on-container-networking" class="md-nav__link">
+    A Word on Container Networking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-your-containers" class="md-nav__link">
+    Managing Your Containers
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing Your Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-stopping" class="md-nav__link">
+    Starting &amp; Stopping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doing-stuff-inside-your-containers" class="md-nav__link">
+    Doing Stuff Inside Your Containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copying-containers" class="md-nav__link">
+    Copying Containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-storage-cpu-limits" class="md-nav__link">
+    Configuring Storage &amp; CPU Limits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleting-containers-and-how-to-keep-that-from-happening" class="md-nav__link">
+    Deleting Containers (and How to Keep That From Happening)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-servers" class="md-nav__link">
+    Setting Up The Servers
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up The Servers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-apache-website-server" class="md-nav__link">
+    The Apache website server
+  </a>
+  
+    <nav class="md-nav" aria-label="The Apache website server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-real-user-ips-from-the-proxy-server" class="md-nav__link">
+    Getting real user IPs from the proxy server
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-nginx-website-server" class="md-nav__link">
+    The Nginx website server
+  </a>
+  
+    <nav class="md-nav" aria-label="The Nginx website server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-real-user-ips-from-the-proxy-server-again" class="md-nav__link">
+    Getting real user IPs from the proxy server (again)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-reverse-proxy-server" class="md-nav__link">
+    The Reverse Proxy Server
+  </a>
+  
+    <nav class="md-nav" aria-label="The Reverse Proxy Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#essential-step-configuring-the-proxy-server-container-to-take-all-incoming-server-traffic" class="md-nav__link">
+    Essential Step: Configuring the “proxy-server” Container to Take all Incoming Server Traffic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directing-traffic-to-the-apache-server" class="md-nav__link">
+    Directing traffic to the Apache server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directing-traffic-to-the-nginx-server" class="md-nav__link">
+    Directing traffic to the Nginx server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restart-the-servers-in-your-web-server-containers" class="md-nav__link">
+    Restart the servers in your web server containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-ssl-certificates-for-your-websites" class="md-nav__link">
+    Getting SSL certificates for your websites
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../podman-nextcloud/" class="md-nav__link">
+        Nextcloud on Podman
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../contribute/">Contribute</a>
+          
+            <label for="__nav_4_8">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Contribute" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_8">
+          <span class="md-nav__icon md-icon"></span>
+          Contribute
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/README.fr/" class="md-nav__link">
+        README.fr
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/mkdocs_lsyncd/" class="md-nav__link">
+        Local Documentation - LXD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/navigation/" class="md-nav__link">
+        Navigational Changes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/rockydocs_formatting/" class="md-nav__link">
+        Rocky Docs Formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/rockydocs_web_dev/" class="md-nav__link">
+        Local Documentation - Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_9">
+          Database
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Database" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_9">
+          <span class="md-nav__icon md-icon"></span>
+          Database
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database/database_mariadb-server/" class="md-nav__link">
+        MariaDB Database Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Desktop
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Desktop" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Desktop
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../desktop/mate_installation/" class="md-nav__link">
+        MATE Desktop
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../desktop/xfce_installation/" class="md-nav__link">
+        XFCE Desktop Environment
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_11">
+          Dns
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dns" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_11">
+          <span class="md-nav__icon md-icon"></span>
+          Dns
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dns/private_dns_server_using_bind/" class="md-nav__link">
+        Bind Private DNS Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_12">
+          Editors
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Editors" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_12">
+          <span class="md-nav__icon md-icon"></span>
+          Editors
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editors/micro/" class="md-nav__link">
+        micro
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_13">
+          Email
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Email" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_13">
+          <span class="md-nav__icon md-icon"></span>
+          Email
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../email/postfix_reporting/" class="md-nav__link">
+        Postfix Process Reporting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" type="checkbox" id="__nav_4_14" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_14">
+          File sharing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File sharing" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_14">
+          <span class="md-nav__icon md-icon"></span>
+          File sharing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_sharing/glusterfs/" class="md-nav__link">
+        Clustering-GlusterFS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_sharing/secure_ftp_server_vsftpd/" class="md-nav__link">
+        Secure FTP Server - vsftpd
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../file_sharing/sftp/" class="md-nav__link">
+        Secure Server - sftp
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_15">
+          Git
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Git" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_15">
+          <span class="md-nav__icon md-icon"></span>
+          Git
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/git_wf_git-cola_atom/" class="md-nav__link">
+        git Using Git Cola and Atom
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_16" type="checkbox" id="__nav_4_16" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_16">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_16">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/import_rocky_to_wsl_howto/" class="md-nav__link">
+        Import to WSL2 with Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/rocky_to_wsl_howto/" class="md-nav__link">
+        Import To WSL with WSL and rinse
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_17" type="checkbox" id="__nav_4_17" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_17">
+          Mirror management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mirror management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_17">
+          <span class="md-nav__icon md-icon"></span>
+          Mirror management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mirror_management/add_mirror_manager/" class="md-nav__link">
+        Adding a Rocky Mirror
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mirror_management/add_mirror_manager.sv/" class="md-nav__link">
+        Lägg till en publik spegel till Rocky's spegelhanterare
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_18" type="checkbox" id="__nav_4_18" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_18">
+          Network
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Network" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_18">
+          <span class="md-nav__icon md-icon"></span>
+          Network
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../network/basic_network_configuration.fr/" class="md-nav__link">
+        Configuration réseau de base
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../network/basic_network_configuration/" class="md-nav__link">
+        Networking Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../network/librenms_monitoring_server/" class="md-nav__link">
+        LibreNMS Monitoring Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_19" type="checkbox" id="__nav_4_19" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../package_management/">Package management</a>
+          
+            <label for="__nav_4_19">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Package management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_19">
+          <span class="md-nav__icon md-icon"></span>
+          Package management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/developer_start2/" class="md-nav__link">
+        Development Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_build_troubleshooting/" class="md-nav__link">
+        Package Build & Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_debranding/" class="md-nav__link">
+        Package Debranding
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_debranding.sv/" class="md-nav__link">
+        Rocky paket Hur man tar bort varumärke
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_dev_start/" class="md-nav__link">
+        Packaging And Developer Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_signing/" class="md-nav__link">
+        Package Signing & Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_signing.sv/" class="md-nav__link">
+        Paketsignering och testning
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_20" type="checkbox" id="__nav_4_20" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_20">
+          Proxies
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Proxies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_20">
+          <span class="md-nav__icon md-icon"></span>
+          Proxies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../proxies/haproxy_apache_lxd/" class="md-nav__link">
+        HAProxy-Apache-LXD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../proxies/pound/" class="md-nav__link">
+        Pound
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_21" type="checkbox" id="__nav_4_21" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_21">
+          Security
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Security" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_21">
+          <span class="md-nav__icon md-icon"></span>
+          Security
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/dnf_automatic/" class="md-nav__link">
+        Patching with dnf-automatic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/enabling_iptables_firewall/" class="md-nav__link">
+        Enabling `iptables` Firewall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/enabling_iptables_firewall.sv/" class="md-nav__link">
+        Aktivera iptables Brandvägg
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/firewalld-beginners.fr/" class="md-nav__link">
+        pare-feu pour les débutants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/firewalld-beginners/" class="md-nav__link">
+        firewalld for Beginners
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/firewalld-beginners.sv/" class="md-nav__link">
+        brandvägg för nybörjare
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/firewalld/" class="md-nav__link">
+        firewalld from iptables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/generating_ssl_keys_lets_encrypt/" class="md-nav__link">
+        Generating SSL Keys - Let's Encrypt
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/learning_selinux/" class="md-nav__link">
+        SELinux Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/ssh_public_private_keys/" class="md-nav__link">
+        SSH Public and Private Key
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/ssh_public_private_keys.sv/" class="md-nav__link">
+        SSH Publika och privata nycklar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/ssl_keys_https/" class="md-nav__link">
+        Generating SSL Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_21_13" type="checkbox" id="__nav_4_21_13" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_21_13">
+          Authentication
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Authentication" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_21_13">
+          <span class="md-nav__icon md-icon"></span>
+          Authentication
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/authentication/active_directory_authentication/" class="md-nav__link">
+        Active Directory Authentication
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_22" type="checkbox" id="__nav_4_22" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_22">
+          Virtualization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtualization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_22">
+          <span class="md-nav__icon md-icon"></span>
+          Virtualization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../virtualization/vbox-rocky/" class="md-nav__link">
+        Rocky on VirtualBox
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_23" type="checkbox" id="__nav_4_23" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_23">
+          Web
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_23">
+          <span class="md-nav__icon md-icon"></span>
+          Web
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache-sites-enabled.fr/" class="md-nav__link">
+        Configuration Apache Web Server Multi-Sites'
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache-sites-enabled/" class="md-nav__link">
+        Apache Multisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/mod_SSL_apache/" class="md-nav__link">
+        Apache With 'mod_ssl'
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/nginx-mainline/" class="md-nav__link">
+        Nginx
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/nginx-multisite/" class="md-nav__link">
+        Nginx Multisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/php/" class="md-nav__link">
+        PHP and PHP-FPM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_23_7" type="checkbox" id="__nav_4_23_7" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../web/apache_hardened_webserver/">Apache hardened webserver</a>
+          
+            <label for="__nav_4_23_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Apache hardened webserver" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_23_7">
+          <span class="md-nav__icon md-icon"></span>
+          Apache hardened webserver
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache_hardened_webserver/modsecurity/" class="md-nav__link">
+        Web-based Application firewall (WAF)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache_hardened_webserver/ossec-hids/" class="md-nav__link">
+        Host-based Intrustion Detection System (HIDS)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache_hardened_webserver/rkhunter/" class="md-nav__link">
+        Rootkit Hunter
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Learning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Learning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_1">
+          GitHub
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GitHub" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          GitHub
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/GitHub/github/" class="md-nav__link">
+        GitHub
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_2">
+          Linux Ubuntu
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux Ubuntu" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Linux Ubuntu
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Linux_Ubuntu/commandLine/" class="md-nav__link">
+        Command Line
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Linux_Ubuntu/linuxUbuntu/" class="md-nav__link">
+        Ubuntu Linux
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_3">
+          Virtual Box
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtual Box" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Virtual Box
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Virtual_Box/virtualBox/" class="md-nav__link">
+        **Virtual Box**
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_4" type="checkbox" id="__nav_5_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_4">
+          Web Server
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Server" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          Web Server
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/apache/" class="md-nav__link">
+        **Installasi Apache, PHP**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/webServer/" class="md-nav__link">
+        **Web Server**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/website/" class="md-nav__link">
+        **Website**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/xampp/" class="md-nav__link">
+        **XAMPP**
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/">Tutorials</a>
+          
+            <label for="__nav_6">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/Arch_Linux/">Arch Linux</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Arch Linux" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Arch Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites-and-assumptions" class="md-nav__link">
+    Prerequisites And Assumptions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-host-server-environment" class="md-nav__link">
+    Setting Up The Host Server Environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up The Host Server Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-the-epel-repository" class="md-nav__link">
+    Install the EPEL Repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-snapd" class="md-nav__link">
+    Install snapd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-lxd" class="md-nav__link">
+    Install LXD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lxd-initialization" class="md-nav__link">
+    LXD Initialization
+  </a>
+  
+    <nav class="md-nav" aria-label="LXD Initialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-user-privileges" class="md-nav__link">
+    Setting Up User Privileges
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-your-firewall" class="md-nav__link">
+    Setting Up Your Firewall
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-containers" class="md-nav__link">
+    Setting Up The Containers
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up The Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-the-image-you-want" class="md-nav__link">
+    Finding the Image You Want
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-containers" class="md-nav__link">
+    Creating the Containers
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating the Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-word-on-container-networking" class="md-nav__link">
+    A Word on Container Networking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-your-containers" class="md-nav__link">
+    Managing Your Containers
+  </a>
+  
+    <nav class="md-nav" aria-label="Managing Your Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-stopping" class="md-nav__link">
+    Starting &amp; Stopping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doing-stuff-inside-your-containers" class="md-nav__link">
+    Doing Stuff Inside Your Containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copying-containers" class="md-nav__link">
+    Copying Containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-storage-cpu-limits" class="md-nav__link">
+    Configuring Storage &amp; CPU Limits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleting-containers-and-how-to-keep-that-from-happening" class="md-nav__link">
+    Deleting Containers (and How to Keep That From Happening)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-servers" class="md-nav__link">
+    Setting Up The Servers
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up The Servers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-apache-website-server" class="md-nav__link">
+    The Apache website server
+  </a>
+  
+    <nav class="md-nav" aria-label="The Apache website server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-real-user-ips-from-the-proxy-server" class="md-nav__link">
+    Getting real user IPs from the proxy server
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-nginx-website-server" class="md-nav__link">
+    The Nginx website server
+  </a>
+  
+    <nav class="md-nav" aria-label="The Nginx website server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-real-user-ips-from-the-proxy-server-again" class="md-nav__link">
+    Getting real user IPs from the proxy server (again)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-reverse-proxy-server" class="md-nav__link">
+    The Reverse Proxy Server
+  </a>
+  
+    <nav class="md-nav" aria-label="The Reverse Proxy Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#essential-step-configuring-the-proxy-server-container-to-take-all-incoming-server-traffic" class="md-nav__link">
+    Essential Step: Configuring the “proxy-server” Container to Take all Incoming Server Traffic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directing-traffic-to-the-apache-server" class="md-nav__link">
+    Directing traffic to the Apache server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directing-traffic-to-the-nginx-server" class="md-nav__link">
+    Directing traffic to the Nginx server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restart-the-servers-in-your-web-server-containers" class="md-nav__link">
+    Restart the servers in your web server containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-ssl-certificates-for-your-websites" class="md-nav__link">
+    Getting SSL certificates for your websites
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    Notes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="building-a-network-of-websitesweb-servers-with-lxd-for-beginners">Building a Network of Websites/Web Servers With LXD, for Beginners</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Okay, so we already have <a href="../lxd_server/">a guide on installing LXD/LXC on Rocky Linux</a>, but that was written by someone who knows what he’s doing, and wanted to build a containerized network of servers and/or apps on a physical machine on his local network. It’s great, and I’ll be straight up stealing bits of it so I don’t have to write as much.</p>
+<p>But, if you’ve just heard about Linux Containers, and don’t really understand how they work yet, but you want to host some websites, this is the guide for you. <em>This tutorial will teach you how to host basic websites with LXD and LXC on any system, including virtual private servers and cloud hosting.</em></p>
+<p>So first, what’s a Linux Container? Well, for the absolute beginner, it’s a way to make one computer pretend that it’s actually a lot more computers. These “containers” each house a basic—usually stripped-down—version of an operating system you choose. You can use each container like an individual server; put <em>nginx</em> on one, <em>Apache</em> on another, and even use a third as a database server.</p>
+<p>The basic advantage is that if one app or website inside its own container experiences severe bugs, a hack, or other problems, it’s unlikely to affect the rest of your server or the other apps and websites. Also, containers are super easy to snapshot, back up, and restore.</p>
+<p>In this case, we’ll be running Rocky Linux in our containers, on top of our “host” system, which is also Rocky Linux.</p>
+<p>Conceptually, it’s something like this:</p>
+<p><img alt="A graph showing how one computer can pretend to be several" src="../../images/lxd-web-server-01.png" /></p>
+<p>If you’ve ever played with VirtualBox to run some Windows apps, it’s like that, but not. Unlike virtual machines, Linux Containers don’t emulate an entire hardware environment for each container. Rather, they all share a few virtual devices by default for networking and storage, though you can add more virtual devices. As a result, they require a lot less overhead (processing power and RAM) than a virtual machine.</p>
+<p>For those Docker fiends out there (Docker being another container-based system, <em>not</em> a VM system), Linux Containers are less ephemeral than what you’re used to. All data in every container instance is persistent, and any changes you make are permanent unless you revert to a backup. In short, shutting down the container won’t erase your sins.</p>
+<p>Heh.</p>
+<p>LXD, specifically, is a command-line application that helps you to set up and manage Linux Containers. That's what we're going to be installing on our Rocky Linux host server today. I'm going to be writing LXC/LXD a lot though, as there's a lot of old documentation which refers to LXC only, and I'm trying to make it easier for people to find updated guides like this one.</p>
+<p>!!! Note</p>
+<pre><code>There was a precursor app to LXD which was also called "LXC". As it stands today: LXC is the technology, LXD is the app.
+</code></pre>
+<p>We’ll be using them both to create an environment that works something like this:</p>
+<p><img alt="A diagram of the intended Linux Container structure" src="../../images/lxd-web-server-02.png" /></p>
+<p>Specifically, I’m going to show you how to set up simple Nginx and Apache web servers inside of your server containers, and use another container with Nginx as a reverse proxy. Again, this setup should work in any environment: from local networks to virtual private servers.</p>
+<p>!!! Note</p>
+<pre><code>A reverse proxy is a program that takes incoming connections from the internet (or your local network) and routes them to the right server, container, or app. There are also dedicated tools for this job like HaProxy... but weirdly enough, I find Nginx a lot easier to use.
+</code></pre>
+<h2 id="prerequisites-and-assumptions">Prerequisites And Assumptions</h2>
+<ul>
+<li>Basic familiarity with the Linux command line interface. You should know how to use SSH if you’re installing LXC/LXD on a remote server.</li>
+<li>An internet-connected server, physical or virtual, with Rocky Linux already running on it.</li>
+<li>Two domain names pointed right at your server with an A record.<ul>
+<li>Two subdomains would also work just as well. One domain with a wildcard subdomain record would also, or a custom LAN domain... you get the picture.</li>
+</ul>
+</li>
+<li>A command-line text editor. <em>nano</em> will do, <em>micro</em> is my favorite, but use whatever makes you comfortable.</li>
+<li>You <em>can</em> follow this whole tutorial as the root user, but you probably shouldn’t. After the initial installation of LXC/LXD, we’ll guide you in creating an unprivileged user specifically for operating LXD commands.</li>
+<li>We now have Rocky Linux images to base your containers on, and they’re awesome.</li>
+<li>If you're not too familiar with Nginx or Apache, you <strong>will</strong> need to check out some of our other guides if you want to get a full productions server up and running. Don't worry, I'll link them below.</li>
+</ul>
+<h2 id="setting-up-the-host-server-environment">Setting Up The Host Server Environment</h2>
+<p>So here’s where I’m going to copy and paste bits from the other LXD guide, for your convenience and mine. All credit for most of this part goes to Steven Spencer.</p>
+<h3 id="install-the-epel-repository">Install the EPEL Repository</h3>
+<p>LXD requires the EPEL (Extra Packages for Enterprise Linux) repository, which is easy to install using:</p>
+<pre><code class="language-bash">dnf install epel-release
+</code></pre>
+<p>Once installed, check for updates:</p>
+<pre><code class="language-bash">dnf update
+</code></pre>
+<p>If there were kernel updates during the update process above, reboot your server</p>
+<h3 id="install-snapd">Install snapd</h3>
+<p>LXD must be installed from a snap* package for Rocky Linux. For this reason, we need to install snapd with:</p>
+<pre><code class="language-bash">dnf install snapd
+</code></pre>
+<p>And now enable the snapd service to auto-start when your server reboots, and start it running now:</p>
+<pre><code class="language-bash">systemctl enable snapd
+</code></pre>
+<p>And then run:</p>
+<pre><code class="language-bash">systemctl start snapd
+</code></pre>
+<p>Reboot the server before continuing here. You can do this with the <code>reboot</code> command, or from your VPS/cloud hosting admin panel.</p>
+<p>* <em>snap</em> is a method of packaging applications so they come with all of the dependencies they need, and can run on almost any Linux system.</p>
+<h3 id="install-lxd">Install LXD</h3>
+<p>Installing LXD requires the use of the snap command. At this point, we are just installing it, we are doing no set up:</p>
+<pre><code class="language-bash">snap install lxd
+</code></pre>
+<p>If you’re running LXD on a physical (AKA “bare metal”) server, you should probably go back to the other guide and read the “Environment Setup” section there. There’s a lot of good stuff about kernels and file systems, and so much more.</p>
+<p>If you’re running LXD in a virtual environment, just reboot and read on.</p>
+<h3 id="lxd-initialization">LXD Initialization</h3>
+<p>Now that the environment is all set up, we are ready to initialize LXD. This is an automated script that asks a series of questions to get your LXD instance up and running:</p>
+<pre><code class="language-bash">lxd init
+</code></pre>
+<p>Here are the questions and our answers for the script, with a little explanation where warranted:</p>
+<pre><code>Would you like to use LXD clustering? (yes/no) [default=no]:
+</code></pre>
+<p>If you are interested in clustering, do some additional research on that <a href="https://lxd.readthedocs.io/en/latest/clustering/">here</a>. Otherwise, just press “Enter” to accept the default option.</p>
+<pre><code>Do you want to configure a new storage pool? (yes/no) [default=yes]:
+</code></pre>
+<p>Accept the default.</p>
+<pre><code>Name of the new storage pool [default=default]: server-storage
+</code></pre>
+<p>Choose a name for your storage pool. I like to name it after the server LXD is running on. (A storage pool is basically a set amount of hard drive space set aside for your containers.)</p>
+<pre><code>Name of the storage backend to use (btrfs, dir, lvm, zfs, ceph) [default=zfs]: lvm
+</code></pre>
+<p>The above question is about what sort of file system you want to use for storage, and the default may vary depending on what’s available on your system. If you're on a bare metal server, and want to use ZFS, again, refer back to the guide linked above.</p>
+<p>In a virtual environment, I have found that “LVM” works fine, and it’s usually what I use. You can accept the default on the next question.</p>
+<pre><code>Create a new LVM pool? (yes/no) [default=yes]:
+</code></pre>
+<p>If you have a specific hard drive or partition you’d like to use for the whole storage pool, write “yes” next. If you’re doing all of this on a VPS, you’ll probably <em>have</em> to choose “no”.</p>
+<pre><code>`Would you like to use an existing empty block device (e.g. a disk or partition)? (yes/no) [default=no]:`
+</code></pre>
+<p>Metal As A Service (MAAS) is outside the scope of this document. Accept the defaults for this next bit.</p>
+<pre><code>Would you like to connect to a MAAS server? (yes/no) [default=no]:
+</code></pre>
+<p>And more defaults. It's all good.</p>
+<pre><code>Would you like to create a new local network bridge? (yes/no) [default=yes]:
+
+What should the new bridge be called? [default=lxdbr0]: `
+
+What IPv4 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]:
+</code></pre>
+<p>If you want to use IPv6 on your LXD containers, you can turn on this next option. That is up to you, but you mostly shouldn’t need to. I think. I tend to leave it on out of laziness.</p>
+<pre><code>What IPv6 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]:
+</code></pre>
+<p>This is necessary to easily back up the server, and can allow you to manage your LXD install from other computers. If that all sounds good to you, answer "yes" here/</p>
+<pre><code>Would you like the LXD server to be available over the network? (yes/no) [default=no]: yes
+</code></pre>
+<p>If you did say yes to the last questions, take the defaults here:</p>
+<pre><code>Address to bind LXD to (not including port) [default=all]:
+
+Port to bind LXD to [default=8443]:
+</code></pre>
+<p>Now you'll be asked for a trust password. That's  how you will connect to the LXC host server from other computers and servers, so set this with something that makes sense in your environment. Save this password to a secure location, such as a password manager.</p>
+<pre><code>Trust password for new clients:
+
+Again:
+</code></pre>
+<p>And then keep taking the defaults from here on out:</p>
+<pre><code>Would you like stale cached images to be updated automatically? (yes/no) [default=yes]
+
+Would you like a YAML &quot;lxd init&quot; preseed to be printed? (yes/no) [default=no]:
+</code></pre>
+<h4 id="setting-up-user-privileges">Setting Up User Privileges</h4>
+<p>Before we continue on, we need to create our "lxdadmin" user and make sure that it has the privileges it needs. We need the "lxdadmin" user to be able to use <em>sudo</em> for access to root commands, and we need it to be a member of the “lxd” group. To add the user and make sure it is a member of both groups, run:</p>
+<pre><code class="language-bash">useradd -G wheel,lxd lxdadmin
+</code></pre>
+<p>Then set the password:</p>
+<pre><code class="language-bash">passwd lxdadmin
+</code></pre>
+<p>As with the other passwords, save this to a secure location.</p>
+<h2 id="setting-up-your-firewall">Setting Up Your Firewall</h2>
+<p>Before we do anything else with containers, you need to be able to access your proxy server from the outside. If your firewall is blocking port 80 (the default port used for HTTP/web traffic), or port 443 (used for HTTPS/<em>secure</em> web traffic), then you won’t be doing much of anything server-wise.</p>
+<p>The other LXD guide will show you how to do this with the <em>iptables</em> firewall, if that’s what you want to do. I tend to use the CentOS default firewall: <em>firewalld</em>. So that’s what we’re doing, this time.</p>
+<p><code>firewalld</code> is configured via the <code>firewall-cmd</code> command. <strong>The absolute first thing we want to do,</strong> before we open any ports, is make sure that your containers can be assigned their IP addresses automatically:</p>
+<pre><code class="language-bash">firewall-cmd --zone=trusted --permanent --change-interface=lxdbr0
+</code></pre>
+<p>!!! Warning</p>
+<pre><code>If you don't do that last step, your containers will not be able to properly access the internet, or each other. This is crazy-essential, and knowing it will save you *ages* of frustration.
+</code></pre>
+<p>Now, to add a new port, just run this:</p>
+<pre><code class="language-bash">firewall-cmd --permanent --zone=public --add-port=80/tcp
+</code></pre>
+<p>Let’s break this down:</p>
+<ul>
+<li>The <code>-–permanent</code> flag tells the firewall to make sure this configuration is used every time the firewall is restarted, and when the server itself is restarted.</li>
+<li><code>–-zone=public</code> tells the firewall to take incoming connections to this port from everyone.</li>
+<li>Lastly, <code>–-add-port=80/tcp</code> tells the firewall to accept incoming connections over port 80, as long as they’re using the Transmission Control Protocol, which is what you want in this case.</li>
+</ul>
+<p>To repeat the process for HTTPS traffic, just run the command again, and change the number.</p>
+<pre><code class="language-bash">firewall-cmd --permanent --zone=public --add-port=443/tcp
+</code></pre>
+<p>These configurations won’t take effect until you force the issue. To do that, tell <em>firewalld</em> to reload its configurations, like so:</p>
+<pre><code class="language-bash">firewall-cmd --reload
+</code></pre>
+<p>Now, there’s a very small chance that this won’t work. In those rare cases, make <em>firewalld</em> do your bidding with the old turn-it-off-and-turn-it-on-again.</p>
+<pre><code class="language-bash">systemctl restart firewalld
+</code></pre>
+<p>To make sure the ports have been added properly, run <code>firewall-cmd --list-all</code>. A properly-configured firewall will look a bit like this (I have a few extra ports open on my local server, ignore them):</p>
+<pre><code class="language-bash">public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: enp9s0
+  sources:
+  services: cockpit dhcpv6-client ssh
+  ports: 81/tcp 444/tcp 15151/tcp 80/tcp 443/tcp
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+</code></pre>
+<p>And that should be everything you need, firewall-wise.</p>
+<h2 id="setting-up-the-containers">Setting Up The Containers</h2>
+<p>Actually managing containers is pretty easy. Just think of it as being able to conjure up a whole computer on command, and start or stop it at will. You can also log into said “computer” and run any commands you like, just as you would with your host server.</p>
+<p>!!! Note</p>
+<pre><code>From here on out, every command should be run as the `lxdadmin` user, or whatever you decided to call it, though some will require the use of *sudo* for temporary root privileges.
+</code></pre>
+<p>You’re going to need three containers for this tutorial: the reverse proxy server, a test Nginx server, and a test Apache server, all running on Rocky-based containers.</p>
+<p>If for some reason you need a fully privileged container (and you mostly shouldn’t), you can run all of these commands as root.</p>
+<p>For this tutorial, you’ll need three containers:</p>
+<p>We’ll call them “proxy-server” (for the container that will be directing web traffic to the other two containers), “nginx-server”, and “apache-server”. Yes, I’ll be showing you how to reverse proxy to both <em>nginx</em> and <em>apache</em>-based servers. Things like <em>docker</em> or NodeJS apps we can wait with until I figure that out myself.</p>
+<p>We’ll start by figuring out which image we want to base our containers on. For this tutorial, we’re just using Rocky Linux. Using Alpine Linux, for example, can result in much smaller containers (if storage is a concern), but that’s beyond the scope of this particular document.</p>
+<h3 id="finding-the-image-you-want">Finding the Image You Want</h3>
+<p>Here’s the short, short method for starting a container with Rocky Linux:</p>
+<pre><code class="language-bash">lxc launch images:rockylinux/8/amd64 my-container
+</code></pre>
+<p>Of course, that “my-container” bit at the end should be renamed to whatever container name you want, eg. “proxy-server”. The “/amd64” part should be changed to “arm64”  if you’re doing all of this on something like a Raspberry Pi.</p>
+<p>Now here’s the long version: to find the images you want, you can use this command to list every available image in the main LXC repositories:</p>
+<pre><code class="language-bash">lxc image list images: | more
+</code></pre>
+<p>Then just press “Enter” to scroll down a massive list of images, and press “Control-C” to get out of the list-viewing mode.</p>
+<p>Or, you could simplify your life, and specify what kind of Linux you want, like so:</p>
+<pre><code class="language-bash">lxc image list images: | grep rockylinux
+</code></pre>
+<p>That should print out a much shorter list that looks like this:</p>
+<pre><code class="language-bash">| rockylinux/8 (3 more)                    | 4e6beda70200 | yes    | Rockylinux 8 amd64 (20220129_03:44)          | x86_64       | VIRTUAL-MACHINE | 612.19MB  | Jan 29, 2022 at 12:00am (UTC) |
+| rockylinux/8 (3 more)                    | c04dd2bcf20b | yes    | Rockylinux 8 amd64 (20220129_03:44)          | x86_64       | CONTAINER       | 127.34MB  | Jan 29, 2022 at 12:00am (UTC) |
+| rockylinux/8/arm64 (1 more)              | adc0561d6330 | yes    | Rockylinux 8 arm64 (20220129_03:44)          | aarch64      | CONTAINER       | 124.03MB  | Jan 29, 2022 at 12:00am (UTC) |
+| rockylinux/8/cloud (1 more)              | 2591d9716b04 | yes    | Rockylinux 8 amd64 (20220129_03:43)          | x86_64       | CONTAINER       | 147.04MB  | Jan 29, 2022 at 12:00am (UTC) |
+| rockylinux/8/cloud (1 more)              | c963253fcea9 | yes    | Rockylinux 8 amd64 (20220129_03:43)          | x86_64       | VIRTUAL-MACHINE | 630.56MB  | Jan 29, 2022 at 12:00am (UTC) |
+| rockylinux/8/cloud/arm64                 | 9f49e80afa5b | yes    | Rockylinux 8 arm64 (20220129_03:44)          | aarch64      | CONTAINER       | 143.15MB  | Jan 29, 2022 at 12:00am (UTC) |
+</code></pre>
+<h3 id="creating-the-containers">Creating the Containers</h3>
+<p>!!! Note</p>
+<pre><code>Below, is a quick way to create all of these containers. You may want to wait before creating the proxy-server container. There's a trick I'll show you down below that could save you time.
+</code></pre>
+<p>Once you’ve found the image you want, use the <code>lxc launch</code> command as shown above. To make the containers we want for this tutorial, run these commands (modifying them as needed) in succession:</p>
+<pre><code class="language-bash">lxc launch images:rockylinux/8/amd64 proxy-server
+lxc launch images:rockylinux/8/amd64 nginx-server
+lxc launch images:rockylinux/8/amd64 apache-server
+</code></pre>
+<p>As you run each command, you should get a notification that your containers have been created, and even started. Then, you’ll want to check on all of them.</p>
+<p>Run this command to see that they’re all up and running:</p>
+<pre><code class="language-bash">lxc list
+</code></pre>
+<p>That should give you output that looks a bit like this (though, if you opted to use IPv6, it’s going to be a lot more text):</p>
+<pre><code class="language-bash">+---------------+---------+-----------------------+------+-----------+-----------+
+|     NAME      |  STATE  |         IPV4          | IPV6 |   TYPE    | SNAPSHOTS |
++---------------+---------+-----------------------+------+-----------+-----------+
+| proxy-server  | RUNNING | 10.199.182.231 (eth0) |      | CONTAINER | 0         |
++---------------+---------+-----------------------+------+-----------+-----------+
+| nginx-server  | RUNNING | 10.199.182.232 (eth0) |      | CONTAINER | 0         |
++---------------+---------+-----------------------+------+-----------+-----------+
+| apache-server | RUNNING | 10.199.182.233 (eth0) |      | CONTAINER | 0         |
++---------------+---------+-----------------------+------+-----------+-----------+
+</code></pre>
+<h4 id="a-word-on-container-networking">A Word on Container Networking</h4>
+<p>So the other guide linked at the beginning of this one has a whole tutorial on how to set LXC/LXD up to work with Macvlan. This is especially useful if you’re running a local server, and you want each container to have an IP address visible on the local network.</p>
+<p>When you’re running on a VPS, you don’t often have that option. In fact, you might only have one single IP address that you’re allowed to work with. No biggie. The default networking configuration is designed to accommodate this sort of limitation; answering the <code>lxd init</code> questions as I specified above <em>should</em> take care of everything.</p>
+<p>Basically, LXD creates a virtual network device called a bridge (usually named “lxdbr0”), and all containers get connected to that bridge by default. Through it, they can connect to the internet via your host’s default network device (ethernet, wi-fi, or a virtual network device provided by your VPS). Somewhat more importantly, all of the containers can connect to each other.</p>
+<p>To ensure this inter-container connection, <em>every container gets an internal domain name</em>. By default, this is just the name of the container plus “.lxd”. So the “proxy-server” container is available to all the other containers at “proxy-server.lxd”. But here’s the <em>really</em> important thing to know: by <strong>default “.lxd” domains are only available inside the containers themselves.</strong></p>
+<p>If you run <code>ping proxy-server.lxd</code> on the host OS (or anywhere else), you’ll get nothing. Those internal domains are going to come in super handy later on, though.</p>
+<p>You can technically change this, and make the container’s internal domains available on the host… but I never actually figured that out. It’s probably best to put your reverse proxy server in a container anyway, so you can snapshot and back it up with ease.</p>
+<h3 id="managing-your-containers">Managing Your Containers</h3>
+<p>Some things you should know before going forward:</p>
+<h4 id="starting-stopping">Starting &amp; Stopping</h4>
+<p>All containers can be started, stopped, and restarted as needed with the following commands:</p>
+<pre><code class="language-bash">lxc start mycontainer
+lxc stop mycontainer
+lxc restart mycontainer
+</code></pre>
+<p>Hey, even Linux needs to reboot sometimes. And heck, you can actually start, stop, and restart all containers at once with the following commands.</p>
+<pre><code class="language-bash">lxc start --all
+lxc stop --all
+lxc restart --all
+</code></pre>
+<p>That <code>restart --all</code> option comes in real handy for some of the more obscure temporary bugs.</p>
+<h4 id="doing-stuff-inside-your-containers">Doing Stuff Inside Your Containers</h4>
+<p>You can control the operating system inside your container in two ways: you can just run commands inside them from the host OS, or you can open a shell.</p>
+<p>Here’s what I mean. To run a command inside a container, maybe to install <em>Apache</em>, just use <code>lxc exec</code>, like so:</p>
+<pre><code class="language-bash">lxc exec my-container dnf install httpd -y
+</code></pre>
+<p>That will make <em>Apache</em> install on its own, and you will see the output of the command on your host’s terminal.</p>
+<p>To open a shell (where you can just run all the commands you want as root), use this:</p>
+<pre><code class="language-bash">lxc exec my-container bash
+</code></pre>
+<p>If you’re like me, valuing convenience over storage space, and have installed an alternate shell like <em>fish</em> in all of your containers, just change the command like so:</p>
+<pre><code class="language-bash">lxc exec my-container fish
+</code></pre>
+<p>In almost all instances, you’ll automatically be placed on the root account, and in the <code>/root</code> directory.</p>
+<p>Finally, if you've opened a shell into a container, you leave it the same way you leave any shell: with a simple <code>exit</code> command.</p>
+<h4 id="copying-containers">Copying Containers</h4>
+<p>Now, if you have a container you’d like to replicate with minimal effort, you don’t need to start a brand new one and install all of your base applications again. That’d be silly. Just run:</p>
+<pre><code class="language-bash">lxc copy my-container my-other-container
+</code></pre>
+<p>An exact copy of “my-container” will be created with the name “my-other-container”. It may not start automatically though, so make any changes you might want to make to your new container’s configuration, then run:</p>
+<pre><code class="language-bash">lxc start my-other-container
+</code></pre>
+<p>At this point, you may want to make some changes, like changing the container’s internal hostname, or something.</p>
+<h4 id="configuring-storage-cpu-limits">Configuring Storage &amp; CPU Limits</h4>
+<p>LXC/LXD usually defines how much storage space a container gets, and generally manages resources, but you might want control over that. If you’re worried about keeping your containers small, you can use the <code>lxc config</code> command to shrink and stretch them as needed.</p>
+<p>The following command will set a “soft” limit of 2GB on a container. A soft limit is actually more of a “minimum storage”, and the container will use more storage if it’s available. As always, change “my-container” to the name of the actual container.</p>
+<pre><code class="language-bash">lxc config set my-container limits.memory 2GB
+</code></pre>
+<p>You can set a hard limit like so:</p>
+<pre><code class="language-bash">lxc config set my-container limits.memory.enforce 2GB
+</code></pre>
+<p>And if you want to make sure that any given container can’t take over all the processing power available to your server, you can limit the CPU cores it has access to with this command. Just change the number of CPU cores at the end as you see fit.</p>
+<pre><code class="language-bash">lxc config set my-container limits.cpu 2
+</code></pre>
+<h4 id="deleting-containers-and-how-to-keep-that-from-happening">Deleting Containers (and How to Keep That From Happening)</h4>
+<p>Lastly, you can delete containers by running this command:</p>
+<pre><code class="language-bash">lxc delete my-container
+</code></pre>
+<p>You won’t be able to delete the container if it’s running, so you can either stop it first, or use the <code>-–force</code> flag to skip that part.</p>
+<pre><code class="language-bash">lxc delete my-container --force
+</code></pre>
+<p>Now, thanks to tab -command-completion, user error, and the fact that “d” sits next to “s” on most keyboards, you can accidentally delete containers. This is known, in the business, as THE BIG OOPS. (Or at least it’ll be known as THE BIG OOPS when I’m done here.)</p>
+<p>To defend against that, you can set any container to be “protected” (making the process of deleting them take an extra step) with this command:</p>
+<pre><code class="language-bash">lxc config set my-container security.protection.delete true
+</code></pre>
+<p>To un-protect the container, just run the command again, but change “true” to “false”.</p>
+<h2 id="setting-up-the-servers">Setting Up The Servers</h2>
+<p>Okay, now that your containers are up and running, it’s time to install what you need. First, make sure all of them are updated with the following commands (skip the “proxy-server” container if you haven’t created it yet):</p>
+<pre><code class="language-bash">lxc exec proxy-server dnf update -y
+lxc exec nginx-server dnf update -y
+lxc exec apache-server dnf update -y
+</code></pre>
+<p>Then, jump into each container, and get cracking.</p>
+<p>You’ll also need a text editor for every container. By default, Rocky Linux comes with <em>vi</em>, but if you want to simplify your life, <em>nano</em> will do. You can install it in each container before you open them up.</p>
+<pre><code class="language-bash">lxc exec proxy-server dnf install nano -y
+lxc exec nginx-server dnf install nano -y
+lxc exec apache-server dnf install nano -y
+</code></pre>
+<p>I’ll be using <em>nano</em> in all of the text-editor-related commands going forward, but you do you.</p>
+<h3 id="the-apache-website-server">The Apache website server</h3>
+<p>We're going to keep this short, for learning and testing purposes. Look below for a link to your full Apache guides.</p>
+<p>First, open up a shell into your container. Note that by default, containers will drop you into the root account. For our purposes, that's fine, though you may want to create a specific web server user for actual production purposes.</p>
+<pre><code class="language-bash">lxc exec apache-server bash
+</code></pre>
+<p>Once you’re logged in, just install <em>Apache</em> the easy way:</p>
+<pre><code class="language-bash">dnf install httpd
+</code></pre>
+<p>Now, you could follow our <a href="../../web/apache-sites-enabled/">Apache Web Server Multi-Site Setup guide</a> from here on out, but that’s actually kind of overkill for our purposes. We don’t usually want to set up Apache for multiple websites in a containerized environment like this. The whole point of containers is a separation of concerns, after all.</p>
+<p>Also, the SSL certificates are going on the proxy server, so we’re going to keep things simple.</p>
+<p>Once <em>Apache</em> is installed, make sure it’s running, and can keep running on reboot:</p>
+<pre><code class="language-bash">systemctl enable --now httpd
+</code></pre>
+<p>The <code>--now</code> flag lets you skip the command to start the actual server. For reference, that would be:</p>
+<pre><code class="language-bash">systemctl start httpd
+</code></pre>
+<p>If you have <code>curl</code> installed on your server host, you can make sure the default web page is up and running with:</p>
+<pre><code class="language-bash">curl [container-ip-address]
+</code></pre>
+<p>Remember, you can see all contkainer IPs with <code>lxc list</code>. And if you install curl on all your containers, you <em>could</em> just run:</p>
+<pre><code class="language-bash">curl localhost
+</code></pre>
+<h4 id="getting-real-user-ips-from-the-proxy-server">Getting real user IPs from the proxy server</h4>
+<p>Now here's a step that you'll need to do to prepare Apache for using the reverse proxy. By default, the actual IP addresses of users will not be logged by the servers in your web server containers. You want those IP addresses to go through because some web apps need user IPs for things like moderation, banning, and troubleshooting.</p>
+<p>To make your visitor's IP addresses get past the proxy server, you need two parts: the right settings in the proxy server (we'll cover that later), and a simple configuration file for the Apache server.</p>
+<p>A big thanks goes out to Linode and <a href="https://www.linode.com/docs/guides/beginners-guide-to-lxd-reverse-proxy">their own LXD guide</a> for the templates for these config files.</p>
+<p>Make a new config file:</p>
+<pre><code class="language-bash">nano /etc/httpd/conf.d/real-ip.conf
+</code></pre>
+<p>And add this text to it:</p>
+<pre><code>RemoteIPHeader X-Real-IP
+RemoteIPTrustedProxy proxy-server.lxd
+</code></pre>
+<p>Remember to change <code>proxy-server.lxd</code> to whatever you called your actual proxy container, if necessary. Now <strong>don't restart the Apache server just yet.</strong> That configuration file we added could cause problems <em>until</em> we get the proxy server up and running.</p>
+<p>Exit the shell for now, and let's start on the Nginx server.</p>
+<p>!!! Note</p>
+<pre><code>While this technique *does* work (your web apps and websites will get the users' real IPs), Apache's own access logs *will not show the right IPs.* They'll usually show the IP of the container that your reverse proxy is in. This is apparently a problem with how Apache logs things.
+
+I've found loads of solutions on Google, and none of them have actually worked for me. Watch this space for someone much smarter than I am to figure it out. In the meantime, you can check the proxy server's access logs if you need to see the IP addresses yourself, or check the logs of whatever web app you're installing.
+</code></pre>
+<h3 id="the-nginx-website-server">The Nginx website server</h3>
+<p>Again, we're keeping this short. If you want to use the latest (and recommended) version of Nginx in production, check out our <a href="../../web/nginx-mainline/">beginner's guide to installing Nginx</a>. That covers the full install guide, and some best practices for configuring your server.</p>
+<p>For testing and learning, you <em>could</em> just install Nginx normally, but I recommend installing the latest version, which is called the "mainline" branch.</p>
+<p>First, log into the container's shell:</p>
+<pre><code class="language-bash">lxc exec nginx-server bash
+</code></pre>
+<p>Then, install the <code>epel-release</code> repository so you can install the latest version of Nginx:</p>
+<pre><code class="language-bash">dnf install epel-release
+</code></pre>
+<p>Once that's done, search for the latest version of Nginx with:</p>
+<pre><code class="language-bash">dnf module list nginx
+</code></pre>
+<p>That should get you a list that looks like this:</p>
+<pre><code class="language-bash">Rocky Linux 8 - AppStream
+Name       Stream        Profiles        Summary
+nginx      1.14 [d]      common [d]      nginx webserver
+nginx      1.16          common [d]      nginx webserver
+nginx      1.18          common [d]      nginx webserver
+nginx      1.20          common [d]      nginx webserver
+nginx      mainline      common [d]      nginx webserver
+</code></pre>
+<p>The one you want is, you guessed it: the mainline branch. Enable the module with this command:</p>
+<pre><code class="language-bash">dnf enable module nginx:mainline
+</code></pre>
+<p>You'll be asked if you're sure you want to do this, so just choose <code>Y</code> as usual. Then, use the default command to install Nginx:</p>
+<pre><code class="language-bash">dnf install nginx
+</code></pre>
+<p>Then, enable and start Nginx:</p>
+<pre><code class="language-bash">dnf enable --now nginx
+</code></pre>
+<p>!!! Note</p>
+<pre><code>Remember when I said to wait before creating the proxy container? Here's why: at this point, you can save yourself some time by leaving the "nginx-server" container, and copying it to make the "proxy-server" container:
+
+```bash
+lxc copy nginx-server proxy-server
+```
+
+Make sure to start the proxy container with `lxc start proxy-server`, and add the proxy ports to the container as detailed below.
+</code></pre>
+<p>Again, you can make sure the container is working from the host with:</p>
+<pre><code class="language-bash">curl [your-container-ip]
+</code></pre>
+<h4 id="getting-real-user-ips-from-the-proxy-server-again">Getting real user IPs from the proxy server (again)</h4>
+<p>The logs <em>should</em> work this time. Should. To do this, we're putting a very similar file in <code>/etc/nginx/conf.d</code>:</p>
+<pre><code class="language-bash">nano /etc/nginx/conf.d/real-ip.conf
+</code></pre>
+<p>Then put this text in it:</p>
+<pre><code class="language-bash">real_ip_header    X-Real-IP;
+set_real_ip_from  proxy-server.lxd;
+</code></pre>
+<p>Lastly, <strong>don't restart the server yet</strong>. Again, that config file could cause problems until the proxy server is set up.</p>
+<h3 id="the-reverse-proxy-server">The Reverse Proxy Server</h3>
+<p>So remember when I said you'd need two domains or subdomains? This is where you need them. The subdomains I'm using for this tutorial are:</p>
+<ul>
+<li>apache.server.test</li>
+<li>nginx.server.test</li>
+</ul>
+<p>Change them in all the files and instructions as needed.</p>
+<p>If you copied the "proxy-server" container from your "nginx-server" container, and you've added your proxy devices to it, just jump on into the shell. If you created the container earlier, you'll need to repeat all the steps for installing Nginx in the "proxy-server" container.</p>
+<p>Once it's installed and you know it runs okay, you just need to set up a couple of configuration files to direct traffic from your chosen domains to the actual website servers.</p>
+<p>Before you do that, make sure you can access both servers via their internal domains:</p>
+<pre><code class="language-bash">curl apache-server.lxd
+curl nginx-server.lxd
+</code></pre>
+<p>If those two commands load the HTML of the default server welcome pages in your terminal, then everything has been set up correctly.</p>
+<h4 id="essential-step-configuring-the-proxy-server-container-to-take-all-incoming-server-traffic"><em>Essential Step:</em> Configuring the “proxy-server” Container to Take all Incoming Server Traffic</h4>
+<p>Again, you might want to do this later when you actually create the proxy server, but here are the instructions you'll need:</p>
+<p>Remember when we opened up ports 80 and 443 in the firewall? Here’s where we make the “proxy-server” container listen to those ports, and take all the traffic directed at them.</p>
+<p>Just run these two commands in succession:</p>
+<pre><code class="language-bash">lxc config device add proxy-server myproxy80 proxy listen=tcp:0.0.0.0:80 connect=tcp:127.0.0.1:80
+lxc config device add proxy-server myproxy443 proxy listen=tcp:0.0.0.0:443 connect=tcp:127.0.0.1:443
+</code></pre>
+<p>Let’s break that down. Each command is adding a virtual “device” to the proxy-server container. Those devices are set to listen on the host OS’ port 80 and port 443, and bind them to the container’s port 80 and port 443. Each device needs a name, so I’ve chosen “myproxy80”, and “myproxy443”.</p>
+<p>The “listen” option is the port on the host OS, and if I’m not mistaken, 0.0.0.0 is the IP address for the host on the “lxdbr0” bridge. The “connect” option is the local IP address and ports being connected to.</p>
+<p>!!! Note</p>
+<pre><code>Once these devices have been set up, you should reboot all the containers, just to be sure.
+</code></pre>
+<p>These virtual device should ideally be unique. It's usually best not to add a “myport80” device to another container that's currently running; it’ll have to be called something else. </p>
+<p><em>Likewise, only one container can listen on any specific host OS port at a time.</em></p>
+<h4 id="directing-traffic-to-the-apache-server">Directing traffic to the Apache server</h4>
+<p>In the "proxy-server" container, create a configuration file called <code>apache-server.conf</code> in <code>/etc/nginx/conf.d/</code>:</p>
+<pre><code class="language-bash">nano /etc/nginx/conf.d/apache-server.conf
+</code></pre>
+<p>Then paste this test in, change the domain name as necessary, and save it:</p>
+<pre><code>upstream apache-server {
+    server apache-server.lxd:80;
+}
+
+server {
+    listen 80 proxy_protocol;
+    listen [::]:80 proxy_protocol;
+    server_name apache.server.test; #&lt; Your domain goes here
+
+    location / {
+        proxy_pass http://apache-server;
+
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+</code></pre>
+<p>Let's break that down a little:</p>
+<ul>
+<li>The <code>upstream</code> section is defining exactly where the reverse proxy is going to send all its traffic. Specifically, it's sending traffic to the "apache-server" container's internal domain name: <code>apache-server.lxd</code>.</li>
+<li>The two lines that start with <code>listen</code> are telling the server to listen to traffic coming in on port 80 with the proxy protocol. The first via IPv4, and the second via IPv6.</li>
+<li>The <code>server_name</code> function takes all the traffic that's specifically coming to "apache.server.test" and routes it through the reverse proxy.</li>
+<li>The <code>proxy-pass</code> function is the part that actually directs all traffic captured by the <code>server_name</code> variable, and sends it to the server defined in the <code>upstream</code> section.</li>
+<li>The <code>proxy_redirect</code> function can apparently interfere with reverse proxies, so we're making sure it's turned off.</li>
+<li>All of the <code>proxy-set-header</code> options are sending information like the user's IP and more to the web server.</li>
+</ul>
+<p>!!! warning</p>
+<pre><code>The `proxy_protocol` bit in the `listen` variables is *essential* for the proxy server to work. Never leave it out.
+</code></pre>
+<p>For every LXD/website configuration file, you'll need to change the <code>upstream</code>, <code>server</code>, <code>server_name</code>, and <code>proxy_pass</code> settings accordingly. The text after "http://" in <code>proxy-pass</code> must match the txt that comes after the <code>upstream</code> text.</p>
+<p>Reload the server with <code>systemctl restart nginx</code>, then point your browser at whatever domain you're using instead of <code>apache.server.test</code>. If you see a page that looks like this, you're golden:</p>
+<p><img alt="A screenshot of the default Rocky Linux Apache welcome page" src="../../images/lxd-web-server-03.png" /></p>
+<p>!!! Note</p>
+<pre><code>You can name the config files whatever you like. I'm using simplified names for the tutorials, but some sysadmins recommend names based on the actual domain, but backwards. It's an alphabetical order-based organization thing.
+
+eg. "apache.server.test" would get a configuration file named `test.server.apache.conf`.
+</code></pre>
+<h4 id="directing-traffic-to-the-nginx-server">Directing traffic to the Nginx server</h4>
+<p>Just kinda repeat the process. Create a file just like before:</p>
+<pre><code class="language-bash">nano /etc/nginx/conf.d/nginx-server.conf
+</code></pre>
+<p>Add the approriate text:</p>
+<pre><code>upstream nginx-server {
+    server rocky-nginx.lxd:80;
+}
+
+server {
+    listen 80 proxy_protocol;
+    listen [::]:80 proxy_protocol;
+    server_name nginx.server.test; #&lt; Your domain goes here
+
+    location / {
+        proxy_pass http://nginx-server;
+
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+</code></pre>
+<p>Again, reload the proxy server, point your browser at the appropriate address, and hope to whatever deity your prefer that you see this:</p>
+<p><img alt="A screenshot of the default Rocky Linux Nginx welcome page" src="../../images/lxd-web-server-04.png" /></p>
+<h4 id="restart-the-servers-in-your-web-server-containers">Restart the servers in your web server containers</h4>
+<p>Exit back out of the "proxy-server" container, and restart the servers in your other two containers with one simple command:</p>
+<pre><code class="language-bash">lxc exec apache-server systemctl restart httpd &amp;&amp; lxc exec nginx-server restart nginx
+</code></pre>
+<p>That will apply the "real-ip.conf" files we made to their respective server configurations.</p>
+<h4 id="getting-ssl-certificates-for-your-websites">Getting SSL certificates for your websites</h4>
+<p>Getting official, proper SSL certificates is easiest with Let's Encrypt, and a little application called certbot. certbot will automatically detect your websites, get SSL certificates for them, and configure the sites itself. It will even renew the certificates for you every 30 days or so, without any intervention from you or cron jobs.</p>
+<p>This all has to be done from the "proxy-server" container, so log into that shell. Once there, install the EPEL repositories, just like you did on the host. Make sure the container is updated first:</p>
+<pre><code class="language-bash">dnf update
+</code></pre>
+<p>Then, add the EPEL repository:</p>
+<pre><code class="language-bash">dnf install epel-release
+</code></pre>
+<p>Then you just need to install certbot and its Nginx module:</p>
+<pre><code class="language-bash">dnf install certbot python3-certbot-nginx
+</code></pre>
+<p>Once installed, as long as you already have a couple of websites configured, just run:</p>
+<pre><code class="language-bash">certbot --nginx
+</code></pre>
+<p>Certbot will read your Nginx configuration, and figure out how many websites you have and if they need SSL certificates. At this point, you'll be asked a few questions. Do you accept the terms of service, do you want emails, etc?</p>
+<p>The most important questions are as follows. Enter your email address when you see this:</p>
+<pre><code>Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Enter email address (used for urgent renewal and security notices)
+ (Enter 'c' to cancel):
+</code></pre>
+<p>Here you can choose which websites get certificates. Just hit enter to get certificates for all of them.</p>
+<pre><code>Which names would you like to activate HTTPS for?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+1: apache.server.test
+2: nginx.server.test
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Select the appropriate numbers separated by commas and/or spaces, or leave input
+blank to select all options shown (Enter 'c' to cancel):
+</code></pre>
+<p>You'll see a bunch of confirmation text, and it'll be done. But if you go to your websites, you might find that they don't work. This is because when certbot creates the updated configuration, it forgets one very important thing.</p>
+<p>Go into your <code>apache-server.conf</code> and <code>nginx-server.conf</code> files, and find the following two lines:</p>
+<pre><code>listen [::]:443 ssl ipv6only=on; # managed by Certbot
+listen 443 ssl; # managed by Certbot
+</code></pre>
+<p>Yep, they're missing the <code>proxy_protocol</code> setting, and that's bad. Add it in yourself.</p>
+<pre><code>listen proxy_protocol [::]:443 ssl ipv6only=on; # managed by Certbot
+listen proxy_protocol 443 ssl; # managed by Certbot
+</code></pre>
+<p>Save the file, restart the server, and your websites should load without any issue.</p>
+<h2 id="notes">Notes</h2>
+<ol>
+<li>In this tutorial, I didn't mention configuring the actual web servers much. The very least you should do, in production, is change the domains names in the server config files in your actual web server containers, and not just the proxy container. And maybe set up a web server user in each.</li>
+<li>If you want to know a bit more about managing SSL certificates and SSL server configurations manually, check out <a href="../../security/generating_ssl_keys_lets_encrypt/">our guide to installing certbot and generating SSL certificates</a>.</li>
+<li>Apps like Nextcloud will require some extra configuration (for security reasons) if you put them in an LXD container behind a proxy.</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>There's a lot more to learn about LXC/LXD, containerization, web servers, and running websites, but that should honestly give you a good start. Once you learn how everything should be set up, and how to configure things the way you like, you can even begin to automate the process.</p>
+<p>You might use Ansible, or you might be like me, and just have a custom-written set of scripts that you run to make everything go faster. You can even create small "template containers" with all of your favorite software preinstalled, then just copy them and expand their storage capacity as needed.</p>
+<p>Okay. This is done. I'm off to play video games. Have fun!</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../lxd_server/" class="md-footer__link md-footer__link--prev" aria-label="Previous: LXD Server" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              LXD Server
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../podman-nextcloud/" class="md-footer__link md-footer__link--next" aria-label="Next: Nextcloud on Podman" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Nextcloud on Podman
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Achmad Fauzi Hamibowo &copy; 2022 • <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> • Made with ❤️ in Depok, West Java
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://twitter.com/achmadfhbw" target="_blank" rel="noopener" title="achmadfhbw on Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "navigation.prune", "search.share", "toc.follow"], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

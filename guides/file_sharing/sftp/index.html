@@ -1,0 +1,5211 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Steven Spencer">
+      
+      
+        <link rel="canonical" href="https://docs.achmadfhbw.my.id/guides/file_sharing/sftp/">
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Secure Server - sftp - Linux Learning Material</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Quicksand";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#secure-server-sftp-with-ssh-lock-down-procedures" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Linux Learning Material" class="md-header__button md-logo" aria-label="Linux Learning Material" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Linux Learning Material
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Secure Server - sftp
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../books/" class="md-tabs__link">
+        Books
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../gemstones/" class="md-tabs__link">
+        Gemstones
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        Guides
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../learning/GitHub/github/" class="md-tabs__link">
+        Learning
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tutorials/" class="md-tabs__link">
+        Tutorials
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Linux Learning Material" class="md-nav__button md-logo" aria-label="Linux Learning Material" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Linux Learning Material
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../books/">Books</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Books" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Books
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Admin guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Admin guide" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Admin guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/00-toc/" class="md-nav__link">
+        Learning Linux With Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/01-presentation/" class="md-nav__link">
+        Introduction to Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/03-commands/" class="md-nav__link">
+        Linux Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/04-advanced-commands/" class="md-nav__link">
+        Advanced Linux Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/05-vi/" class="md-nav__link">
+        VI Text Editor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/06-users/" class="md-nav__link">
+        User Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/07-file-systems/" class="md-nav__link">
+        File System
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/08-process/" class="md-nav__link">
+        Process Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/09-backups/" class="md-nav__link">
+        Backup and Restore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/10-boot/" class="md-nav__link">
+        System Startup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/11-tasks/" class="md-nav__link">
+        Task Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/12-network/" class="md-nav__link">
+        Implementing the Network
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/admin_guide/13-softwares/" class="md-nav__link">
+        Software Management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Disa stig
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Disa stig" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Disa stig
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/disa_stig/disa_stig_part1/" class="md-nav__link">
+        DISA STIG On Rocky Linux 8 - Part 1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Learning ansible
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning ansible" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Learning ansible
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/00-toc/" class="md-nav__link">
+        Learning Ansible with Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/01-basic/" class="md-nav__link">
+        Ansible Basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/02-advanced/" class="md-nav__link">
+        Ansible Intermediate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/03-working-with-files/" class="md-nav__link">
+        File Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/04-ansible-galaxy/" class="md-nav__link">
+        Ansible Galaxy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/05-deployments/" class="md-nav__link">
+        Deploy With Ansistrano
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/06-large-scale-infrastructure/" class="md-nav__link">
+        Large Scale infrastructure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/07-working-with-filters/" class="md-nav__link">
+        Working With Filters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_ansible/08-management-server-optimizations/" class="md-nav__link">
+        Management server optimizations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          Learning bash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning bash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Learning bash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/00-toc/" class="md-nav__link">
+        Learning bash with Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/01-first-script/" class="md-nav__link">
+        Bash - First script
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/02-using-variables/" class="md-nav__link">
+        Bash - Using Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/03-data-entry-and-manipulations/" class="md-nav__link">
+        Bash - Data entry and manipulations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/04-check-your-knowledge/" class="md-nav__link">
+        Bash - Check your knowledge
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/05-tests/" class="md-nav__link">
+        Bash - Tests
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/06-conditional-structures/" class="md-nav__link">
+        Bash - Conditional structures if and case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/07-loops/" class="md-nav__link">
+        Bash - Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/08-check-your-knowledge/" class="md-nav__link">
+        Bash - Check your knowledge
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_10" type="checkbox" id="__nav_2_5_10" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_10">
+          Appendix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Appendix" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_10">
+          <span class="md-nav__icon md-icon"></span>
+          Appendix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_bash/appendix/02-variables-logs/" class="md-nav__link">
+        Variables - Use With Logs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          Learning rsync
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning rsync" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Learning rsync
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/01_rsync_overview/" class="md-nav__link">
+        rsync brief description
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/02_rsync_demo01/" class="md-nav__link">
+        rsync demo 01
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/03_rsync_demo02/" class="md-nav__link">
+        rsync demo 02
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/04_rsync_configure/" class="md-nav__link">
+        rsync configuration file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/05_rsync_authentication-free_login/" class="md-nav__link">
+        rsync password-free authentication login
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/06_rsync_inotify/" class="md-nav__link">
+        inotify-tools installation and use
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../books/learning_rsync/07_rsync_unison_use/" class="md-nav__link">
+        Use unison
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../gemstones/">Gemstones</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Gemstones" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Gemstones
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/bash_stub/" class="md-nav__link">
+        bash - Script Stub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/htop/" class="md-nav__link">
+        htop-Process Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/https_rsa_keygen/" class="md-nav__link">
+        https - RSA Key Generation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/mtr/" class="md-nav__link">
+        mtr - Network Diagnostics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/nmcli/" class="md-nav__link">
+        nmcli - set connection autoconnect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/nmtui/" class="md-nav__link">
+        nmtui - Network Management Tool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/perl_search_replace/" class="md-nav__link">
+        Perl - Search and Replace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/sed_search_replace/" class="md-nav__link">
+        sed - Search and Replace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/setup_local_repo/" class="md-nav__link">
+        Setup Local Rocky Repositories
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/view_kernel_conf/" class="md-nav__link">
+        View Current Kernel Configuration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Guides</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../custom-linux-kernel/" class="md-nav__link">
+        Building and Installing Custom Linux Kernels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Automation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Automation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Automation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/anacron/" class="md-nav__link">
+        anacron - Automating commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/cron_jobs_howto/" class="md-nav__link">
+        cron - Automating Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/cronie/" class="md-nav__link">
+        cronie - Timed Tasks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/olivetin/" class="md-nav__link">
+        OliveTin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation/templates-automation-packer-vsphere/" class="md-nav__link">
+        Automatic Template Creation - Packer - Ansible - VMware vSphere
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Backup
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Backup" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Backup
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backup/mirroring_lsyncd/" class="md-nav__link">
+        Mirroring Solution - lsyncd
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backup/rsnapshot_backup/" class="md-nav__link">
+        Backup Solution - Rsnapshot
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backup/rsync_ssh/" class="md-nav__link">
+        Synchronization With rsync
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          Cms
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cms" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cms
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cms/cloud_server_using_nextcloud/" class="md-nav__link">
+        Cloud Server Using Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cms/dokuwiki_server/" class="md-nav__link">
+        DokuWiki
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Communications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communications" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Communications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../communications/asterisk_installation/" class="md-nav__link">
+        Installing Asterisk
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_7">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_7">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../containers/lxd_server/" class="md-nav__link">
+        LXD Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../containers/lxd_web_servers/" class="md-nav__link">
+        LXD Beginners Guide-Multiple Servers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../containers/podman-nextcloud/" class="md-nav__link">
+        Nextcloud on Podman
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../contribute/">Contribute</a>
+          
+            <label for="__nav_4_8">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Contribute" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_8">
+          <span class="md-nav__icon md-icon"></span>
+          Contribute
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/README.fr/" class="md-nav__link">
+        README.fr
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/mkdocs_lsyncd/" class="md-nav__link">
+        Local Documentation - LXD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/navigation/" class="md-nav__link">
+        Navigational Changes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/rockydocs_formatting/" class="md-nav__link">
+        Rocky Docs Formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contribute/rockydocs_web_dev/" class="md-nav__link">
+        Local Documentation - Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_9">
+          Database
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Database" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_9">
+          <span class="md-nav__icon md-icon"></span>
+          Database
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database/database_mariadb-server/" class="md-nav__link">
+        MariaDB Database Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Desktop
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Desktop" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Desktop
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../desktop/mate_installation/" class="md-nav__link">
+        MATE Desktop
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../desktop/xfce_installation/" class="md-nav__link">
+        XFCE Desktop Environment
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_11">
+          Dns
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dns" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_11">
+          <span class="md-nav__icon md-icon"></span>
+          Dns
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dns/private_dns_server_using_bind/" class="md-nav__link">
+        Bind Private DNS Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_12">
+          Editors
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Editors" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_12">
+          <span class="md-nav__icon md-icon"></span>
+          Editors
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editors/micro/" class="md-nav__link">
+        micro
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_13">
+          Email
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Email" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_13">
+          <span class="md-nav__icon md-icon"></span>
+          Email
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../email/postfix_reporting/" class="md-nav__link">
+        Postfix Process Reporting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" type="checkbox" id="__nav_4_14" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_14">
+          File sharing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File sharing" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_14">
+          <span class="md-nav__icon md-icon"></span>
+          File sharing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glusterfs/" class="md-nav__link">
+        Clustering-GlusterFS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../secure_ftp_server_vsftpd/" class="md-nav__link">
+        Secure FTP Server - vsftpd
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Secure Server - sftp
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Secure Server - sftp
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-general-information" class="md-nav__link">
+    Part 1: General Information
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: General Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assumptions-and-conventions" class="md-nav__link">
+    Assumptions and Conventions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sites-users-administrators" class="md-nav__link">
+    Sites, Users, Administrators
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-sftp-change-root-jail" class="md-nav__link">
+    Part 2: SFTP Change Root Jail
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: SFTP Change Root Jail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directories" class="md-nav__link">
+    Directories
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#httpd-configuration" class="md-nav__link">
+    httpd Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#website-configuration" class="md-nav__link">
+    Website Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-creation" class="md-nav__link">
+    User Creation
+  </a>
+  
+    <nav class="md-nav" aria-label="User Creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#administrators" class="md-nav__link">
+    Administrators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-users-sftp" class="md-nav__link">
+    Web Users (SFTP)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-configuration" class="md-nav__link">
+    SSH Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-the-template-and-the-script" class="md-nav__link">
+    8.5 - The Template And The Script
+  </a>
+  
+    <nav class="md-nav" aria-label="8.5 - The Template And The Script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-template" class="md-nav__link">
+    The Template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-the-script" class="md-nav__link">
+    8.5 - The Script
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-the-template-and-the-script" class="md-nav__link">
+    8.6 - The Template And The Script
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 - The Template And The Script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#86-the-template" class="md-nav__link">
+    8.6 The Template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-the-script-and-sshd_config-changes" class="md-nav__link">
+    8.6 - The Script and sshd_config Changes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-changes-and-script-notes-for-both-85-and-86" class="md-nav__link">
+    Final Changes and Script Notes for both 8.5 and 8.6
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-ssh-denial-and-sftp-access" class="md-nav__link">
+    Testing SSH Denial and SFTP Access
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing SSH Denial and SFTP Access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphical-tool-testing" class="md-nav__link">
+    Graphical Tool Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-line-tool-testing" class="md-nav__link">
+    Command Line Tool Testing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-test-files" class="md-nav__link">
+    Web Test Files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-tests" class="md-nav__link">
+    Web Tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-administrative-access-with-ssh-key-pairs" class="md-nav__link">
+    Part 3: Administrative Access with SSH key pairs
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Administrative Access with SSH key pairs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-publicprivate-key-pairs" class="md-nav__link">
+    Creating the public/private Key Pairs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transferring-the-public-key-to-the-sftp-server" class="md-nav__link">
+    Transferring The Public key to the SFTP Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowing-only-key-based-logins" class="md-nav__link">
+    Allowing ONLY key-based Logins
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-turn-off-remote-root-login" class="md-nav__link">
+    Part 4: Turn Off Remote root Login
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addendum-new-system-administrators" class="md-nav__link">
+    Addendum: New System Administrators
+  </a>
+  
+    <nav class="md-nav" aria-label="Addendum: New System Administrators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solution-one-sneaker-net" class="md-nav__link">
+    Solution One - Sneaker Net
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution-two-temporarily-edit-the-sshd_config" class="md-nav__link">
+    Solution Two - Temporarily Edit The sshd_config
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution-three-script-the-process" class="md-nav__link">
+    Solution Three - Script The Process
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_15">
+          Git
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Git" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_15">
+          <span class="md-nav__icon md-icon"></span>
+          Git
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git/git_wf_git-cola_atom/" class="md-nav__link">
+        git Using Git Cola and Atom
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_16" type="checkbox" id="__nav_4_16" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_16">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_16">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/import_rocky_to_wsl_howto/" class="md-nav__link">
+        Import to WSL2 with Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interoperability/rocky_to_wsl_howto/" class="md-nav__link">
+        Import To WSL with WSL and rinse
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_17" type="checkbox" id="__nav_4_17" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_17">
+          Mirror management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mirror management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_17">
+          <span class="md-nav__icon md-icon"></span>
+          Mirror management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mirror_management/add_mirror_manager/" class="md-nav__link">
+        Adding a Rocky Mirror
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mirror_management/add_mirror_manager.sv/" class="md-nav__link">
+        Lägg till en publik spegel till Rocky's spegelhanterare
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_18" type="checkbox" id="__nav_4_18" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_18">
+          Network
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Network" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_18">
+          <span class="md-nav__icon md-icon"></span>
+          Network
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../network/basic_network_configuration.fr/" class="md-nav__link">
+        Configuration réseau de base
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../network/basic_network_configuration/" class="md-nav__link">
+        Networking Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../network/librenms_monitoring_server/" class="md-nav__link">
+        LibreNMS Monitoring Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_19" type="checkbox" id="__nav_4_19" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../package_management/">Package management</a>
+          
+            <label for="__nav_4_19">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Package management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_19">
+          <span class="md-nav__icon md-icon"></span>
+          Package management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/developer_start2/" class="md-nav__link">
+        Development Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_build_troubleshooting/" class="md-nav__link">
+        Package Build & Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_debranding/" class="md-nav__link">
+        Package Debranding
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_debranding.sv/" class="md-nav__link">
+        Rocky paket Hur man tar bort varumärke
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_dev_start/" class="md-nav__link">
+        Packaging And Developer Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_signing/" class="md-nav__link">
+        Package Signing & Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../package_management/package_signing.sv/" class="md-nav__link">
+        Paketsignering och testning
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_20" type="checkbox" id="__nav_4_20" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_20">
+          Proxies
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Proxies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_20">
+          <span class="md-nav__icon md-icon"></span>
+          Proxies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../proxies/haproxy_apache_lxd/" class="md-nav__link">
+        HAProxy-Apache-LXD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../proxies/pound/" class="md-nav__link">
+        Pound
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_21" type="checkbox" id="__nav_4_21" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_21">
+          Security
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Security" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_21">
+          <span class="md-nav__icon md-icon"></span>
+          Security
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/dnf_automatic/" class="md-nav__link">
+        Patching with dnf-automatic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/enabling_iptables_firewall/" class="md-nav__link">
+        Enabling `iptables` Firewall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/enabling_iptables_firewall.sv/" class="md-nav__link">
+        Aktivera iptables Brandvägg
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/firewalld-beginners.fr/" class="md-nav__link">
+        pare-feu pour les débutants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/firewalld-beginners/" class="md-nav__link">
+        firewalld for Beginners
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/firewalld-beginners.sv/" class="md-nav__link">
+        brandvägg för nybörjare
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/firewalld/" class="md-nav__link">
+        firewalld from iptables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/generating_ssl_keys_lets_encrypt/" class="md-nav__link">
+        Generating SSL Keys - Let's Encrypt
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/learning_selinux/" class="md-nav__link">
+        SELinux Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/ssh_public_private_keys/" class="md-nav__link">
+        SSH Public and Private Key
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/ssh_public_private_keys.sv/" class="md-nav__link">
+        SSH Publika och privata nycklar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/ssl_keys_https/" class="md-nav__link">
+        Generating SSL Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_21_13" type="checkbox" id="__nav_4_21_13" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_21_13">
+          Authentication
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Authentication" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_21_13">
+          <span class="md-nav__icon md-icon"></span>
+          Authentication
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../security/authentication/active_directory_authentication/" class="md-nav__link">
+        Active Directory Authentication
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_22" type="checkbox" id="__nav_4_22" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_22">
+          Virtualization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtualization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_22">
+          <span class="md-nav__icon md-icon"></span>
+          Virtualization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../virtualization/vbox-rocky/" class="md-nav__link">
+        Rocky on VirtualBox
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_23" type="checkbox" id="__nav_4_23" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_23">
+          Web
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_23">
+          <span class="md-nav__icon md-icon"></span>
+          Web
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache-sites-enabled.fr/" class="md-nav__link">
+        Configuration Apache Web Server Multi-Sites'
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache-sites-enabled/" class="md-nav__link">
+        Apache Multisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/mod_SSL_apache/" class="md-nav__link">
+        Apache With 'mod_ssl'
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/nginx-mainline/" class="md-nav__link">
+        Nginx
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/nginx-multisite/" class="md-nav__link">
+        Nginx Multisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/php/" class="md-nav__link">
+        PHP and PHP-FPM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_23_7" type="checkbox" id="__nav_4_23_7" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../web/apache_hardened_webserver/">Apache hardened webserver</a>
+          
+            <label for="__nav_4_23_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Apache hardened webserver" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_23_7">
+          <span class="md-nav__icon md-icon"></span>
+          Apache hardened webserver
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache_hardened_webserver/modsecurity/" class="md-nav__link">
+        Web-based Application firewall (WAF)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache_hardened_webserver/ossec-hids/" class="md-nav__link">
+        Host-based Intrustion Detection System (HIDS)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/apache_hardened_webserver/rkhunter/" class="md-nav__link">
+        Rootkit Hunter
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Learning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Learning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_1">
+          GitHub
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GitHub" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          GitHub
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/GitHub/github/" class="md-nav__link">
+        GitHub
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_2">
+          Linux Ubuntu
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux Ubuntu" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Linux Ubuntu
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Linux_Ubuntu/commandLine/" class="md-nav__link">
+        Command Line
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Linux_Ubuntu/linuxUbuntu/" class="md-nav__link">
+        Ubuntu Linux
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_3">
+          Virtual Box
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtual Box" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Virtual Box
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Virtual_Box/virtualBox/" class="md-nav__link">
+        **Virtual Box**
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_4" type="checkbox" id="__nav_5_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_4">
+          Web Server
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Server" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          Web Server
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/apache/" class="md-nav__link">
+        **Installasi Apache, PHP**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/webServer/" class="md-nav__link">
+        **Web Server**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/website/" class="md-nav__link">
+        **Website**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/xampp/" class="md-nav__link">
+        **XAMPP**
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/">Tutorials</a>
+          
+            <label for="__nav_6">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/Arch_Linux/">Arch Linux</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Arch Linux" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Arch Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-general-information" class="md-nav__link">
+    Part 1: General Information
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: General Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assumptions-and-conventions" class="md-nav__link">
+    Assumptions and Conventions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sites-users-administrators" class="md-nav__link">
+    Sites, Users, Administrators
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-sftp-change-root-jail" class="md-nav__link">
+    Part 2: SFTP Change Root Jail
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: SFTP Change Root Jail">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directories" class="md-nav__link">
+    Directories
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#httpd-configuration" class="md-nav__link">
+    httpd Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#website-configuration" class="md-nav__link">
+    Website Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-creation" class="md-nav__link">
+    User Creation
+  </a>
+  
+    <nav class="md-nav" aria-label="User Creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#administrators" class="md-nav__link">
+    Administrators
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-users-sftp" class="md-nav__link">
+    Web Users (SFTP)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-configuration" class="md-nav__link">
+    SSH Configuration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-the-template-and-the-script" class="md-nav__link">
+    8.5 - The Template And The Script
+  </a>
+  
+    <nav class="md-nav" aria-label="8.5 - The Template And The Script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-template" class="md-nav__link">
+    The Template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-the-script" class="md-nav__link">
+    8.5 - The Script
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-the-template-and-the-script" class="md-nav__link">
+    8.6 - The Template And The Script
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 - The Template And The Script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#86-the-template" class="md-nav__link">
+    8.6 The Template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-the-script-and-sshd_config-changes" class="md-nav__link">
+    8.6 - The Script and sshd_config Changes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-changes-and-script-notes-for-both-85-and-86" class="md-nav__link">
+    Final Changes and Script Notes for both 8.5 and 8.6
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-ssh-denial-and-sftp-access" class="md-nav__link">
+    Testing SSH Denial and SFTP Access
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing SSH Denial and SFTP Access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphical-tool-testing" class="md-nav__link">
+    Graphical Tool Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-line-tool-testing" class="md-nav__link">
+    Command Line Tool Testing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-test-files" class="md-nav__link">
+    Web Test Files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-tests" class="md-nav__link">
+    Web Tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-administrative-access-with-ssh-key-pairs" class="md-nav__link">
+    Part 3: Administrative Access with SSH key pairs
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Administrative Access with SSH key pairs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-the-publicprivate-key-pairs" class="md-nav__link">
+    Creating the public/private Key Pairs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transferring-the-public-key-to-the-sftp-server" class="md-nav__link">
+    Transferring The Public key to the SFTP Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowing-only-key-based-logins" class="md-nav__link">
+    Allowing ONLY key-based Logins
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-turn-off-remote-root-login" class="md-nav__link">
+    Part 4: Turn Off Remote root Login
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addendum-new-system-administrators" class="md-nav__link">
+    Addendum: New System Administrators
+  </a>
+  
+    <nav class="md-nav" aria-label="Addendum: New System Administrators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solution-one-sneaker-net" class="md-nav__link">
+    Solution One - Sneaker Net
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution-two-temporarily-edit-the-sshd_config" class="md-nav__link">
+    Solution Two - Temporarily Edit The sshd_config
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution-three-script-the-process" class="md-nav__link">
+    Solution Three - Script The Process
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="secure-server-sftp-with-ssh-lock-down-procedures">Secure Server - SFTP with SSH Lock Down Procedures</h1>
+<h2 id="introduction">Introduction</h2>
+<p>It may seem strange to have a document dedicated to the "secure" use of SFTP (a part of openssh-server package) when the SSH proptocol is itself secure. I hear what you are thinking. But most system administrators do not want to open up SSH to everyone in order to implement SFTP for everyone. This document will describe how to implement a change root jail<sup>1</sup> for SFTP while keeping SSH access limited.</p>
+<p>There are many documents out there that deal with creating an SFTP change root jail, but most do not take into account a use case where the user that is set up would be accessing a web directory on a server with multiple websites. This document deals with that. If that isn't your use case, you can easily adapt these concepts to use in different situations.</p>
+<p>The author also feels that it is necessary when making the change root jail document for SFTP to also discuss the other things that you should do as a system administrator to minimize the target that you offer to the world via SSH. For this reason, this document is divided into four parts:</p>
+<ol>
+<li>The first deals with the general information that we will use for the entire document.</li>
+<li>The second deals with the setup of the change root jail, and if you decide that you want to stop there, that's totally up to you.</li>
+<li>The third part deals with setting up public/private key SSH access for your system administrators and turning off remote password based authentication.</li>
+<li>The fourth, and last section of this document deals with turning off remote root logins.</li>
+</ol>
+<p>Taking all of these steps will allow you to offer secure SFTP access for your customers while also minimizing the possibility that port 22 (the one reserved for SSH access) will be compromised by a bad actor.</p>
+<p>!!! Note "<sup>1</sup> Change root jails for beginners:"</p>
+<pre><code>Change root (or chroot) jails are a way to restrict what a process and all of its various child processes can do on your computer. It essentially allows you to choose a specific directory/folder on your machine, and make that the "root" dirtectory for any given process or program.
+
+From there on, that process or program can *only* access that folder and its subfolders.
+</code></pre>
+<p>!!! hint "Updates for Rocky Linux 8.6"</p>
+<pre><code>This document has been updated to include new changes that came out with version 8.6 that will make this procedure even safer. If you are using 8.6, then there are specific sections in the document below, prefixed with "8.6 -". For clarity sake, the sections specific to Rocky Linux 8.5 have been prefixed with "8.5 - ". Other than those sections specifically prefixed, this document is generic for both versions of the OS.
+</code></pre>
+<h2 id="part-1-general-information">Part 1: General Information</h2>
+<h3 id="assumptions-and-conventions">Assumptions and Conventions</h3>
+<p>We assume that:</p>
+<ul>
+<li>you are comfortable executing commands at the command line.</li>
+<li>you can use a command line editor, such as <code>vi</code> (used here), <code>nano</code>, <code>micro</code>, etc.</li>
+<li>you understand basic Linux commands used for adding groups and users, or can follow along well.</li>
+<li>your multisite website is set up like this: <a href="../../web/apache-sites-enabled/">Apache Multisite</a></li>
+<li><code>httpd</code> (Apache) has already been installed on the server.</li>
+</ul>
+<p>!!! note</p>
+<pre><code>You can apply these concepts to any server set up, and to any web daemon. While we are assuming Apache here, you can definitely use this for Nginx as well.
+</code></pre>
+<h3 id="sites-users-administrators">Sites, Users, Administrators</h3>
+<p>Everything is made up here. Any resemblance to persons or sites that are real, is purely accidental:</p>
+<p><strong>Sites:</strong></p>
+<ul>
+<li>mybrokenaxel.com
+    user = mybroken</li>
+<li>myfixedaxel.com
+    user = myfixed</li>
+</ul>
+<p><strong>Administrators</strong></p>
+<ul>
+<li>Steve Simpson = ssimpson</li>
+<li>Laura Blakely = lblakely</li>
+</ul>
+<h2 id="part-2-sftp-change-root-jail">Part 2: SFTP Change Root Jail</h2>
+<h3 id="installation">Installation</h3>
+<p>Installation is simple. You just need to have openssh-server installed, which is probably installed already. Enter this command to be sure:</p>
+<pre><code>dnf install openssh-server
+</code></pre>
+<h3 id="setup">Setup</h3>
+<h4 id="directories">Directories</h4>
+<ul>
+<li>The directory path structure will be <code>/var/www/sub-domains/[ext.domainname]/html</code> and the <code>html</code> directory in this path will be the change root jail for the SFTP user.</li>
+</ul>
+<p>Creating the configuration directories:</p>
+<pre><code>mkdir -p /etc/httpd/sites-available
+mkdir -p /etc/httpd/sites-enabled
+</code></pre>
+<p>Creating the web directories:</p>
+<pre><code>mkdir -p /var/www/sub-domains/com.mybrokenaxel/html
+mkdir -p /var/www/sub-domains/com.myfixedaxel/html
+</code></pre>
+<p>We will deal with the ownership of these directories in the script application found below.</p>
+<h3 id="httpd-configuration"><code>httpd</code> Configuration</h3>
+<p>We need to modify the built-in <code>httpd.conf</code> file to make it load the configuration files in the <code>/etc/httpd/sites-enabled</code> directory. This is done with one line at the bottom of the <code>httpd.conf</code> file.</p>
+<p>Edit the file with your favorite editor. I'm using <code>vi</code> here:</p>
+<pre><code>vi /etc/httpd/conf/httpd.conf
+</code></pre>
+<p>and add this at the very bottom of the file:</p>
+<pre><code>Include /etc/httpd/sites-enabled
+</code></pre>
+<p>Then save the file and exit.</p>
+<h3 id="website-configuration">Website Configuration</h3>
+<p>We need two sites created. We will create the configurations in <code>/etc/httpd/sites-available</code> and then link them to <code>../sites-enabled</code>:</p>
+<pre><code>vi /etc/httpd/sites-available/com.mybrokenaxel
+</code></pre>
+<p>!!! note</p>
+<pre><code>We are only using the HTTP protocol for our example. Any real website would need an HTTPS protocol configuration, SSL certificates, and possibly more.
+</code></pre>
+<pre><code>&lt;VirtualHost *:80&gt;
+        ServerName www.mybrokenaxel.com
+        ServerAdmin username@rockylinux.org
+        DocumentRoot /var/www/sub-domains/com.mybrokenaxel/html
+        DirectoryIndex index.php index.htm index.html
+        Alias /icons/ /var/www/icons/
+
+
+    CustomLog &quot;/var/log/httpd/com.mybrokenaxel.www-access_log&quot; combined
+    ErrorLog  &quot;/var/log/httpd/com.mybrokenaxel.www-error_log&quot;
+
+        &lt;Directory /var/www/sub-domains/com.mybrokenaxel/html&gt;
+                Options -ExecCGI -Indexes
+                AllowOverride None
+
+                Order deny,allow
+                Deny from all
+                Allow from all
+
+                Satisfy all
+        &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</code></pre>
+<p>Save this file and exit.</p>
+<pre><code>vi /etc/httpd/sites-available/com.myfixedaxel
+</code></pre>
+<pre><code>&lt;VirtualHost *:80&gt;
+        ServerName www.myfixedaxel.com
+        ServerAdmin username@rockylinux.org
+        DocumentRoot /var/www/sub-domains/com.myfixedaxel/html
+        DirectoryIndex index.php index.htm index.html
+        Alias /icons/ /var/www/icons/
+
+
+    CustomLog &quot;/var/log/httpd/com.myfixedaxel.www-access_log&quot; combined
+    ErrorLog  &quot;/var/log/httpd/com.myfixedaxel.www-error_log&quot;
+
+        &lt;Directory /var/www/sub-domains/com.myfixedaxel/html&gt;
+                Options -ExecCGI -Indexes
+                AllowOverride None
+
+                Order deny,allow
+                Deny from all
+                Allow from all
+
+                Satisfy all
+        &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</code></pre>
+<p>Save this file and exit.</p>
+<p>Once the two configuration files are created, go ahead and link them from within <code>/etc/httpd/sites-enabled</code>:</p>
+<pre><code>ln -s ../sites-available/com.mybrokenaxel
+ln -s ../sites-available/com.myfixedaxel
+</code></pre>
+<p>Now enable and start the <code>httpd</code> process:</p>
+<pre><code>systemctl enable --now httpd
+</code></pre>
+<h3 id="user-creation">User Creation</h3>
+<p>For our example environment, we are assuming that none of the users are set up. Let's start with our administrative users. Note that at this point in our process, we can still log in as the root user to add the other users and set them up the way we want. We will remove root logins once we have the users set up and tested.</p>
+<h4 id="administrators">Administrators</h4>
+<pre><code>useradd -g wheel ssimpson
+useradd -g wheel lblakely
+</code></pre>
+<p>By adding our users to the group "wheel" we give them <code>sudo</code> access.</p>
+<p>You still need a password for <code>sudo</code> access. There are ways around this, but none are all that secure. Frankly, if you have problems with security using <code>sudo</code> on your server, then you've got much bigger problems with your entire setup. Set the two administrative passwords with secure passwords:</p>
+<pre><code>passwd ssimpson
+Changing password for user ssimpson.
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+
+passwd lblakely
+Changing password for user lblakely.
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+</code></pre>
+<p>Now test access to the server via ssh for your two administrative users. You should be able to:</p>
+<ul>
+<li>use <code>ssh</code> to log in as one of the administrative users to the server. (Example: <code>ssh lblakely@192.168.1.116</code> or <code>ssh lblakely@mywebserver.com</code>)</li>
+<li>once the server is accessed, you should be able to access root with <code>sudo -s</code> and entering the administrative user's password.</li>
+</ul>
+<p>If this works for both administrative users, you should be ready to go to the next step.</p>
+<h4 id="web-users-sftp">Web Users (SFTP)</h4>
+<p>We need to add our web users. That <code>../html</code> directory structure already exists, so we don't want to create it when we add the user, but we <em>do</em> want to specify it. We also do not want any login other than via SFTP so we need to use a shell that denies logins.</p>
+<pre><code>useradd -M -d /var/www/sub-domains/com.mybrokenaxel/html -g apache -s /usr/sbin/nologin mybroken
+useradd -M -d /var/www/sub-domains/com.myfixedaxel/html -g apache -s /usr/sbin/nologin myfixed
+</code></pre>
+<p>Let's break down those commands a bit:</p>
+<ul>
+<li>The <code>-M</code> option says to <em>not</em> create the standard home directory for the user.</li>
+<li><code>-d</code> specifies that what comes after is the <em>actual</em> home directory.</li>
+<li><code>-g</code> says that the group that this user belongs to is <code>apache</code>.</li>
+<li><code>-s</code> says that the shell the user is assigned is <code>/usr/sbin/nologin</code></li>
+<li>At the end is the actual username for the user.</li>
+</ul>
+<p><strong>Note:</strong> For an Nginx server, you would use <code>nginx</code> as the group.</p>
+<p>Our SFTP users still need a password. So let's go ahead and setup a secure password for each now. Since we have already seen the command output above, we won't be repeating it here:</p>
+<pre><code>passwd mybroken
+passwd myfixed
+</code></pre>
+<h3 id="ssh-configuration">SSH Configuration</h3>
+<p>!!! caution</p>
+<pre><code>Before we start this next process, it is highly recommended that you make a backup of the system file we are going to be modifying: `/etc/ssh/sshd_config`. Breaking this file and not being able to go back to the original could cause you a world of heartache!
+
+```
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+```
+</code></pre>
+<p>We need to make one change to the <code>/etc/ssh/sshd_config</code> file and then we are going to build a template so that we can make our web directory changes outside of the configuration file and script the additions we are going to need.</p>
+<p>First, let's make the manual change we need:</p>
+<pre><code>vi /etc/ssh/sshd_config
+</code></pre>
+<p>Near the bottom of the file, you will find this:</p>
+<pre><code># override default of no subsystems
+Subsystem     sftp    /usr/libexec/openssh/sftp-server
+</code></pre>
+<p>We want to change that to read as follows:</p>
+<pre><code># override default of no subsystems
+# Subsystem     sftp    /usr/libexec/openssh/sftp-server
+Subsystem       sftp    internal-sftp
+</code></pre>
+<p>Save and exit the file.</p>
+<p>Just like before, let's describe what we are doing a little here. Both the <code>sftp-server</code> and <code>internal-sftp</code> are part of OpenSSH. The <code>internal-sftp</code>, while not too different from the <code>sftp-server</code>, simplifies configurations using <code>ChrootDirectory</code> to force a different file system root on clients. So that is why we want to use <code>internal-sftp</code>.</p>
+<h3 id="85-the-template-and-the-script">8.5 - The Template And The Script</h3>
+<p>Why are we creating a template and a script for this next part? The reason is simply to avoid human error as much as possible. We aren't done modifying that <code>/etc/ssh/sshd_config</code> file yet, but we want to eliminate as many errors as possible whenever we need to make these modifications. We will create all of this in <code>/usr/local/sbin</code>.</p>
+<h4 id="the-template">The Template</h4>
+<p>First, let's create our template:</p>
+<pre><code>vi /usr/local/sbin/sshd_template
+</code></pre>
+<p>This template should have the following:</p>
+<pre><code>Match User replaceuser
+  PasswordAuthentication yes
+  ChrootDirectory replacedirectory
+  ForceCommand internal-sftp
+  AllowTcpForwarding no
+  X11Forwarding no
+</code></pre>
+<p>!!! note</p>
+<pre><code>The `PasswordAuthentication yes` would not normally be required for the change root jail, BUT, we will be turning off `PasswordAuthentication` later on for everyone else, so it is important to have this line in the template.
+</code></pre>
+<p>We want a directory for our user files that we will create from the template too:</p>
+<pre><code>mkdir /usr/local/sbin/templates
+</code></pre>
+<h4 id="85-the-script">8.5 - The Script</h4>
+<p>Now let's create our script:</p>
+<pre><code>vi /usr/local/sbin/webuser
+</code></pre>
+<p>And put this code in it:</p>
+<pre><code>#!/bin/bash
+# script to populate the SSHD configuration for web users.
+
+# Set variables
+
+tempfile=&quot;/usr/local/sbin/sshd_template&quot;
+dompath=&quot;/var/www/sub-domains/&quot;
+
+# Prompt for user and domain in reverse (ext.domainname):
+
+clear
+
+echo -n &quot;Enter the web sftp user: &quot;
+read sftpuser
+echo -n &quot;Enter the domain in reverse. Example: com.domainname: &quot;
+read dom
+echo -n &quot;Is all of this correct: sftpuser = $sftpuser and domain = $dom (Y/N)? &quot;
+read yn
+if [ &quot;$yn&quot; = &quot;n&quot; ] || [ &quot;$yn&quot; = &quot;N&quot; ]
+then
+    exit
+fi
+if [ &quot;$yn&quot; = &quot;y&quot; ] || [ &quot;$yn&quot; = &quot;Y&quot; ]
+then
+    /usr/bin/cat $tempfile &gt; /usr/local/sbin/templates/$dom.txt
+    /usr/bin/sed -i &quot;s,replaceuser,$sftpuser,g&quot; /usr/local/sbin/templates/$dom.txt
+    /usr/bin/sed -i &quot;s,replacedirectory,$dompath$dom,g&quot; /usr/local/sbin/templates/$dom.txt
+    /usr/bin/chown -R $sftpuser.apache $dompath$dom/html
+fi
+
+## Make a backup of /etc/ssh/sshd_config
+
+/usr/bin/rm -f /etc/ssh/sshd_config.bak
+
+/usr/bin/cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+
+## Now append our new user information to to the file
+
+cat /usr/local/sbin/templates/$dom.txt &gt;&gt; /etc/ssh/sshd_config
+
+## Restart sshd
+
+/usr/bin/systemctl restart sshd
+
+echo &quot; &quot;
+echo &quot;Please check the status of sshd with systemctl status sshd.&quot;
+echo &quot;You can verify that your information was added to the sshd_config by doing a more of the sshd_config&quot;
+echo &quot;A backup of the working sshd_config was created when this script was run: sshd_config.bak&quot;
+</code></pre>
+<h3 id="86-the-template-and-the-script">8.6 - The Template And The Script</h3>
+<p>With the release of Rocky Linux 8.6, a new option is available for the <code>sshd_config</code> file that allows for drop in configurations. This is a <strong>GREAT</strong> change. What this means is that for 8.6, we will make a single additional change to the <code>sshd_config</code> file, and then our script will build out sftp changes in a separate configuration file. While the 8.5 procedure above is pretty darned safe, this new change makes things even safer. Safety is good!!</p>
+<h4 id="86-the-template">8.6 The Template</h4>
+<p>There are no changes between 8.5 and 8.6 as far as the template is concerned. So use <a href="#the-template">that procedure above</a> and then return here for the script.</p>
+<h4 id="86-the-script-and-sshd_config-changes">8.6 - The Script and <code>sshd_config</code> Changes</h4>
+<p>Because of the changes allowed for the <code>sshd_config</code> file in Rocky Linux 8.6, our script will use a new drop in configuration file: <code>/etc/ssh/sftp/sftp_config</code>.</p>
+<p>To start with, create that directory:</p>
+<pre><code>mkdir /etc/ssh/sftp
+</code></pre>
+<p>Now make a backup copy of the <code>sshd_config</code>:</p>
+<pre><code>cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+</code></pre>
+<p>And finally edit the <code>sshd_config</code> file, scroll to the very bottom of the file, and add this line:</p>
+<pre><code>Include /etc/ssh/sftp/sftp_config
+</code></pre>
+<p>Save your changes and exit the file. We will need to restart <code>sshd</code> but our script will do that for us after we update <code>sftp_config</code> file, so let's create the script and run it.</p>
+<pre><code>vi /usr/local/sbin/webuser
+</code></pre>
+<p>And put this code in it:</p>
+<pre><code>#!/bin/bash
+# script to populate the SSHD configuration for web users.
+
+# Set variables
+
+tempfile=&quot;/usr/local/sbin/sshd_template&quot;
+dompath=&quot;/var/www/sub-domains/&quot;
+
+# Prompt for user and domain in reverse (ext.domainname):
+
+clear
+
+echo -n &quot;Enter the web sftp user: &quot;
+read sftpuser
+echo -n &quot;Enter the domain in reverse. Example: com.domainname: &quot;
+read dom
+echo -n &quot;Is all of this correct: sftpuser = $sftpuser and domain = $dom (Y/N)? &quot;
+read yn
+if [ &quot;$yn&quot; = &quot;n&quot; ] || [ &quot;$yn&quot; = &quot;N&quot; ]
+then
+    exit
+fi
+if [ &quot;$yn&quot; = &quot;y&quot; ] || [ &quot;$yn&quot; = &quot;Y&quot; ]
+then
+    /usr/bin/cat $tempfile &gt; /usr/local/sbin/templates/$dom.txt
+    /usr/bin/sed -i &quot;s,replaceuser,$sftpuser,g&quot; /usr/local/sbin/templates/$dom.txt
+    /usr/bin/sed -i &quot;s,replacedirectory,$dompath$dom,g&quot; /usr/local/sbin/templates/$dom.txt
+    /usr/bin/chown -R $sftpuser.apache $dompath$dom/html
+fi
+
+## Make a backup of /etc/ssh/sftp/sftp_config
+
+/usr/bin/rm -f /etc/ssh/sftp/sftp_config.bak
+
+/usr/bin/cp /etc/ssh/sftp/sftp_config /etc/ssh/sftp/sftp_config.bak
+
+## Now append our new user information to to the file
+
+cat /usr/local/sbin/templates/$dom.txt &gt;&gt; /etc/ssh/sftp/sftp_config
+
+## Restart sshd
+
+/usr/bin/systemctl restart sshd
+
+echo &quot; &quot;
+echo &quot;Please check the status of sshd with systemctl status sshd.&quot;
+echo &quot;You can verify that your information was added by doing a more of the sftp_config&quot;
+echo &quot;A backup of the working sftp_config was created when this script was run: sftp_config.bak&quot;
+</code></pre>
+<h3 id="final-changes-and-script-notes-for-both-85-and-86">Final Changes and Script Notes for both 8.5 and 8.6</h3>
+<p>!!! tip</p>
+<pre><code>If you take a look at either of the scripts above, you will note that we have changed the delimiter that `sed` uses by default from `/` to `,`. `sed` allows you to use any single-byte character as a delimiter. What we are searching for in the file has a bunch of "/" characters in it, and we would have had to escape each one (add a "\" in front of them) to search and replace these strings. Changing the delimiter makes this infinitely easier to do because it eliminates the need to do those escapes.
+</code></pre>
+<p>A couple of things to know about the script and about an SFTP change root in general. First, we are prompting for the needed information and then echoing it back to the user so they can verify it. If we answer "N" to the confirmation question, the script bails and does nothing. The script for 8.5 makes a backup of <code>sshd_config</code> (<code>/etc/ssh/sshd_config.bak</code>) the way it was prior to our running of the script. The 8.6 script does the same for the <code>sftp_config</code> file (<code>/etc/ssh/sftp/sftp_config.bak</code>). In this way, if we screw something up with an entry, we can simply restore the appropriate backup file and then restart <code>sshd</code> to get things working again.</p>
+<p>The SFTP change root requires that the path given in the <code>sshd_config</code> is owned by root. For this reason we do not need the <code>html</code> directory added to the end of the path. Once the user is authenticated, the change root will switch the user's home directory, in this case the <code>../html</code>, directory to whichever domain we are entering. Our script has appropriately changed the owner of the <code>../html</code> directory to the sftpuser and the apache group.</p>
+<p>!!! attention "Script Compatibility"</p>
+<pre><code>While you can use the script that we created for Rocky Linxux 8.5 on either 8.5 or 8.6 successfully, the same cannot be said for the 8.6 script. Since the drop in configuration file option (`Include` directive) was not enabled in 8.5, attempting to use the 8.6 script in Rocky Linux 8.5 will fail.
+</code></pre>
+<p>Now that our script is created, let's make it executable:</p>
+<pre><code>chmod +x /usr/local/sbin/webuser
+</code></pre>
+<p>Then run the script for our two test domains.</p>
+<h3 id="testing-ssh-denial-and-sftp-access">Testing SSH Denial and SFTP Access</h3>
+<p>First, test using <code>ssh</code> from another machine to our host machine as one of the SFTP users. You should receive this after entering a password:</p>
+<pre><code>This service allows sftp connections only.
+</code></pre>
+<h4 id="graphical-tool-testing">Graphical Tool Testing</h4>
+<p>If you <em>do</em> receive that message, then the next thing is to test SFTP access. If you would like to do things the easy way, you can use a graphical FTP application that supports SFTP such as Filezilla. In such cases, your fields would look something like this:</p>
+<ul>
+<li><strong>Host:</strong> sftp://hostname_or_IP_of_the_server</li>
+<li><strong>Username:</strong> (Example: myfixed)</li>
+<li><strong>Password:</strong> (the password of the SFTP user)</li>
+<li><strong>Port:</strong> (You shouldn't need to enter one, provided you are using SSH and SFTP on the default port 22)</li>
+</ul>
+<p>Once filled in, you can click the "Quickconnect" (Filezilla) button and you should be connected to the <code>../html</code> directory of the appropriate site. Then double-click on the "html" directory to put yourself inside it, and try to drop a file into the directory. If you are successful, then you are good.</p>
+<h4 id="command-line-tool-testing">Command Line Tool Testing</h4>
+<p>You can obviously do all of this from the command line on a machine that has SSH installed. (most Linux installations). Here's a very brief overview of the command line method for connection and a few options:</p>
+<ul>
+<li>sftp username (Example: myfixed@ hostname or IP of the server: sftp myfixed@192.168.1.116)</li>
+<li>Enter the password when prompted</li>
+<li>cd html (change to the html directory)</li>
+<li>pwd (should show that you are in the html directory)</li>
+<li>lpwd (should show your local working directory)</li>
+<li>lcd PATH (should change your local working directory to something you want to use)</li>
+<li>put filename (will copy a file to <code>..html</code> directory)</li>
+</ul>
+<p>For an exhaustive list of options and more, take a look at the <a href="https://man7.org/linux/man-pages/man1/sftp.1.html">SFTP manual page</a>.</p>
+<h3 id="web-test-files">Web Test Files</h3>
+<p>For our dummy domains, we want to create a couple of <code>index.html</code> files that we can populate the <code>../html</code> directory with. Once these are created, you simply need to put them in the directory for each domain using the SFTP credentials for that domain. These files are super simple. We just want something so that we can see definitively that our sites are up and running and that the SFTP portion is working as expected.  Here's an example of this file. You can of course modify it as you like:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;My Broken Axel&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;My Broken Axel&lt;/h1&gt;
+&lt;p&gt;A test page for the site.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="web-tests">Web Tests</h3>
+<p>To test that these files show up and load as expected, you simply need to modify your hosts file on your workstation. For Linux, that would be <code>sudo vi /etc/hosts</code> and then simply add in the IP and host names we are testing with like this:</p>
+<pre><code>127.0.0.1   localhost
+192.168.1.116   www.mybrokenaxel.com    mybrokenaxel.com
+192.168.1.116   www.myfixedaxel.com myfixedaxel.com
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+</code></pre>
+<p>!!! hint</p>
+<pre><code>For real domains, you would want to populate your DNS server's with the hosts above. You can, though, use this *Poor Man's DNS* for testing any domain, even one that hasn't been taken live on real DNS servers.
+</code></pre>
+<p>Now, open your web browser and check to make sure that your <code>index.html</code> file for each domain displays by entering the URL in your browser's address bar. Example: "http://mybrokenaxel.com" if your test index files load, everything is working correctly.</p>
+<h2 id="part-3-administrative-access-with-ssh-key-pairs">Part 3: Administrative Access with SSH key pairs</h2>
+<p>Please note that we will be using concepts discussed in the document <a href="../../security/ssh_public_private_keys">SSH Public and Private Keys</a> in this section, but also improving on it. If you are new to the process, feel free to read that article first before continuing.</p>
+<h3 id="creating-the-publicprivate-key-pairs">Creating the public/private Key Pairs</h3>
+<p>From one of the administrative user's workstations command line, (Example: lblakely) do the following:</p>
+<pre><code>ssh-keygen -t rsa
+</code></pre>
+<p>Which will give you this:</p>
+<pre><code>Generating public/private rsa key pair.
+Enter file in which to save the key (/home/lblakely/.ssh/id_rsa):
+</code></pre>
+<p>Hit enter to create the private key in the location shown. This will give you this dialog:</p>
+<pre><code>Enter passphrase (empty for no passphrase):
+</code></pre>
+<p>You will need to decide personally whether you need a passphrase for this step. The author always just hits enter here.</p>
+<pre><code>Enter same passphrase again:
+</code></pre>
+<p>Repeat whatever passphrase you entered earlier or hit enter for none.</p>
+<p>At this point both the public and private keys have been created. Repeat this step for our other system administrator example user.</p>
+<h3 id="transferring-the-public-key-to-the-sftp-server">Transferring The Public key to the SFTP Server</h3>
+<p>The next step is to export our key to the server. In reality, a system administrator responsible for managing multiple servers would transfer his public key to all of the servers he/she is responsible for.  </p>
+<p>Once the key is created, the user can send the key to the server securely with <code>ssh-id-copy</code>:</p>
+<pre><code>ssh-id-copy lblakely@192.168.1.116
+</code></pre>
+<p>The server will prompt for the user's password one time, and then copy the key into authorized_keys. You'll get this message as well:</p>
+<pre><code>Number of key(s) added: 1
+
+Now try logging into the machine, with:   &quot;ssh 'lblakely@192.168.1.116'&quot;
+and check to make sure that only the key(s) you wanted were added.
+</code></pre>
+<p>If you are able to login with this account, repeat the process with the other administrator.</p>
+<h3 id="allowing-only-key-based-logins">Allowing ONLY key-based Logins</h3>
+<p>Assuming that all of the above has worked out as planned and our keys for our administrators are now in place on the SFTP server, let's turn off password authentication on the server. For safety sake, make sure that you have two connections to the server so that you can reverse any changes if you have unintended consequences.</p>
+<p>To accomplish this step, we need to modify the <code>sshd_config</code> once again, and just like before, we want to make a backup of the file first:</p>
+<pre><code>cp -f /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+</code></pre>
+<p>Next, edit the <code>sshd_config</code> file:</p>
+<pre><code>vi /etc/ssh/sshd_config
+</code></pre>
+<p>We want to turn off tunneled passwords so find this line in the configuration:</p>
+<pre><code>PasswordAuthentication yes
+</code></pre>
+<p>And change it so that it says "no" - note that just remarking out this line will fail, as the default is always "yes".</p>
+<pre><code>PasswordAuthentication no
+</code></pre>
+<p>Public key authentication is on by default, but let's make sure that it is evident when you look at the file by removing the remark in front of this line:</p>
+<pre><code>#PubkeyAuthentication yes
+</code></pre>
+<p>So that it reads:</p>
+<pre><code>PubkeyAuthentication yes
+</code></pre>
+<p>This makes our <code>sshd_config</code> file self-documenting to a degree.</p>
+<p>Save your changes. Cross your fingers, and restart <code>sshd</code>:</p>
+<pre><code>systemctl restart sshd
+</code></pre>
+<p>Attempting to login as one of your administrative users to the server using their keys should work just like before. If not, restore your backup, make sure that you've followed all of the steps, and try again.</p>
+<h2 id="part-4-turn-off-remote-root-login">Part 4: Turn Off Remote root Login</h2>
+<p>Essentially, we have functionally done that already. If you attempt to login with the root user to the server now, you will get the following:</p>
+<pre><code>root@192.168.1.116: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
+</code></pre>
+<p>But we want to make sure that someone cannot create a public/private key for the root user and access the server that way. So there's one final step we need to perform and we need to do that...You guessed it! ... in the <code>sshd_config</code> file.</p>
+<p>Since we are making a change to this file, just like every other step here, we want to make a backup copy of the file before continuing:</p>
+<pre><code>cp -f /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+</code></pre>
+<p>Again, we want to edit the <code>sshd_config</code>:</p>
+<pre><code>vi /etc/ssh/sshd_config
+</code></pre>
+<p>Then we want to find this line:</p>
+<pre><code>PermitRootLogin yes
+</code></pre>
+<p>And change it to "no" so it reads:</p>
+<pre><code>PermitRootLogin no
+</code></pre>
+<p>Then save and quit out of the file and restart <code>sshd</code>:</p>
+<pre><code>systemctl restart sshd
+</code></pre>
+<p>Now anyone attempting to login as the root user remotely over <code>ssh</code> will get the same denial message as before, but will <strong>still</strong> not be able to access the server even if they have a public/private key pair for root.</p>
+<h2 id="addendum-new-system-administrators">Addendum: New System Administrators</h2>
+<p>One thing that we haven't discussed yet is what happens when a new system administrator comes on board? With password authentication off, <code>ssh-copy-id</code> will not work. Here's what the author recommends for these situations. Note that there is more than one solution:</p>
+<h3 id="solution-one-sneaker-net">Solution One - Sneaker Net</h3>
+<p>This solution assumes physical access to the server and that the server is physical hardware and not virtual (container or VM):</p>
+<ul>
+<li>Add the user to the "wheel" group on the SFTP server</li>
+<li>Have the user generate his SSH public and private keys</li>
+<li>Using a USB drive, copy the public key to the drive and physically walk it over to the server and install it manually in the new system administrators <code>/home/[username]/.ssh</code> directory</li>
+</ul>
+<h3 id="solution-two-temporarily-edit-the-sshd_config">Solution Two - Temporarily Edit The <code>sshd_config</code></h3>
+<p>This solution is prone to human error, but since it isn't done often, it would probably be OK if carefully done:</p>
+<ul>
+<li>Add the user to the "wheel" group on the SFTP server</li>
+<li>Have another system administrator who already has key based authentication, temporarily turn on "PasswordAuthentication yes" in the <code>sshd_config</code> file and restart <code>sshd</code></li>
+<li>Have the new system administrator run <code>ssh-copy-id</code> using his/her password to copy the ssh key to the server.</li>
+</ul>
+<h3 id="solution-three-script-the-process">Solution Three - Script The Process</h3>
+<p>This is the author's favorite. It uses a system administrator which already has key-based access and a script that must be run with <code>bash [script-name]</code> to accomplish the same thing as "Solution Two" above:</p>
+<ul>
+<li>manually edit the <code>sshd_config</code> file and remove the remarked out line that looks like this: <code>#PasswordAuthentication no</code>. This line is documenting the process of turning password authentication off, but it will get in the way of the script below, because our script will look for the first occurrence of <code>PasswordAuthentication no</code> and later the first occurrence of <code>PasswordAuthentication yes</code>. If you remove this one line, our script will work fine.</li>
+<li>create a script on the SFTP server called "quickswitch", or whatever you want to call it. The contents of this script would look like this:</li>
+</ul>
+<pre><code>#!/bin/bash
+# for use in adding a new system administrator
+
+/usr/bin/cp -f /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+
+/usr/bin/sed -i '0,/PasswordAuthentication no/ s/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+/usr/bin/systemctl restart sshd
+echo &quot;Have the user send his keys, and then hit enter.&quot;
+read yn
+/usr/bin/sed -i '0,/PasswordAuthentication yes/ s/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+/usr/bin/systemctl restart sshd
+echo &quot;Changes reversed&quot;
+</code></pre>
+<p>Script explanation: We don't make this script executable. The reason is that we don't want it accidentally run. The script would need to be run (as noted above) like this: <code>bash /usr/local/sbin/quickswitch</code>. This script makes a backup copy of the <code>sshd_config</code> file just like all of our other examples above. It then edits the <code>sshd_config</code> file in place and searches for the <em>FIRST</em> occurrence of <code>PasswordAuthentication no</code> and changes it to <code>PasswordAuthentication yes</code> then restarts <code>sshd</code> and waits for the script user to hit <kbd>ENTER</kbd> before continuing. The system administrator running the script would be in communication with the new system administrator, and once that new system administrator runs <code>ssh-copy-id</code> to copy his key to the server, the system administrator who is running the script hits enter and the change is reversed.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We've covered a lot of bits and pieces in this document but they are all designed to make a multisite web server more secure and less prone to attack vectors over SSH when turning on SFTP for customer access. Turning on and using SFTP is much more secure than using FTP, even if you are using really <em>GOOD</em> ftp servers and have them set up as securely as possible as noted in this <a href="../secure_ftp_server_vsftpd">document on VSFTPD</a>. By implementing <em>all</em> of the steps in this document, you can feel comfortable opening up port 22 (SSH) to your public zone and still know that your environment is secure.</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../secure_ftp_server_vsftpd/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Secure FTP Server - vsftpd" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Secure FTP Server - vsftpd
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../git/git_wf_git-cola_atom/" class="md-footer__link md-footer__link--next" aria-label="Next: git Using Git Cola and Atom" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              git Using Git Cola and Atom
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Achmad Fauzi Hamibowo &copy; 2022 • <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> • Made with ❤️ in Depok, West Java
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://twitter.com/achmadfhbw" target="_blank" rel="noopener" title="achmadfhbw on Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "navigation.prune", "search.share", "toc.follow"], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

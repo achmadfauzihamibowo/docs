@@ -1,0 +1,5020 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.achmadfhbw.my.id/books/admin_guide/12-network/">
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Implementing the Network - Linux Learning Material</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Quicksand";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#implementing-the-network" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Linux Learning Material" class="md-header__button md-logo" aria-label="Linux Learning Material" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Linux Learning Material
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Implementing the Network
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        Books
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../gemstones/" class="md-tabs__link">
+        Gemstones
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guides/" class="md-tabs__link">
+        Guides
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../learning/GitHub/github/" class="md-tabs__link">
+        Learning
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tutorials/" class="md-tabs__link">
+        Tutorials
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Linux Learning Material" class="md-nav__button md-logo" aria-label="Linux Learning Material" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Linux Learning Material
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Books</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Books" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Books
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Admin guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Admin guide" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Admin guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-toc/" class="md-nav__link">
+        Learning Linux With Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-presentation/" class="md-nav__link">
+        Introduction to Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-commands/" class="md-nav__link">
+        Linux Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-advanced-commands/" class="md-nav__link">
+        Advanced Linux Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-vi/" class="md-nav__link">
+        VI Text Editor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-users/" class="md-nav__link">
+        User Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-file-systems/" class="md-nav__link">
+        File System
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-process/" class="md-nav__link">
+        Process Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-backups/" class="md-nav__link">
+        Backup and Restore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-boot/" class="md-nav__link">
+        System Startup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-tasks/" class="md-nav__link">
+        Task Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Implementing the Network
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Implementing the Network
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generalities" class="md-nav__link">
+    Generalities
+  </a>
+  
+    <nav class="md-nav" aria-label="Generalities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mac-address-ip-address" class="md-nav__link">
+    MAC address / IP address
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-domain" class="md-nav__link">
+    DNS Domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reminder-of-the-osi-model" class="md-nav__link">
+    Reminder of the OSI model
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-naming-of-interfaces" class="md-nav__link">
+    The naming of interfaces
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-ip-command" class="md-nav__link">
+    Using the ip command
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-hostname" class="md-nav__link">
+    The hostname
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etchosts-file" class="md-nav__link">
+    /etc/hosts file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etcnsswitchconf-file" class="md-nav__link">
+    /etc/nsswitch.conf file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etcresolvconf-file" class="md-nav__link">
+    /etc/resolv.conf file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip-command" class="md-nav__link">
+    ip command
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dhcp-configuration" class="md-nav__link">
+    DHCP configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static-configuration" class="md-nav__link">
+    Static configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routing" class="md-nav__link">
+    Routing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-resolution" class="md-nav__link">
+    Name resolution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dig-command" class="md-nav__link">
+    dig command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getent-command" class="md-nav__link">
+    getent command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipcalc-command" class="md-nav__link">
+    ipcalc command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ss-command" class="md-nav__link">
+    ss command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netstat-command" class="md-nav__link">
+    netstat command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ip-or-mac-address-conflicts" class="md-nav__link">
+    IP or MAC address conflicts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hot-configuration" class="md-nav__link">
+    Hot configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-summary" class="md-nav__link">
+    In summary
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-softwares/" class="md-nav__link">
+        Software Management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Disa stig
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Disa stig" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Disa stig
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disa_stig/disa_stig_part1/" class="md-nav__link">
+        DISA STIG On Rocky Linux 8 - Part 1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Learning ansible
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning ansible" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Learning ansible
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/00-toc/" class="md-nav__link">
+        Learning Ansible with Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/01-basic/" class="md-nav__link">
+        Ansible Basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/02-advanced/" class="md-nav__link">
+        Ansible Intermediate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/03-working-with-files/" class="md-nav__link">
+        File Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/04-ansible-galaxy/" class="md-nav__link">
+        Ansible Galaxy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/05-deployments/" class="md-nav__link">
+        Deploy With Ansistrano
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/06-large-scale-infrastructure/" class="md-nav__link">
+        Large Scale infrastructure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/07-working-with-filters/" class="md-nav__link">
+        Working With Filters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/08-management-server-optimizations/" class="md-nav__link">
+        Management server optimizations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          Learning bash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning bash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Learning bash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/00-toc/" class="md-nav__link">
+        Learning bash with Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/01-first-script/" class="md-nav__link">
+        Bash - First script
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/02-using-variables/" class="md-nav__link">
+        Bash - Using Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/03-data-entry-and-manipulations/" class="md-nav__link">
+        Bash - Data entry and manipulations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/04-check-your-knowledge/" class="md-nav__link">
+        Bash - Check your knowledge
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/05-tests/" class="md-nav__link">
+        Bash - Tests
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/06-conditional-structures/" class="md-nav__link">
+        Bash - Conditional structures if and case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/07-loops/" class="md-nav__link">
+        Bash - Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/08-check-your-knowledge/" class="md-nav__link">
+        Bash - Check your knowledge
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_10" type="checkbox" id="__nav_2_5_10" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_10">
+          Appendix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Appendix" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_10">
+          <span class="md-nav__icon md-icon"></span>
+          Appendix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/appendix/02-variables-logs/" class="md-nav__link">
+        Variables - Use With Logs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          Learning rsync
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning rsync" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Learning rsync
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/01_rsync_overview/" class="md-nav__link">
+        rsync brief description
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/02_rsync_demo01/" class="md-nav__link">
+        rsync demo 01
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/03_rsync_demo02/" class="md-nav__link">
+        rsync demo 02
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/04_rsync_configure/" class="md-nav__link">
+        rsync configuration file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/05_rsync_authentication-free_login/" class="md-nav__link">
+        rsync password-free authentication login
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/06_rsync_inotify/" class="md-nav__link">
+        inotify-tools installation and use
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/07_rsync_unison_use/" class="md-nav__link">
+        Use unison
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../gemstones/">Gemstones</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Gemstones" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Gemstones
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/bash_stub/" class="md-nav__link">
+        bash - Script Stub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/htop/" class="md-nav__link">
+        htop-Process Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/https_rsa_keygen/" class="md-nav__link">
+        https - RSA Key Generation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/mtr/" class="md-nav__link">
+        mtr - Network Diagnostics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/nmcli/" class="md-nav__link">
+        nmcli - set connection autoconnect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/nmtui/" class="md-nav__link">
+        nmtui - Network Management Tool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/perl_search_replace/" class="md-nav__link">
+        Perl - Search and Replace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/sed_search_replace/" class="md-nav__link">
+        sed - Search and Replace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/setup_local_repo/" class="md-nav__link">
+        Setup Local Rocky Repositories
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/view_kernel_conf/" class="md-nav__link">
+        View Current Kernel Configuration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/">Guides</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/custom-linux-kernel/" class="md-nav__link">
+        Building and Installing Custom Linux Kernels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Automation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Automation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Automation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/anacron/" class="md-nav__link">
+        anacron - Automating commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/cron_jobs_howto/" class="md-nav__link">
+        cron - Automating Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/cronie/" class="md-nav__link">
+        cronie - Timed Tasks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/olivetin/" class="md-nav__link">
+        OliveTin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/templates-automation-packer-vsphere/" class="md-nav__link">
+        Automatic Template Creation - Packer - Ansible - VMware vSphere
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Backup
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Backup" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Backup
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/backup/mirroring_lsyncd/" class="md-nav__link">
+        Mirroring Solution - lsyncd
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/backup/rsnapshot_backup/" class="md-nav__link">
+        Backup Solution - Rsnapshot
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/backup/rsync_ssh/" class="md-nav__link">
+        Synchronization With rsync
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          Cms
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cms" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cms
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/cms/cloud_server_using_nextcloud/" class="md-nav__link">
+        Cloud Server Using Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/cms/dokuwiki_server/" class="md-nav__link">
+        DokuWiki
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Communications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communications" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Communications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/communications/asterisk_installation/" class="md-nav__link">
+        Installing Asterisk
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_7">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_7">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/containers/lxd_server/" class="md-nav__link">
+        LXD Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/containers/lxd_web_servers/" class="md-nav__link">
+        LXD Beginners Guide-Multiple Servers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/containers/podman-nextcloud/" class="md-nav__link">
+        Nextcloud on Podman
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/contribute/">Contribute</a>
+          
+            <label for="__nav_4_8">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Contribute" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_8">
+          <span class="md-nav__icon md-icon"></span>
+          Contribute
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/README.fr/" class="md-nav__link">
+        README.fr
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/mkdocs_lsyncd/" class="md-nav__link">
+        Local Documentation - LXD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/navigation/" class="md-nav__link">
+        Navigational Changes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/rockydocs_formatting/" class="md-nav__link">
+        Rocky Docs Formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/rockydocs_web_dev/" class="md-nav__link">
+        Local Documentation - Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_9">
+          Database
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Database" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_9">
+          <span class="md-nav__icon md-icon"></span>
+          Database
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/database/database_mariadb-server/" class="md-nav__link">
+        MariaDB Database Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Desktop
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Desktop" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Desktop
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/desktop/mate_installation/" class="md-nav__link">
+        MATE Desktop
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/desktop/xfce_installation/" class="md-nav__link">
+        XFCE Desktop Environment
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_11">
+          Dns
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dns" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_11">
+          <span class="md-nav__icon md-icon"></span>
+          Dns
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/dns/private_dns_server_using_bind/" class="md-nav__link">
+        Bind Private DNS Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_12">
+          Editors
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Editors" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_12">
+          <span class="md-nav__icon md-icon"></span>
+          Editors
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/editors/micro/" class="md-nav__link">
+        micro
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_13">
+          Email
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Email" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_13">
+          <span class="md-nav__icon md-icon"></span>
+          Email
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/email/postfix_reporting/" class="md-nav__link">
+        Postfix Process Reporting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" type="checkbox" id="__nav_4_14" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_14">
+          File sharing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File sharing" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_14">
+          <span class="md-nav__icon md-icon"></span>
+          File sharing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/file_sharing/glusterfs/" class="md-nav__link">
+        Clustering-GlusterFS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/file_sharing/secure_ftp_server_vsftpd/" class="md-nav__link">
+        Secure FTP Server - vsftpd
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/file_sharing/sftp/" class="md-nav__link">
+        Secure Server - sftp
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_15">
+          Git
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Git" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_15">
+          <span class="md-nav__icon md-icon"></span>
+          Git
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/git/git_wf_git-cola_atom/" class="md-nav__link">
+        git Using Git Cola and Atom
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_16" type="checkbox" id="__nav_4_16" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_16">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_16">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/interoperability/import_rocky_to_wsl_howto/" class="md-nav__link">
+        Import to WSL2 with Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/interoperability/rocky_to_wsl_howto/" class="md-nav__link">
+        Import To WSL with WSL and rinse
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_17" type="checkbox" id="__nav_4_17" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_17">
+          Mirror management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mirror management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_17">
+          <span class="md-nav__icon md-icon"></span>
+          Mirror management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/mirror_management/add_mirror_manager/" class="md-nav__link">
+        Adding a Rocky Mirror
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/mirror_management/add_mirror_manager.sv/" class="md-nav__link">
+        Lägg till en publik spegel till Rocky's spegelhanterare
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_18" type="checkbox" id="__nav_4_18" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_18">
+          Network
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Network" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_18">
+          <span class="md-nav__icon md-icon"></span>
+          Network
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/network/basic_network_configuration.fr/" class="md-nav__link">
+        Configuration réseau de base
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/network/basic_network_configuration/" class="md-nav__link">
+        Networking Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/network/librenms_monitoring_server/" class="md-nav__link">
+        LibreNMS Monitoring Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_19" type="checkbox" id="__nav_4_19" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/package_management/">Package management</a>
+          
+            <label for="__nav_4_19">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Package management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_19">
+          <span class="md-nav__icon md-icon"></span>
+          Package management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/developer_start2/" class="md-nav__link">
+        Development Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_build_troubleshooting/" class="md-nav__link">
+        Package Build & Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_debranding/" class="md-nav__link">
+        Package Debranding
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_debranding.sv/" class="md-nav__link">
+        Rocky paket Hur man tar bort varumärke
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_dev_start/" class="md-nav__link">
+        Packaging And Developer Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_signing/" class="md-nav__link">
+        Package Signing & Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_signing.sv/" class="md-nav__link">
+        Paketsignering och testning
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_20" type="checkbox" id="__nav_4_20" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_20">
+          Proxies
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Proxies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_20">
+          <span class="md-nav__icon md-icon"></span>
+          Proxies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/proxies/haproxy_apache_lxd/" class="md-nav__link">
+        HAProxy-Apache-LXD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/proxies/pound/" class="md-nav__link">
+        Pound
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_21" type="checkbox" id="__nav_4_21" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_21">
+          Security
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Security" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_21">
+          <span class="md-nav__icon md-icon"></span>
+          Security
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/dnf_automatic/" class="md-nav__link">
+        Patching with dnf-automatic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/enabling_iptables_firewall/" class="md-nav__link">
+        Enabling `iptables` Firewall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/enabling_iptables_firewall.sv/" class="md-nav__link">
+        Aktivera iptables Brandvägg
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/firewalld-beginners.fr/" class="md-nav__link">
+        pare-feu pour les débutants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/firewalld-beginners/" class="md-nav__link">
+        firewalld for Beginners
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/firewalld-beginners.sv/" class="md-nav__link">
+        brandvägg för nybörjare
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/firewalld/" class="md-nav__link">
+        firewalld from iptables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/generating_ssl_keys_lets_encrypt/" class="md-nav__link">
+        Generating SSL Keys - Let's Encrypt
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/learning_selinux/" class="md-nav__link">
+        SELinux Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/ssh_public_private_keys/" class="md-nav__link">
+        SSH Public and Private Key
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/ssh_public_private_keys.sv/" class="md-nav__link">
+        SSH Publika och privata nycklar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/ssl_keys_https/" class="md-nav__link">
+        Generating SSL Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_21_13" type="checkbox" id="__nav_4_21_13" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_21_13">
+          Authentication
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Authentication" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_21_13">
+          <span class="md-nav__icon md-icon"></span>
+          Authentication
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/authentication/active_directory_authentication/" class="md-nav__link">
+        Active Directory Authentication
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_22" type="checkbox" id="__nav_4_22" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_22">
+          Virtualization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtualization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_22">
+          <span class="md-nav__icon md-icon"></span>
+          Virtualization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/virtualization/vbox-rocky/" class="md-nav__link">
+        Rocky on VirtualBox
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_23" type="checkbox" id="__nav_4_23" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_23">
+          Web
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_23">
+          <span class="md-nav__icon md-icon"></span>
+          Web
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache-sites-enabled.fr/" class="md-nav__link">
+        Configuration Apache Web Server Multi-Sites'
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache-sites-enabled/" class="md-nav__link">
+        Apache Multisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/mod_SSL_apache/" class="md-nav__link">
+        Apache With 'mod_ssl'
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/nginx-mainline/" class="md-nav__link">
+        Nginx
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/nginx-multisite/" class="md-nav__link">
+        Nginx Multisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/php/" class="md-nav__link">
+        PHP and PHP-FPM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_23_7" type="checkbox" id="__nav_4_23_7" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/web/apache_hardened_webserver/">Apache hardened webserver</a>
+          
+            <label for="__nav_4_23_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Apache hardened webserver" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_23_7">
+          <span class="md-nav__icon md-icon"></span>
+          Apache hardened webserver
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache_hardened_webserver/modsecurity/" class="md-nav__link">
+        Web-based Application firewall (WAF)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache_hardened_webserver/ossec-hids/" class="md-nav__link">
+        Host-based Intrustion Detection System (HIDS)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache_hardened_webserver/rkhunter/" class="md-nav__link">
+        Rootkit Hunter
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Learning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Learning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_1">
+          GitHub
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GitHub" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          GitHub
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/GitHub/github/" class="md-nav__link">
+        GitHub
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_2">
+          Linux Ubuntu
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux Ubuntu" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Linux Ubuntu
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Linux_Ubuntu/commandLine/" class="md-nav__link">
+        Command Line
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Linux_Ubuntu/linuxUbuntu/" class="md-nav__link">
+        Ubuntu Linux
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_3">
+          Virtual Box
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtual Box" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Virtual Box
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Virtual_Box/virtualBox/" class="md-nav__link">
+        **Virtual Box**
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_4" type="checkbox" id="__nav_5_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_4">
+          Web Server
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Server" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          Web Server
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/apache/" class="md-nav__link">
+        **Installasi Apache, PHP**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/webServer/" class="md-nav__link">
+        **Web Server**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/website/" class="md-nav__link">
+        **Website**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/xampp/" class="md-nav__link">
+        **XAMPP**
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/">Tutorials</a>
+          
+            <label for="__nav_6">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/Arch_Linux/">Arch Linux</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Arch Linux" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Arch Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generalities" class="md-nav__link">
+    Generalities
+  </a>
+  
+    <nav class="md-nav" aria-label="Generalities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mac-address-ip-address" class="md-nav__link">
+    MAC address / IP address
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-domain" class="md-nav__link">
+    DNS Domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reminder-of-the-osi-model" class="md-nav__link">
+    Reminder of the OSI model
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-naming-of-interfaces" class="md-nav__link">
+    The naming of interfaces
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-ip-command" class="md-nav__link">
+    Using the ip command
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-hostname" class="md-nav__link">
+    The hostname
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etchosts-file" class="md-nav__link">
+    /etc/hosts file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etcnsswitchconf-file" class="md-nav__link">
+    /etc/nsswitch.conf file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etcresolvconf-file" class="md-nav__link">
+    /etc/resolv.conf file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip-command" class="md-nav__link">
+    ip command
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dhcp-configuration" class="md-nav__link">
+    DHCP configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#static-configuration" class="md-nav__link">
+    Static configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routing" class="md-nav__link">
+    Routing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-resolution" class="md-nav__link">
+    Name resolution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dig-command" class="md-nav__link">
+    dig command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getent-command" class="md-nav__link">
+    getent command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipcalc-command" class="md-nav__link">
+    ipcalc command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ss-command" class="md-nav__link">
+    ss command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netstat-command" class="md-nav__link">
+    netstat command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ip-or-mac-address-conflicts" class="md-nav__link">
+    IP or MAC address conflicts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hot-configuration" class="md-nav__link">
+    Hot configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-summary" class="md-nav__link">
+    In summary
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="implementing-the-network">Implementing the Network</h1>
+<p>In this chapter you will learn how to work with and manage the network.</p>
+<hr />
+<p><strong>Objectives</strong> : In this chapter you will learn how to:</p>
+<p>:heavy_check_mark: Configure a workstation to use DHCP;<br />
+:heavy_check_mark: Configure a workstation to use a static configuration; <br />
+:heavy_check_mark: Configure a workstation to use a gateway; <br />
+:heavy_check_mark: Configure a workstation to use DNS servers; <br />
+:heavy_check_mark: Troubleshoot the network of a workstation.</p>
+<p>:checkered_flag: <strong>network</strong>, <strong>linux</strong>, <strong>ip</strong></p>
+<p><strong>Knowledge</strong>: :star: :star:<br />
+<strong>Complexity</strong>: :star: :star:</p>
+<p><strong>Reading time</strong>: 30 minutes</p>
+<hr />
+<h2 id="generalities">Generalities</h2>
+<p>To illustrate this chapter, we will use the following architecture.</p>
+<p><img alt="Illustration of our network architecture" src="../images/network-001.png" /></p>
+<p>It will allow us to consider :</p>
+<ul>
+<li>integration in a LAN (local area network);</li>
+<li>the configuration of a gateway to reach a remote server;</li>
+<li>the configuration of a DNS server and the implementation of name resolution.</li>
+</ul>
+<p>The minimum parameters to be defined for the machine are:</p>
+<ul>
+<li>the name of the machine ;</li>
+<li>the IP address;</li>
+<li>the subnet mask.</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li><code>pc-rocky</code>;</li>
+<li><code>192.168.1.10</code>;</li>
+<li><code>255.255.255.0</code>.</li>
+</ul>
+<p>The notation called CIDR is more and more frequent: 192.168.1.10/24</p>
+<p>IP addresses are used for the proper routing of messages (packets). They are divided into two parts:</p>
+<ul>
+<li>the fixed part, identifying the network;</li>
+<li>the identifier of the host in the network.</li>
+</ul>
+<p>The subnet mask is a set of <strong>4 bytes</strong> intended to isolate:</p>
+<ul>
+<li>the network address (<strong>NetID</strong> or <strong>SubnetID</strong>) by performing a bitwise logical AND between the IP address and the mask;</li>
+<li>the host address (<strong>HostID</strong>) by performing a bitwise logical AND between the IP address and the complement of the mask.</li>
+</ul>
+<p>There are also specific addresses within a network, which must be identified. The first address of a range as well as the last one have a particular role:</p>
+<ul>
+<li>
+<p>The first address of a range is the <strong>network address</strong>. It is used to identify networks and to route information from one network to another.</p>
+</li>
+<li>
+<p>The last address of a range is the <strong>broadcast address</strong>. It is used to broadcast information to all the machines on the network.</p>
+</li>
+</ul>
+<h3 id="mac-address-ip-address">MAC address / IP address</h3>
+<p>A <strong>MAC address</strong> is a physical identifier written in the factory onto the device. This is sometimes referred to as the hardware address. It consists of 6 bytes often given in hexadecimal form (for example 5E:FF:56:A2:AF:15).
+It is composed of : 3 bytes of the manufacturer identifier and 3 bytes of the serial number.</p>
+<p>!!! Warning</p>
+<pre><code>This last statement is nowadays a little less true with virtualization. There are also software solutions for changing the MAC address.
+</code></pre>
+<p>An Internet Protocol (<strong>IP</strong>) address is an identification number permanently or temporarily assigned to each device connected to a computer network using the Internet Protocol.
+One part defines the network address (NetID or SubnetID as the case may be), the other part defines the address of the host in the network (HostID). The relative size of each part varies according to the network (sub)mask.</p>
+<p>An IPv4 address defines an address on 4 bytes. The number of available addresses being close to saturation a new standard was created, the IPv6 defined on 16 bytes.</p>
+<p>IPv6 is often represented by 8 groups of 2 bytes separated by a colon. Insignificant zeros can be omitted, one or more groups of 4 consecutive zeros can be replaced by a double colon.</p>
+<p>Subnet masks have from 0 to 128 bits. (for example 21ac:0000:0000:0611:21e0:00ba:321b:54da/64 or 21ac::611:21e0:ba:321b:54da/64)</p>
+<p>In a web address or URL (Uniform Resource Locator), an ip address can be followed by a colon and the port address (which indicates the application to which the data is destined). Also to avoid confusion in a URL, the IPv6 address is written in square brackets [ ], colon, port address.</p>
+<p>IP and MAC addresses must be unique on a network!</p>
+<h3 id="dns-domain">DNS Domain</h3>
+<p>Client machines can be part of a DNS (<strong>Domain Name System</strong>, e.g. <code>mydomain.lan</code>) domain.</p>
+<p>The fully qualified machine name (<strong>FQDN</strong>) becomes <code>pc-rocky.mydomain.lan</code>.</p>
+<p>A set of computers can be grouped into a logical, name-resolving, set called a DNS domain. A DNS domain is not, of course, limited to a single physical network.</p>
+<p>In order for a computer to be part of a DNS domain, it must be given a DNS suffix (here <code>mydomain.lan</code>) as well as servers that it can query.</p>
+<h3 id="reminder-of-the-osi-model">Reminder of the OSI model</h3>
+<p>!!! Note "Memory aid"</p>
+<pre><code>To remember the order of the layers of the OSI model, remember the following sentence: __Please Do Not Touch Steven's Pet Alligator__.
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Protocoles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7 - Application</td>
+<td>POP, IMAP, SMTP, SSH, SNMP, HTTP, FTP, ...</td>
+</tr>
+<tr>
+<td>6 - Presentation</td>
+<td>ASCII, MIME, ...</td>
+</tr>
+<tr>
+<td>5 - Session</td>
+<td>TLS, SSL, NetBIOS, ...</td>
+</tr>
+<tr>
+<td>4 - Transport</td>
+<td>TLS, SSL, TCP, UDP, ...</td>
+</tr>
+<tr>
+<td>3 - Network</td>
+<td>IPv4, IPv6, ARP, ...</td>
+</tr>
+<tr>
+<td>2 - Data Link</td>
+<td>Ethernet, WiFi, Token Ring, ...</td>
+</tr>
+<tr>
+<td>1 - Physical</td>
+<td>Cables, optical fibers, radio waves, ...</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Layer 1</strong> (Physical) supports transmission over a communication channel (Wifi, Optical fiber, RJ cable, etc.).
+Unit: the bit.</p>
+<p><strong>Layer 2</strong> (Data Link) supports network topology
+(token-ring, star, bus, etc.), data splitting and transmission errors.
+Unit: the frame.</p>
+<p><strong>Layer 3</strong> (Network) supports end-to-end data transmission (IP routing = Gateway).
+Unit: the packet.</p>
+<p><strong>Layer 4</strong> (Transport) supports service type (connected or unconnected)
+encryption and flow control.
+Unit: the segment or the datagram.</p>
+<p><strong>Layer 5</strong> (Session) supports the communication between two computers.</p>
+<p><strong>Layer 6</strong> (Presentation) represents the area that is independent of data at the application layer. Essentially this layer translates from network format to the application format, or or from the application format to the network format.</p>
+<p><strong>Layer 7</strong> (Application) represents the contact with the user.
+It provides the services offered by the network: http, dns, ftp, imap,
+pop, smtp, etc.</p>
+<h2 id="the-naming-of-interfaces">The naming of interfaces</h2>
+<p><em>lo</em> is the "<strong>loopback</strong>" interface which allows TCP/IP programs to communicate with each other without leaving the local machine. This enables testing if the <strong>network module of the system is working properly</strong> and also allows pinging the localhost. All packets that enter through localhost leave through localhost. The packets received are the packets sent.</p>
+<p>The Linux kernel assigns interface names with a specific prefix depending on the type. Traditionally, all <strong>Ethernet</strong> interfaces, for example, began with <strong>eth</strong>. The prefix was followed by a number, the first being 0 (eth0, eth1, eth2...). The wifi interfaces were given a wlan prefix.</p>
+<p>On Rocky8 Linux distributions, systemd will name interfaces with the new following policy where "X" represents a number:</p>
+<ul>
+<li><code>enoX</code>:  on-board devices</li>
+<li><code>ensX</code>: PCI Express hotplug slot</li>
+<li><code>enpXsX</code>: physical/geographical location of the connector of the hardware</li>
+<li>...</li>
+</ul>
+<h2 id="using-the-ip-command">Using the <code>ip</code> command</h2>
+<p>Forget the old <code>ifconfig</code> command! Think <code>ip</code>!</p>
+<p>!!! Note</p>
+<pre><code>Comment for administrators of older Linux systems:
+
+The historical network management command is `ifconfig`. This command has been replaced by the `ip` command, which is already well known to network administrators.
+
+The `ip` command is the only command to manage **IP address, ARP, routing, etc.**.
+
+The `ifconfig` command is no longer installed by default in Rocky8.
+
+It is important to get into good habits now.
+</code></pre>
+<h2 id="the-hostname">The hostname</h2>
+<p>The <code>hostname</code> command displays or sets the host name of the system</p>
+<pre><code>hostname [-f] [hostname]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-f</code></td>
+<td>Display the FQDN</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>Display the system IPs address</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Tip</p>
+<pre><code>This command is used by various network programs to identify the machine.
+</code></pre>
+<p>To assign a host name, it is possible to use the <code>hostname</code> command, but the changes will not be retained at the next boot. The command with no arguments displays the host name.</p>
+<p>To set the host name, the file <code>/etc/sysconfig/network</code> must be modified:</p>
+<pre><code>NETWORKING=yes
+HOSTNAME=pc-rocky.mondomaine.lan
+</code></pre>
+<p>The RedHat boot script also consults the <code>/etc/hosts</code> file to resolve the host name of the system.</p>
+<p>When the system boots, Linux evaluates the <code>HOSTNAME</code> value in the <code>/etc/sysconfig/network</code> file.</p>
+<p>It then uses the <code>/etc/hosts</code> file to evaluate the main IP address of the server and its host name. It deduces the DNS domain name.</p>
+<p>It is therefore essential to fill in these two files before any configuration of network services.</p>
+<p>!!! Tip</p>
+<pre><code>To know if this configuration is well done, the commands `hostname` and `hostname -f` must answer with the expected values.
+</code></pre>
+<h2 id="etchosts-file">/etc/hosts file</h2>
+<p>The <code>/etc/hosts</code> file is a static host name mapping table, which follows the following format:</p>
+<pre><code>@IP &lt;hostname&gt;  [alias]  [# comment]
+</code></pre>
+<p>Example of <code>/etc/hosts</code> file:</p>
+<pre><code>127.0.0.1   localhost localhost.localdomain
+::1         localhost localhost.localdomain
+192.168.1.10    rockstar.rockylinux.lan rockstar
+</code></pre>
+<p>The <code>/etc/hosts</code> file is still used by the system, especially at boot time when the system FQDN is determined.</p>
+<p>!!! Tip</p>
+<pre><code>RedHat recommends that at least one line containing the system name be filled in.
+</code></pre>
+<p>If the <strong>DNS</strong> service (<strong>D</strong>domain <strong>N</strong>ame <strong>S</strong>ervice) is not in place, you must fill in all the names in the hosts file for each of your machines.</p>
+<p>The <code>/etc/hosts</code> file contains one line per entry, with the IP address, the FQDN, then the host name (in that order) and a series of aliases (alias1 alias2 ...). The alias is an option.</p>
+<h2 id="etcnsswitchconf-file"><code>/etc/nsswitch.conf</code> file</h2>
+<p>The <strong>NSS</strong> (<strong>N</strong>ame <strong>S</strong>ervice <strong>S</strong>witch) allows configuration files (e.g. <code>/etc/passwd</code>, <code>/etc/group</code>, <code>/etc/hosts</code>) to be substituted for one or more centralized databases.</p>
+<p>The <code>/etc/nsswitch.conf</code> file is used to configure the name service databases.</p>
+<pre><code>passwd: files
+shadow: files
+group: files
+
+hosts: files dns
+</code></pre>
+<p>In this case, Linux will first look for a host name match (<code>hosts:</code> line) in the <code>/etc/hosts</code> file (<code>files</code> value) before querying DNS (<code>dns</code> value)! This behavior can simply be changed by editing the <code>/etc/nsswitch.conf</code> file.</p>
+<p>Of course, it is possible to imagine querying an LDAP, MySQL or other server by configuring the name service to respond to system requests for hosts, users, groups, etc.</p>
+<p>The resolution of the name service can be tested with the <code>getent</code> command that we will see later in this course.</p>
+<h2 id="etcresolvconf-file"><code>/etc/resolv.conf</code> file</h2>
+<p>The <code>/etc/resolv.conf</code> file contains the DNS name resolution configuration.</p>
+<pre><code>#Generated by NetworkManager
+domain mondomaine.lan
+search mondomaine.lan
+nameserver 192.168.1.254
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>This file is historical. It is no longer filled in directly!
+</code></pre>
+<p>Newer generations of distributions have generally integrated the <code>NetworkManager</code> service. This service allows you to manage the configuration more efficiently, either in graphical or console mode.</p>
+<p>It allows for the addition of DNS servers from the configuration file of a network interface. It then dynamically populates the <code>/etc/resolv.conf</code> file which should never be edited directly, otherwise the configuration changes will be lost the next time the network service is started.</p>
+<h2 id="ip-command"><code>ip</code> command</h2>
+<p>The <code>ip</code> command from the <code>iproute2</code> package allows you to configure an interface and its routing table.</p>
+<p>Display interfaces :</p>
+<pre><code>[root]# ip link
+</code></pre>
+<p>Display interfaces information:</p>
+<pre><code>[root]# ip addr show
+</code></pre>
+<p>Display the information of an interface :</p>
+<pre><code>[root]# ip addr show eth0
+</code></pre>
+<p>Display the ARP table:</p>
+<pre><code>[root]# ip neigh
+</code></pre>
+<p>All historical network management commands have been grouped under the <code>ip</code> command, which is well known to network administrators.</p>
+<h2 id="dhcp-configuration">DHCP configuration</h2>
+<p>The <strong>DHCP</strong> protocol (<strong>D</strong>ynamic <strong>H</strong>ost <strong>C</strong>Control <strong>P</strong>rotocol) allows you to obtain a complete IP configuration via the network. This is the default configuration mode of a network interface under Rocky Linux, which explains why a system connected to the network of an Internet router can function without additional configuration.</p>
+<p>The configuration of interfaces under Rocky Linux is done in the <code>/etc/sysconfig/network-scripts/</code> folder.</p>
+<p>For each Ethernet interface, a <code>ifcfg-ethX</code> file allows for the configuration of the associated interface.</p>
+<pre><code>DEVICE=eth0
+ONBOOT=yes
+BOOTPROTO=dhcp
+HWADDR=00:0c:29:96:32:e3
+</code></pre>
+<ul>
+<li>Interface name : (must be in the file name)</li>
+</ul>
+<pre><code>DEVICE=eth0
+</code></pre>
+<ul>
+<li>Automatically start the interface:</li>
+</ul>
+<pre><code>ONBOOT=yes
+</code></pre>
+<ul>
+<li>Make a DHCP request when the interface starts up:</li>
+</ul>
+<pre><code>BOOTPROTO=dhcp
+</code></pre>
+<ul>
+<li>Specify the MAC address (optional but useful when there are several interfaces) :</li>
+</ul>
+<pre><code>HWADDR=00:0c:29:96:32:e3
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>If NetworkManager is installed, the changes are taken into account automatically. If not, you have to restart the network service.
+</code></pre>
+<ul>
+<li>Restart the network service:</li>
+</ul>
+<pre><code>[root]# systemctl restart NetworkManager
+</code></pre>
+<h2 id="static-configuration">Static configuration</h2>
+<p>The static configuration requires at least:</p>
+<pre><code>DEVICE=eth0
+ONBOOT=yes
+BOOTPROTO=none
+IPADDR=192.168.1.10
+NETMASK=255.255.255.0
+</code></pre>
+<ul>
+<li>Here we are replacing "dhcp" with "none" which equals static configuration:</li>
+</ul>
+<pre><code>BOOTPROTO=none
+</code></pre>
+<ul>
+<li>IP Address:</li>
+</ul>
+<pre><code>IPADDR=192.168.1.10
+</code></pre>
+<ul>
+<li>Subnet mask:</li>
+</ul>
+<pre><code>NETMASK=255.255.255.0
+</code></pre>
+<ul>
+<li>The mask can be specified with a prefix:</li>
+</ul>
+<pre><code>PREFIX=24
+</code></pre>
+<p>!!! Warning</p>
+<pre><code>You must use NETMASK OR PREFIX - Not both!
+</code></pre>
+<h2 id="routing">Routing</h2>
+<p><img alt="Network architecture with a gateway" src="../images/network-002.png" /></p>
+<pre><code>DEVICE=eth0
+ONBOOT=yes
+BOOTPROTO=none
+HWADDR=00:0c:29:96:32:e3
+IPADDR=192.168.1.10
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.254
+</code></pre>
+<p>The <code>ip route</code> command:</p>
+<pre><code>[root]# ip route show
+192.168.1.0/24 dev eth0 […] src 192.168.1.10 metric 1
+default via 192.168.1.254 dev eth0 proto static
+</code></pre>
+<p>It is a good idea to know how to read a routing table, especially in an environment with multiple network interfaces.</p>
+<ul>
+<li>
+<p>In the example shown, the <code>192.168.1.0/24</code> network is reachable directly from the <code>eth0</code> device, so there is a metric at <code>1</code> (does not traverse a router).</p>
+</li>
+<li>
+<p>All other networks than the previous one will be reachable, again from the <code>eth0</code> device, but this time the packets will be addressed to a <code>192.168.1.254</code> gateway. The routing protocol is a static protocol (although it is possible to add a route to a dynamically assigned address in Linux).</p>
+</li>
+</ul>
+<h2 id="name-resolution">Name resolution</h2>
+<p>A system needs to resolve:</p>
+<ul>
+<li>FQDNs into IP addresses</li>
+</ul>
+<pre><code>www.free.fr = 212.27.48.10
+</code></pre>
+<ul>
+<li>IP addresses into names</li>
+</ul>
+<pre><code>212.27.48.10 = www.free.fr
+</code></pre>
+<ul>
+<li>or to obtain information about an area:</li>
+</ul>
+<pre><code>MX de free.fr = 10 mx1.free.fr + 20 mx2.free.fr
+</code></pre>
+<pre><code>DEVICE=eth0
+ONBOOT=yes
+BOOTPROTO=none
+HWADDR=00:0c:29:96:32:e3
+IPADDR=192.168.1.10
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.254
+DNS1=172.16.1.2
+DNS2=172.16.1.3
+DOMAIN=rockylinux.lan
+</code></pre>
+<p>In this case, to reach the DNS, you have to go through the gateway.</p>
+<pre><code> #Generated by NetworkManager
+ domain mondomaine.lan
+ search mondomaine.lan
+ nameserver 172.16.1.2
+ nameserver 172.16.1.3
+</code></pre>
+<p>The file has been updated by NetworkManager.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>The <code>ping</code> command sends datagrams to another machine and waits for a response.</p>
+<p>It is the basic command for testing the network because it checks the connectivity between your network interface and another.</p>
+<p>Syntax of the <code>ping</code> command:</p>
+<pre><code>ping [-c numerical] destination
+</code></pre>
+<p>The <code>-c</code> (count) option allows you to stop the command after the countdown in seconds.</p>
+<p>Example:</p>
+<pre><code>[root]# ping –c 4 localhost
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>Validate connectivity from near to far
+</code></pre>
+<p>1) Validate the TCP/IP software layer</p>
+<pre><code>[root]# ping localhost
+</code></pre>
+<p>"Pinging" the inner loop does not detect a hardware failure on the network interface. It simply determines whether the IP software configuration is correct.</p>
+<p>2) Validate the network card</p>
+<pre><code>[root]# ping 192.168.1.10
+</code></pre>
+<p>To determine that the network card is functional, we must now ping its IP address. The network card, if the network cable is not connected, should be in a "down" state.</p>
+<p>If the ping does not work, first check the network cable to your network switch and reassemble the interface (see the <code>if up</code> command), then check the interface itself.</p>
+<p>3) Validate the connectivity of the gateway</p>
+<pre><code>[root]# ping 192.168.1.254
+</code></pre>
+<p>4) Validate the connectivity of a remote server</p>
+<pre><code>[root]# ping 172.16.1.2
+</code></pre>
+<p>5) Validate the DNS service</p>
+<pre><code>[root]# ping www.free.fr
+</code></pre>
+<h3 id="dig-command"><code>dig</code> command</h3>
+<p>The <code>dig</code> command is used to query the DNS server.</p>
+<p>The <code>dig</code> command syntax:</p>
+<pre><code>dig [-t type] [+short] [name]
+</code></pre>
+<p>Examples:</p>
+<pre><code>[root]# dig +short rockylinux.org
+76.223.126.88
+[root]# dig -t MX +short rockylinux.org                                                          ✔
+5 alt1.aspmx.l.google.com.
+...
+</code></pre>
+<p>The <code>dig</code> command is used to query DNS servers. It is very verbose by default, but this behavior can be changed with the <code>+short</code> option.</p>
+<p>It is also possible to specify a DNS <strong>record type</strong> to resolve, such as an MX <strong>type</strong> to get information about the mail exchangers for a domain.</p>
+<h3 id="getent-command"><code>getent</code> command</h3>
+<p>The <code>getent</code> (get entry) command is used to get an NSSwitch entry (<code>hosts</code> + <code>dns</code>)</p>
+<p>Syntax of the <code>getent</code> command:</p>
+<pre><code>getent hosts name
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# getent hosts rockylinux.org
+  76.223.126.88 rockylinux.org
+</code></pre>
+<p>Querying only a DNS server may return an erroneous result that does not take into account the contents of a <code>hosts</code> file, although this should be rare nowadays.</p>
+<p>To take the <code>/etc/hosts</code> file into account as well, the NSSwitch name service must be queried, which will take care of any DNS resolution.</p>
+<h3 id="ipcalc-command"><code>ipcalc</code> command</h3>
+<p>The <code>ipcalc</code> (<strong>ip calculation</strong>) command is used to calculate the address of a network or broadcast from an IP address and a mask.</p>
+<p>Syntax of the <code>ipcalc</code> command:</p>
+<pre><code>ipcalc  [options] IP &lt;netmask&gt;
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# ipcalc –b 172.16.66.203 255.255.240.0
+BROADCAST=172.16.79.255
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>This command is interesting followed by a redirection to automatically fill in the configuration files of your interfaces:
+
+```
+[root]# ipcalc –b 172.16.66.203 255.255.240.0 &gt;&gt; /etc/sysconfig/network-scripts/ifcfg-eth0
+```
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-b</code></td>
+<td>Displays the broadcast address.</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>Displays the network address and mask.</td>
+</tr>
+</tbody>
+</table>
+<p><code>ipcalc</code> is a simple way to calculate the IP information of a host. The various options indicate what information <code>ipcalc</code> should display on the standard output. Multiple options can be specified. An IP address on which to operate must be specified. Most operations also require a network mask or CIDR prefix.</p>
+<table>
+<thead>
+<tr>
+<th>Option short</th>
+<th>Option long</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-b</code></td>
+<td><code>--broadcast</code></td>
+<td>Displays the broadcast address of the given IP address and the network mask.</td>
+</tr>
+<tr>
+<td><code>-h</code></td>
+<td><code>--hostname</code></td>
+<td>Displays the hostname of the IP address given via DNS.</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td><code>--netmask</code></td>
+<td>Calculates the network mask for the given IP address. Assumes that the IP address is part of a complete class A, B, or C network. Many networks do not use default network masks, in which case an incorrect incorrect value will be returned.</td>
+</tr>
+<tr>
+<td><code>-p</code></td>
+<td><code>--prefix</code></td>
+<td>Indicates the prefix of the mask/IP address.</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td><code>--network</code></td>
+<td>Indicates the network address of the given IP address and mask.</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td><code>--silent</code></td>
+<td>Never displays any error messages.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ss-command"><code>ss</code> command</h3>
+<p>The <code>ss</code> (<strong>socket statistics</strong>) command displays the listening ports on the network.</p>
+<p>Syntax of the <code>ss</code> command:</p>
+<pre><code>ss [-tuna]
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# ss –tuna
+tcp   LISTEN   0   128   *:22   *:*
+</code></pre>
+<p>The commands <code>ss</code> and <code>netstat</code> (to follow) will be very important for the rest of your Linux life.</p>
+<p>When implementing network services, it is very common to check with one of these two commands that the service is listening on the expected ports.</p>
+<h3 id="netstat-command"><code>netstat</code> command</h3>
+<p>!!! Warning</p>
+<pre><code>The `netstat` command is now deprecated and is no-longer installed by default on Rocky Linux. You may still find some Linux versions that have it installed, but it is best to move on to using `ss` for everything that you would have used `netstat` for.
+</code></pre>
+<p>The <code>netstat</code> command (<strong>network statistics</strong>) displays the listening ports on the network.</p>
+<p>Syntax of the <code>netstat</code> command:</p>
+<pre><code>netstat -tapn
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# netstat –tapn
+tcp  0  0  0.0.0.0:22  0.0.0.0:*  LISTEN 2161/sshd
+</code></pre>
+<h3 id="ip-or-mac-address-conflicts">IP or MAC address conflicts</h3>
+<p>A misconfiguration can cause multiple interfaces to use the same IP address. This can happen when a network has multiple DHCP servers or when the same IP address is manually assigned multiple times.</p>
+<p>When the network is malfunctioning, and when an IP address conflict could be the cause, it is possible to use the <code>arp-scan</code> software (requires the EPEL repository):</p>
+<pre><code>$ dnf install arp-scan
+</code></pre>
+<p>Example:</p>
+<pre><code>$ arp-scan -I eth0 -l
+
+172.16.1.104  00:01:02:03:04:05       3COM CORPORATION
+172.16.1.107  00:0c:29:1b:eb:97       VMware, Inc.
+172.16.1.250  00:26:ab:b1:b7:f6       (Unknown)
+172.16.1.252  00:50:56:a9:6a:ed       VMWare, Inc.
+172.16.1.253  00:50:56:b6:78:ec       VMWare, Inc.
+172.16.1.253  00:50:56:b6:78:ec       VMWare, Inc. (DUP: 2)
+172.16.1.253  00:50:56:b6:78:ec       VMWare, Inc. (DUP: 3)
+172.16.1.253  00:50:56:b6:78:ec       VMWare, Inc. (DUP: 4)
+172.16.1.232   88:51:fb:5e:fa:b3       (Unknown) (DUP: 2)
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>As the above example shows, it is also possible to have MAC address conflicts! These problems are brought about by virtualization technologies and the copying of virtual machines.
+</code></pre>
+<h2 id="hot-configuration">Hot configuration</h2>
+<p>The <code>ip</code> command can hot add an IP address to an interface</p>
+<pre><code>ip addr add @IP dev DEVICE
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# ip addr add 192.168.2.10 dev eth1
+</code></pre>
+<p>The <code>ip</code> command allows for the activation or deactivation of an interface:</p>
+<pre><code>ip link set DEVICE up
+ip link set DEVICE down
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# ip link set eth1 up
+[root]# ip link set eth1 down
+</code></pre>
+<p>The <code>ip</code> command is used to add a route:</p>
+<pre><code>ip route add [default|netaddr] via @IP [dev device]
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# ip route add default via 192.168.1.254
+[root]# ip route add 192.168.100.0/24 via 192.168.2.254 dev eth1
+</code></pre>
+<h2 id="in-summary">In summary</h2>
+<p>The files used in this chapter are :</p>
+<p><img alt="Synthesis of the files implemented in the network part" src="../images/network-003.png" /></p>
+<p>A complete interface configuration could be this (file <code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>):</p>
+<pre><code> DEVICE=eth0
+ ONBOOT=yes
+ BOOTPROTO=none
+ HWADDR=00:0c:29:96:32:e3
+ IPADDR=192.168.1.10
+ NETMASK=255.255.255.0
+ GATEWAY=192.168.1.254
+ DNS1=172.16.1.1
+ DNS2=172.16.1.2
+ DOMAIN=rockylinux.lan
+</code></pre>
+<p>The troubleshooting method should go from closest to farthest:</p>
+<ol>
+<li>ping localhost (software test)</li>
+<li>ping IP-address (hardware test)</li>
+<li>ping gateway (connectivity test)</li>
+<li>ping remote-server (routing test)</li>
+<li>DNS query (dig or ping)</li>
+</ol>
+<p><img alt="Method of troubleshooting or network validation" src="../images/network-004.png" /></p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../11-tasks/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Task Management" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Task Management
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../13-softwares/" class="md-footer__link md-footer__link--next" aria-label="Next: Software Management" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Software Management
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Achmad Fauzi Hamibowo &copy; 2022 • <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> • Made with ❤️ in Depok, West Java
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://twitter.com/achmadfhbw" target="_blank" rel="noopener" title="achmadfhbw on Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "navigation.prune", "search.share", "toc.follow"], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

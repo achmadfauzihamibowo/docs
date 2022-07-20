@@ -1,0 +1,5520 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.achmadfhbw.my.id/books/admin_guide/09-backups/">
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Backup and Restore - Linux Learning Material</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Quicksand";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#backup-and-restore" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Linux Learning Material" class="md-header__button md-logo" aria-label="Linux Learning Material" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Linux Learning Material
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Backup and Restore
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        Books
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../gemstones/" class="md-tabs__link">
+        Gemstones
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../guides/" class="md-tabs__link">
+        Guides
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../learning/GitHub/github/" class="md-tabs__link">
+        Learning
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tutorials/" class="md-tabs__link">
+        Tutorials
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Linux Learning Material" class="md-nav__button md-logo" aria-label="Linux Learning Material" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Linux Learning Material
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Books</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Books" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Books
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Admin guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Admin guide" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Admin guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-toc/" class="md-nav__link">
+        Learning Linux With Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-presentation/" class="md-nav__link">
+        Introduction to Linux
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-commands/" class="md-nav__link">
+        Linux Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-advanced-commands/" class="md-nav__link">
+        Advanced Linux Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-vi/" class="md-nav__link">
+        VI Text Editor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-users/" class="md-nav__link">
+        User Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-file-systems/" class="md-nav__link">
+        File System
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-process/" class="md-nav__link">
+        Process Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Backup and Restore
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Backup and Restore
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generalities" class="md-nav__link">
+    Generalities
+  </a>
+  
+    <nav class="md-nav" aria-label="Generalities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-process" class="md-nav__link">
+    The process
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-methods" class="md-nav__link">
+    Backup methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodicity" class="md-nav__link">
+    Periodicity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restoration-methods" class="md-nav__link">
+    Restoration methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-tools" class="md-nav__link">
+    The tools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-convention" class="md-nav__link">
+    Naming convention
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contents-of-a-backup" class="md-nav__link">
+    Contents of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-modes" class="md-nav__link">
+    Storage modes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tape-archiver-tar" class="md-nav__link">
+    Tape ArchiveR - tar
+  </a>
+  
+    <nav class="md-nav" aria-label="Tape ArchiveR - tar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#restoration-guidelines" class="md-nav__link">
+    Restoration guidelines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backing-up-with-tar" class="md-nav__link">
+    Backing up with tar
+  </a>
+  
+    <nav class="md-nav" aria-label="Backing up with tar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estimate-the-size-of-a-backup" class="md-nav__link">
+    Estimate the size of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-convention-for-a-tar-backup" class="md-nav__link">
+    Naming convention for a tar backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-backup" class="md-nav__link">
+    Create a backup
+  </a>
+  
+    <nav class="md-nav" aria-label="Create a backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-backup-in-relative-mode" class="md-nav__link">
+    Create a backup in relative mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-backup-in-absolute-mode" class="md-nav__link">
+    Create a backup in absolute mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-compressed-backup-with-gzip" class="md-nav__link">
+    Creating a compressed backup with gzip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-compressed-backup-with-bzip" class="md-nav__link">
+    Creating a compressed backup with bzip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression-compress-gzip-bzip2-lzip-and-xz" class="md-nav__link">
+    Compression compress, gzip, bzip2, lzip and xz
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-a-file-or-directory-to-an-existing-backup" class="md-nav__link">
+    Add a file or directory to an existing backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-the-contents-of-a-backup" class="md-nav__link">
+    List the contents of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-the-integrity-of-a-backup" class="md-nav__link">
+    Check the integrity of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-untar-a-backup" class="md-nav__link">
+    Extract (untar) a backup
+  </a>
+  
+    <nav class="md-nav" aria-label="Extract (untar) a backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extract-only-a-file-from-a-tar-backup" class="md-nav__link">
+    Extract only a file from a tar backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-a-folder-from-a-backup-tar" class="md-nav__link">
+    Extract a folder from a backup tar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-a-group-of-files-from-a-tar-backup-using-regular-expressions-regex" class="md-nav__link">
+    Extract a group of files from a tar backup using regular expressions (regex)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#copy-input-output-cpio" class="md-nav__link">
+    CoPy Input Output - cpio
+  </a>
+  
+    <nav class="md-nav" aria-label="CoPy Input Output - cpio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-backup-with-cpio-command" class="md-nav__link">
+    Create a backup with cpio command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-of-backup" class="md-nav__link">
+    Type of backup
+  </a>
+  
+    <nav class="md-nav" aria-label="Type of backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-with-relative-path" class="md-nav__link">
+    Backup with relative path
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-with-absolute-path" class="md-nav__link">
+    Backup with absolute path
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-to-a-backup" class="md-nav__link">
+    Add to a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compressing-a-backup" class="md-nav__link">
+    Compressing a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-the-contents-of-a-backup" class="md-nav__link">
+    Read the contents of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restore-a-backup" class="md-nav__link">
+    Restore a backup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression-decompression-utilities" class="md-nav__link">
+    Compression - decompression utilities
+  </a>
+  
+    <nav class="md-nav" aria-label="Compression - decompression utilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compressing-with-gzip" class="md-nav__link">
+    Compressing with gzip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compressing-with-bunzip2" class="md-nav__link">
+    Compressing with bunzip2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decompressing-with-gunzip" class="md-nav__link">
+    Decompressing with gunzip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decompressing-with-bunzip2" class="md-nav__link">
+    Decompressing with bunzip2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-boot/" class="md-nav__link">
+        System Startup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-tasks/" class="md-nav__link">
+        Task Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-network/" class="md-nav__link">
+        Implementing the Network
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-softwares/" class="md-nav__link">
+        Software Management
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_3">
+          Disa stig
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Disa stig" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Disa stig
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disa_stig/disa_stig_part1/" class="md-nav__link">
+        DISA STIG On Rocky Linux 8 - Part 1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_4">
+          Learning ansible
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning ansible" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Learning ansible
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/00-toc/" class="md-nav__link">
+        Learning Ansible with Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/01-basic/" class="md-nav__link">
+        Ansible Basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/02-advanced/" class="md-nav__link">
+        Ansible Intermediate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/03-working-with-files/" class="md-nav__link">
+        File Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/04-ansible-galaxy/" class="md-nav__link">
+        Ansible Galaxy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/05-deployments/" class="md-nav__link">
+        Deploy With Ansistrano
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/06-large-scale-infrastructure/" class="md-nav__link">
+        Large Scale infrastructure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/07-working-with-filters/" class="md-nav__link">
+        Working With Filters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_ansible/08-management-server-optimizations/" class="md-nav__link">
+        Management server optimizations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5" type="checkbox" id="__nav_2_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5">
+          Learning bash
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning bash" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Learning bash
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/00-toc/" class="md-nav__link">
+        Learning bash with Rocky
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/01-first-script/" class="md-nav__link">
+        Bash - First script
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/02-using-variables/" class="md-nav__link">
+        Bash - Using Variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/03-data-entry-and-manipulations/" class="md-nav__link">
+        Bash - Data entry and manipulations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/04-check-your-knowledge/" class="md-nav__link">
+        Bash - Check your knowledge
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/05-tests/" class="md-nav__link">
+        Bash - Tests
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/06-conditional-structures/" class="md-nav__link">
+        Bash - Conditional structures if and case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/07-loops/" class="md-nav__link">
+        Bash - Loops
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/08-check-your-knowledge/" class="md-nav__link">
+        Bash - Check your knowledge
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_5_10" type="checkbox" id="__nav_2_5_10" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_5_10">
+          Appendix
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Appendix" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_5_10">
+          <span class="md-nav__icon md-icon"></span>
+          Appendix
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_bash/appendix/02-variables-logs/" class="md-nav__link">
+        Variables - Use With Logs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_6">
+          Learning rsync
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning rsync" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Learning rsync
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/01_rsync_overview/" class="md-nav__link">
+        rsync brief description
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/02_rsync_demo01/" class="md-nav__link">
+        rsync demo 01
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/03_rsync_demo02/" class="md-nav__link">
+        rsync demo 02
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/04_rsync_configure/" class="md-nav__link">
+        rsync configuration file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/05_rsync_authentication-free_login/" class="md-nav__link">
+        rsync password-free authentication login
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/06_rsync_inotify/" class="md-nav__link">
+        inotify-tools installation and use
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../learning_rsync/07_rsync_unison_use/" class="md-nav__link">
+        Use unison
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../gemstones/">Gemstones</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Gemstones" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Gemstones
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/bash_stub/" class="md-nav__link">
+        bash - Script Stub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/htop/" class="md-nav__link">
+        htop-Process Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/https_rsa_keygen/" class="md-nav__link">
+        https - RSA Key Generation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/mtr/" class="md-nav__link">
+        mtr - Network Diagnostics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/nmcli/" class="md-nav__link">
+        nmcli - set connection autoconnect
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/nmtui/" class="md-nav__link">
+        nmtui - Network Management Tool
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/perl_search_replace/" class="md-nav__link">
+        Perl - Search and Replace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/sed_search_replace/" class="md-nav__link">
+        sed - Search and Replace
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/setup_local_repo/" class="md-nav__link">
+        Setup Local Rocky Repositories
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../gemstones/view_kernel_conf/" class="md-nav__link">
+        View Current Kernel Configuration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/">Guides</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/custom-linux-kernel/" class="md-nav__link">
+        Building and Installing Custom Linux Kernels
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Automation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Automation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Automation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/anacron/" class="md-nav__link">
+        anacron - Automating commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/cron_jobs_howto/" class="md-nav__link">
+        cron - Automating Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/cronie/" class="md-nav__link">
+        cronie - Timed Tasks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/olivetin/" class="md-nav__link">
+        OliveTin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/automation/templates-automation-packer-vsphere/" class="md-nav__link">
+        Automatic Template Creation - Packer - Ansible - VMware vSphere
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Backup
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Backup" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Backup
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/backup/mirroring_lsyncd/" class="md-nav__link">
+        Mirroring Solution - lsyncd
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/backup/rsnapshot_backup/" class="md-nav__link">
+        Backup Solution - Rsnapshot
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/backup/rsync_ssh/" class="md-nav__link">
+        Synchronization With rsync
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          Cms
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cms" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cms
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/cms/cloud_server_using_nextcloud/" class="md-nav__link">
+        Cloud Server Using Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/cms/dokuwiki_server/" class="md-nav__link">
+        DokuWiki
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Communications
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Communications" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Communications
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/communications/asterisk_installation/" class="md-nav__link">
+        Installing Asterisk
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_7">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_7">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/containers/lxd_server/" class="md-nav__link">
+        LXD Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/containers/lxd_web_servers/" class="md-nav__link">
+        LXD Beginners Guide-Multiple Servers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/containers/podman-nextcloud/" class="md-nav__link">
+        Nextcloud on Podman
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/contribute/">Contribute</a>
+          
+            <label for="__nav_4_8">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Contribute" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_8">
+          <span class="md-nav__icon md-icon"></span>
+          Contribute
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/README.fr/" class="md-nav__link">
+        README.fr
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/mkdocs_lsyncd/" class="md-nav__link">
+        Local Documentation - LXD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/navigation/" class="md-nav__link">
+        Navigational Changes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/rockydocs_formatting/" class="md-nav__link">
+        Rocky Docs Formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/contribute/rockydocs_web_dev/" class="md-nav__link">
+        Local Documentation - Docker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_9">
+          Database
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Database" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_9">
+          <span class="md-nav__icon md-icon"></span>
+          Database
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/database/database_mariadb-server/" class="md-nav__link">
+        MariaDB Database Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Desktop
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Desktop" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Desktop
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/desktop/mate_installation/" class="md-nav__link">
+        MATE Desktop
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/desktop/xfce_installation/" class="md-nav__link">
+        XFCE Desktop Environment
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_11">
+          Dns
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Dns" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_11">
+          <span class="md-nav__icon md-icon"></span>
+          Dns
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/dns/private_dns_server_using_bind/" class="md-nav__link">
+        Bind Private DNS Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_12">
+          Editors
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Editors" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_12">
+          <span class="md-nav__icon md-icon"></span>
+          Editors
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/editors/micro/" class="md-nav__link">
+        micro
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_13">
+          Email
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Email" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_13">
+          <span class="md-nav__icon md-icon"></span>
+          Email
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/email/postfix_reporting/" class="md-nav__link">
+        Postfix Process Reporting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" type="checkbox" id="__nav_4_14" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_14">
+          File sharing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="File sharing" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_14">
+          <span class="md-nav__icon md-icon"></span>
+          File sharing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/file_sharing/glusterfs/" class="md-nav__link">
+        Clustering-GlusterFS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/file_sharing/secure_ftp_server_vsftpd/" class="md-nav__link">
+        Secure FTP Server - vsftpd
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/file_sharing/sftp/" class="md-nav__link">
+        Secure Server - sftp
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_15">
+          Git
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Git" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_15">
+          <span class="md-nav__icon md-icon"></span>
+          Git
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/git/git_wf_git-cola_atom/" class="md-nav__link">
+        git Using Git Cola and Atom
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_16" type="checkbox" id="__nav_4_16" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_16">
+          Interoperability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Interoperability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_16">
+          <span class="md-nav__icon md-icon"></span>
+          Interoperability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/interoperability/import_rocky_to_wsl_howto/" class="md-nav__link">
+        Import to WSL2 with Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/interoperability/rocky_to_wsl_howto/" class="md-nav__link">
+        Import To WSL with WSL and rinse
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_17" type="checkbox" id="__nav_4_17" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_17">
+          Mirror management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Mirror management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_17">
+          <span class="md-nav__icon md-icon"></span>
+          Mirror management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/mirror_management/add_mirror_manager/" class="md-nav__link">
+        Adding a Rocky Mirror
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/mirror_management/add_mirror_manager.sv/" class="md-nav__link">
+        Lägg till en publik spegel till Rocky's spegelhanterare
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_18" type="checkbox" id="__nav_4_18" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_18">
+          Network
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Network" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_18">
+          <span class="md-nav__icon md-icon"></span>
+          Network
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/network/basic_network_configuration.fr/" class="md-nav__link">
+        Configuration réseau de base
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/network/basic_network_configuration/" class="md-nav__link">
+        Networking Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/network/librenms_monitoring_server/" class="md-nav__link">
+        LibreNMS Monitoring Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_19" type="checkbox" id="__nav_4_19" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/package_management/">Package management</a>
+          
+            <label for="__nav_4_19">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Package management" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_19">
+          <span class="md-nav__icon md-icon"></span>
+          Package management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/developer_start2/" class="md-nav__link">
+        Development Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_build_troubleshooting/" class="md-nav__link">
+        Package Build & Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_debranding/" class="md-nav__link">
+        Package Debranding
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_debranding.sv/" class="md-nav__link">
+        Rocky paket Hur man tar bort varumärke
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_dev_start/" class="md-nav__link">
+        Packaging And Developer Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_signing/" class="md-nav__link">
+        Package Signing & Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/package_management/package_signing.sv/" class="md-nav__link">
+        Paketsignering och testning
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_20" type="checkbox" id="__nav_4_20" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_20">
+          Proxies
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Proxies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_20">
+          <span class="md-nav__icon md-icon"></span>
+          Proxies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/proxies/haproxy_apache_lxd/" class="md-nav__link">
+        HAProxy-Apache-LXD
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/proxies/pound/" class="md-nav__link">
+        Pound
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_21" type="checkbox" id="__nav_4_21" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_21">
+          Security
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Security" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_21">
+          <span class="md-nav__icon md-icon"></span>
+          Security
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/dnf_automatic/" class="md-nav__link">
+        Patching with dnf-automatic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/enabling_iptables_firewall/" class="md-nav__link">
+        Enabling `iptables` Firewall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/enabling_iptables_firewall.sv/" class="md-nav__link">
+        Aktivera iptables Brandvägg
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/firewalld-beginners.fr/" class="md-nav__link">
+        pare-feu pour les débutants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/firewalld-beginners/" class="md-nav__link">
+        firewalld for Beginners
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/firewalld-beginners.sv/" class="md-nav__link">
+        brandvägg för nybörjare
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/firewalld/" class="md-nav__link">
+        firewalld from iptables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/generating_ssl_keys_lets_encrypt/" class="md-nav__link">
+        Generating SSL Keys - Let's Encrypt
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/learning_selinux/" class="md-nav__link">
+        SELinux Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/ssh_public_private_keys/" class="md-nav__link">
+        SSH Public and Private Key
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/ssh_public_private_keys.sv/" class="md-nav__link">
+        SSH Publika och privata nycklar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/ssl_keys_https/" class="md-nav__link">
+        Generating SSL Keys
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_21_13" type="checkbox" id="__nav_4_21_13" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_21_13">
+          Authentication
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Authentication" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_21_13">
+          <span class="md-nav__icon md-icon"></span>
+          Authentication
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/security/authentication/active_directory_authentication/" class="md-nav__link">
+        Active Directory Authentication
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_22" type="checkbox" id="__nav_4_22" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_22">
+          Virtualization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtualization" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_22">
+          <span class="md-nav__icon md-icon"></span>
+          Virtualization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/virtualization/vbox-rocky/" class="md-nav__link">
+        Rocky on VirtualBox
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_23" type="checkbox" id="__nav_4_23" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_23">
+          Web
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_23">
+          <span class="md-nav__icon md-icon"></span>
+          Web
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache-sites-enabled.fr/" class="md-nav__link">
+        Configuration Apache Web Server Multi-Sites'
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache-sites-enabled/" class="md-nav__link">
+        Apache Multisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/mod_SSL_apache/" class="md-nav__link">
+        Apache With 'mod_ssl'
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/nginx-mainline/" class="md-nav__link">
+        Nginx
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/nginx-multisite/" class="md-nav__link">
+        Nginx Multisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/php/" class="md-nav__link">
+        PHP and PHP-FPM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_23_7" type="checkbox" id="__nav_4_23_7" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../guides/web/apache_hardened_webserver/">Apache hardened webserver</a>
+          
+            <label for="__nav_4_23_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Apache hardened webserver" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_23_7">
+          <span class="md-nav__icon md-icon"></span>
+          Apache hardened webserver
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache_hardened_webserver/modsecurity/" class="md-nav__link">
+        Web-based Application firewall (WAF)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache_hardened_webserver/ossec-hids/" class="md-nav__link">
+        Host-based Intrustion Detection System (HIDS)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/web/apache_hardened_webserver/rkhunter/" class="md-nav__link">
+        Rootkit Hunter
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Learning
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Learning" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Learning
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_1">
+          GitHub
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="GitHub" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          GitHub
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/GitHub/github/" class="md-nav__link">
+        GitHub
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_2">
+          Linux Ubuntu
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Linux Ubuntu" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Linux Ubuntu
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Linux_Ubuntu/commandLine/" class="md-nav__link">
+        Command Line
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Linux_Ubuntu/linuxUbuntu/" class="md-nav__link">
+        Ubuntu Linux
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_3">
+          Virtual Box
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Virtual Box" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Virtual Box
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Virtual_Box/virtualBox/" class="md-nav__link">
+        **Virtual Box**
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_4" type="checkbox" id="__nav_5_4" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5_4">
+          Web Server
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Web Server" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          Web Server
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/apache/" class="md-nav__link">
+        **Installasi Apache, PHP**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/webServer/" class="md-nav__link">
+        **Web Server**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/website/" class="md-nav__link">
+        **Website**
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learning/Web_Server/xampp/" class="md-nav__link">
+        **XAMPP**
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/">Tutorials</a>
+          
+            <label for="__nav_6">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_2" type="checkbox" id="__nav_6_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../tutorials/Arch_Linux/">Arch Linux</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Arch Linux" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Arch Linux
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generalities" class="md-nav__link">
+    Generalities
+  </a>
+  
+    <nav class="md-nav" aria-label="Generalities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-process" class="md-nav__link">
+    The process
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-methods" class="md-nav__link">
+    Backup methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodicity" class="md-nav__link">
+    Periodicity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restoration-methods" class="md-nav__link">
+    Restoration methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-tools" class="md-nav__link">
+    The tools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-convention" class="md-nav__link">
+    Naming convention
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contents-of-a-backup" class="md-nav__link">
+    Contents of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-modes" class="md-nav__link">
+    Storage modes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tape-archiver-tar" class="md-nav__link">
+    Tape ArchiveR - tar
+  </a>
+  
+    <nav class="md-nav" aria-label="Tape ArchiveR - tar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#restoration-guidelines" class="md-nav__link">
+    Restoration guidelines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backing-up-with-tar" class="md-nav__link">
+    Backing up with tar
+  </a>
+  
+    <nav class="md-nav" aria-label="Backing up with tar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estimate-the-size-of-a-backup" class="md-nav__link">
+    Estimate the size of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#naming-convention-for-a-tar-backup" class="md-nav__link">
+    Naming convention for a tar backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-backup" class="md-nav__link">
+    Create a backup
+  </a>
+  
+    <nav class="md-nav" aria-label="Create a backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-backup-in-relative-mode" class="md-nav__link">
+    Create a backup in relative mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-backup-in-absolute-mode" class="md-nav__link">
+    Create a backup in absolute mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-compressed-backup-with-gzip" class="md-nav__link">
+    Creating a compressed backup with gzip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-compressed-backup-with-bzip" class="md-nav__link">
+    Creating a compressed backup with bzip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression-compress-gzip-bzip2-lzip-and-xz" class="md-nav__link">
+    Compression compress, gzip, bzip2, lzip and xz
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-a-file-or-directory-to-an-existing-backup" class="md-nav__link">
+    Add a file or directory to an existing backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-the-contents-of-a-backup" class="md-nav__link">
+    List the contents of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-the-integrity-of-a-backup" class="md-nav__link">
+    Check the integrity of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-untar-a-backup" class="md-nav__link">
+    Extract (untar) a backup
+  </a>
+  
+    <nav class="md-nav" aria-label="Extract (untar) a backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extract-only-a-file-from-a-tar-backup" class="md-nav__link">
+    Extract only a file from a tar backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-a-folder-from-a-backup-tar" class="md-nav__link">
+    Extract a folder from a backup tar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract-a-group-of-files-from-a-tar-backup-using-regular-expressions-regex" class="md-nav__link">
+    Extract a group of files from a tar backup using regular expressions (regex)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#copy-input-output-cpio" class="md-nav__link">
+    CoPy Input Output - cpio
+  </a>
+  
+    <nav class="md-nav" aria-label="CoPy Input Output - cpio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-backup-with-cpio-command" class="md-nav__link">
+    Create a backup with cpio command
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-of-backup" class="md-nav__link">
+    Type of backup
+  </a>
+  
+    <nav class="md-nav" aria-label="Type of backup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-with-relative-path" class="md-nav__link">
+    Backup with relative path
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-with-absolute-path" class="md-nav__link">
+    Backup with absolute path
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-to-a-backup" class="md-nav__link">
+    Add to a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compressing-a-backup" class="md-nav__link">
+    Compressing a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-the-contents-of-a-backup" class="md-nav__link">
+    Read the contents of a backup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restore-a-backup" class="md-nav__link">
+    Restore a backup
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression-decompression-utilities" class="md-nav__link">
+    Compression - decompression utilities
+  </a>
+  
+    <nav class="md-nav" aria-label="Compression - decompression utilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compressing-with-gzip" class="md-nav__link">
+    Compressing with gzip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compressing-with-bunzip2" class="md-nav__link">
+    Compressing with bunzip2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decompressing-with-gunzip" class="md-nav__link">
+    Decompressing with gunzip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decompressing-with-bunzip2" class="md-nav__link">
+    Decompressing with bunzip2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="backup-and-restore">Backup and Restore</h1>
+<p>In this chapter you will learn how to back up and restore your data with Linux.</p>
+<hr />
+<p><strong>Objectives</strong> : In this chapter, future Linux administrators will learn how to:</p>
+<p>:heavy_check_mark: use the <code>tar</code> and <code>cpio</code> command to make a backup; <br />
+:heavy_check_mark: check their backups and restore data; <br />
+:heavy_check_mark: compress or decompress their backups.</p>
+<p>:checkered_flag: <strong>backup</strong>, <strong>restore</strong>, <strong>compression</strong></p>
+<p><strong>Knowledge</strong>: :star: :star: :star: <br />
+<strong>Complexity</strong>: :star: :star:    </p>
+<p><strong>Reading time</strong>: 40 minutes</p>
+<hr />
+<p>!!! Note</p>
+<pre><code>Throughout this chapter the command structures use "device" to specify both a target location for backup, and the source location when restoring. The device can be either external media or a local file. You should get a feel for this as the chapter unfolds, but you can always refer back to this note for clarification if you need to.
+</code></pre>
+<p>The backup will answer a need to conserve and restore data in a sure and effective way.</p>
+<p>The backup allows you to protect yourself from the following:</p>
+<ul>
+<li><strong>Destruction</strong>: voluntary or involuntary. Human or technical. Virus, ...</li>
+<li><strong>Deletion</strong>: voluntary or involuntary. Human or technical. Virus, ...</li>
+<li><strong>Integrity</strong> : data becomes unusable.</li>
+</ul>
+<p>No system is infallible, no human is infallible, so to avoid losing data, it must be backed up to be able to restore after a problem.</p>
+<p>The backup media should be kept in another room (or building) than the server so that a disaster does not destroy the server and the backups.</p>
+<p>In addition, the administrator must regularly check that the media are still readable.</p>
+<h2 id="generalities">Generalities</h2>
+<p>There are two principles, the <strong>backup</strong> and the <strong>archive</strong>.</p>
+<ul>
+<li>The archive destroys the information source after the operation.</li>
+<li>The backup preserves the source of information after the operation.</li>
+</ul>
+<p>These operations consist of saving information in a file, on a peripheral or a supported media (tapes, disks, ...).</p>
+<h3 id="the-process">The process</h3>
+<p>Backups require a lot of discipline and rigor from the system administrator. It is necessary to ask the following questions:</p>
+<ul>
+<li>What is the appropriate medium?</li>
+<li>What should be backed up?</li>
+<li>How many copies?</li>
+<li>How long will the backup take?</li>
+<li>Method?</li>
+<li>How often?</li>
+<li>Automatic or manual?</li>
+<li>Where to store it?</li>
+<li>How long will it be kept?</li>
+</ul>
+<h3 id="backup-methods">Backup methods</h3>
+<ul>
+<li><strong>Complete</strong>: one or more <strong>filesystems</strong> are backed up (kernel, data, utilities, ...).</li>
+<li><strong>Partial</strong>: one or more <strong>files</strong> are backed up (configurations, directories, ...).</li>
+<li><strong>Differential</strong>: only files modified since the last <strong>complete</strong> backup are backed up.</li>
+<li><strong>Incremental</strong>: only files modified since the last backup are backed up.</li>
+</ul>
+<h3 id="periodicity">Periodicity</h3>
+<ul>
+<li><strong>Pre-current</strong> : at a given time (before a system update, ...).</li>
+<li><strong>Periodic</strong>: Daily, weekly, monthly, ...</li>
+</ul>
+<p>!!! Tip</p>
+<pre><code>Before a system change, it can be useful to make a backup. However, there is no point in backing up data every day that is only changed every month.
+</code></pre>
+<h3 id="restoration-methods">Restoration methods</h3>
+<p>Depending on the utilities available, it will be possible to perform several types of restorations.</p>
+<ul>
+<li><strong>Complete restoration</strong>: trees, ...</li>
+<li><strong>Selective restoration</strong>: part of tree, files, ...</li>
+</ul>
+<p>It is possible to restore a whole backup but it is also possible to restore only a part of it. However, when restoring a directory, the files created after the backup are not deleted.</p>
+<p>!!! Tip</p>
+<pre><code>To recover a directory as it was at the time of the backup, it is necessary to completely delete its contents before launching the restoration.
+</code></pre>
+<h3 id="the-tools">The tools</h3>
+<p>There are many utilities to make backups.</p>
+<ul>
+<li><strong>editor tools</strong> ;</li>
+<li><strong>graphical tools</strong>;</li>
+<li><strong>command line tools</strong>: <code>tar</code>, <code>cpio</code>, <code>pax</code>, <code>dd</code>, <code>dump</code>, ...</li>
+</ul>
+<p>The commands we will use here are <code>tar</code> and <code>cpio</code>.</p>
+<ul>
+<li><code>tar</code>:</li>
+<li>easy to use ;</li>
+<li>allows adding files to an existing backup.</li>
+<li><code>cpio</code> :</li>
+<li>retains owners;</li>
+<li>retains groups, dates and rights;</li>
+<li>skips damaged files;</li>
+<li>complete file system.</li>
+</ul>
+<p>!!! Note</p>
+<pre><code>These commands save in a proprietary and standardized format.
+</code></pre>
+<h3 id="naming-convention">Naming convention</h3>
+<p>The use of a naming convention makes it possible to quickly target the contents of a backup file and thus avoid hazardous restorations.</p>
+<ul>
+<li>name of the directory;</li>
+<li>utility used;</li>
+<li>options used;</li>
+<li>date.</li>
+</ul>
+<p>!!! Tip</p>
+<pre><code>The name of the backup must be an explicit name.
+</code></pre>
+<p>!!! Note</p>
+<pre><code>The notion of extension under Linux does not exist. In other words, our use of extensions here is for the human operator. If the systems administrator sees a `.tar.gz` or `.tgz` file extension, for instance, then he knows how to deal with the file.
+</code></pre>
+<h3 id="contents-of-a-backup">Contents of a backup</h3>
+<p>A backup generally contains the following elements:</p>
+<ul>
+<li>the file;</li>
+<li>the name;</li>
+<li>the owner;</li>
+<li>the size;</li>
+<li>the permissions</li>
+<li>access date.</li>
+</ul>
+<p>!!! Note</p>
+<pre><code>The `inode` number is missing.
+</code></pre>
+<h3 id="storage-modes">Storage modes</h3>
+<p>There are two different storage modes:</p>
+<ul>
+<li>file on disk;</li>
+<li>device.</li>
+</ul>
+<h2 id="tape-archiver-tar">Tape ArchiveR - <code>tar</code></h2>
+<p>The <code>tar</code> command allows saving on several successive media (multi-volume options).</p>
+<p>It is possible to extract all or part of a backup.</p>
+<p><code>tar</code> implicitly backs up in relative mode even if the path of the information to be backed up is mentioned in absolute mode. However, backups and restores in absolute mode are possible.</p>
+<h3 id="restoration-guidelines">Restoration guidelines</h3>
+<p>The right questions to ask are:</p>
+<ul>
+<li>what: partial or complete;</li>
+<li>where: the place where the data will be restored;</li>
+<li>how: absolute or relative.</li>
+</ul>
+<p>!!! Warning</p>
+<pre><code>Before a restoration, it is important to take time to think about and determine the most appropriate method to avoid mistakes.
+</code></pre>
+<p>Restorations are usually performed after a problem has occurred that needs to be resolved quickly. A poor restoration can, in some cases, make the situation worse.</p>
+<h3 id="backing-up-with-tar">Backing up with <code>tar</code></h3>
+<p>The default utility for creating backups on UNIX systems is the <code>tar</code> command. These backups can be compressed by <code>bzip2</code>, <code>xz</code>, <code>lzip</code>, <code>lzma</code>, <code>lzop</code>, <code>gzip</code>, <code>compress</code> or <code>zstd</code>.</p>
+<p><code>tar</code> allows you to extract a single file or a directory from a backup, view its contents or validate its integrity.</p>
+<h4 id="estimate-the-size-of-a-backup">Estimate the size of a backup</h4>
+<p>The following command estimates the size in kilobytes of a possible <em>tar</em> file:</p>
+<pre><code>$ tar cf - /directory/to/backup/ | wc -c
+20480
+$ tar czf - /directory/to/backup/ | wc -c
+508
+$ tar cjf - /directory/to/backup/ | wc -c
+428
+</code></pre>
+<p>!!! Warning</p>
+<pre><code>Beware, the presence of "-" in the command line disturbs `zsh`. Switch to `bash`!
+</code></pre>
+<h4 id="naming-convention-for-a-tar-backup">Naming convention for a <code>tar</code> backup</h4>
+<p>Here is an example of a naming convention for a <code>tar</code> backup, knowing that the date is to be added to the name.</p>
+<table>
+<thead>
+<tr>
+<th>keys</th>
+<th>Files</th>
+<th>Suffix</th>
+<th>Observation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cvf</code></td>
+<td><code>home</code></td>
+<td><code>home.tar</code></td>
+<td><code>/home</code> in relative mode, uncompressed form</td>
+</tr>
+<tr>
+<td><code>cvfP</code></td>
+<td><code>/etc</code></td>
+<td><code>etc.A.tar</code></td>
+<td><code>/etc</code> in absolute mode, no compression</td>
+</tr>
+<tr>
+<td><code>cvfz</code></td>
+<td><code>usr</code></td>
+<td><code>usr.tar.gz</code></td>
+<td><code>/usr</code> in relative mode, <em>gzip</em> compression</td>
+</tr>
+<tr>
+<td><code>cvfj</code></td>
+<td><code>usr</code></td>
+<td><code>usr.tar.bz2</code></td>
+<td><code>/usr</code> in relative mode, <em>bzip2</em> compression</td>
+</tr>
+<tr>
+<td><code>cvfPz</code></td>
+<td><code>/home</code></td>
+<td><code>home.A.tar.gz</code></td>
+<td><code>home</code> in absolute mode, <em>gzip</em> compression</td>
+</tr>
+<tr>
+<td><code>cvfPj</code></td>
+<td><code>/home</code></td>
+<td><code>home.A.tar.bz2</code></td>
+<td><code>home</code> in absolute mode, <em>bzip2</em> compression</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="create-a-backup">Create a backup</h4>
+<h5 id="create-a-backup-in-relative-mode">Create a backup in relative mode</h5>
+<p>Creating a non-compressed backup in relative mode is done with the <code>cvf</code> keys:</p>
+<pre><code>tar c[vf] [device] [file(s)]
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# tar cvf /backups/home.133.tar /home/
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>c</code></td>
+<td>Creates a backup.</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td>Displays the name of the processed files.</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>Allows you to specify the name of the backup (medium).</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Tip</p>
+<pre><code>The hyphen (`-`) in front of the `tar` keys is not necessary!
+</code></pre>
+<h5 id="create-a-backup-in-absolute-mode">Create a backup in absolute mode</h5>
+<p>Creating a non-compressed backup explicitly in absolute mode is done with the <code>cvfP</code> keys:</p>
+<pre><code>$ tar c[vf]P [device] [file(s)]
+</code></pre>
+<p>Example:</p>
+<pre><code>[root]# tar cvfP /backups/home.133.P.tar /home/
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>P</code></td>
+<td>Create a backup in absolute mode.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Warning</p>
+<pre><code>With the `P` key, the path of the files to be backed up must be entered as **absolute**. If the two conditions (key `P` and path **absolute**) are not indicated, the backup is in relative mode.
+</code></pre>
+<h5 id="creating-a-compressed-backup-with-gzip">Creating a compressed backup with <code>gzip</code></h5>
+<p>Creating a compressed backup with <code>gzip</code> is done with the <code>cvfz</code> keys:</p>
+<pre><code>$ tar cvzf backup.tar.gz dirname/
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>z</code></td>
+<td>Compresses the backup in <em>gzip</em>.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Note</p>
+<pre><code>The `.tgz` extension is an equivalent extension to `.tar.gz`.
+</code></pre>
+<p>!!! Note</p>
+<pre><code>Keeping the `cvf` (`tvf` or `xvf`) keys unchanged for all backup operations and simply adding the compression key to the end of the keys makes the command easier to understand (e.g. `cvfz` or `cvfj`, etc.).
+</code></pre>
+<h5 id="creating-a-compressed-backup-with-bzip">Creating a compressed backup with <code>bzip</code></h5>
+<p>Creating a compressed backup with <code>bzip</code> is done with the keys <code>cvfj</code>:</p>
+<pre><code>$ tar cvfj backup.tar.bz2 dirname/
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>j</code></td>
+<td>Compresses the backup in <em>bzip2</em>.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Note</p>
+<pre><code>The `.tbz` and `.tb2` extensions are equivalent to `.tar.bz2` extensions.
+</code></pre>
+<h5 id="compression-compress-gzip-bzip2-lzip-and-xz">Compression <code>compress</code>, <code>gzip</code>, <code>bzip2</code>, <code>lzip</code> and <code>xz</code></h5>
+<p>Compression, and consequently decompression, will have an impact on resource consumption (time and CPU usage).</p>
+<p>Here is a ranking of the compression of a set of text files, from least to most efficient:</p>
+<ul>
+<li>compress (<code>.tar.Z</code>)</li>
+<li>gzip (<code>.tar.gz</code>)</li>
+<li>bzip2 (<code>.tar.bz2</code>)</li>
+<li>lzip (<code>.tar.lz</code>)</li>
+<li>xz (<code>.tar.xz</code>)</li>
+</ul>
+<h4 id="add-a-file-or-directory-to-an-existing-backup">Add a file or directory to an existing backup</h4>
+<p>It is possible to add one or more items to an existing backup.</p>
+<pre><code>tar {r|A}[key(s)] [device] [file(s)]
+</code></pre>
+<p>To add <code>/etc/passwd</code> to the backup <code>/backups/home.133.tar</code>:</p>
+<pre><code>[root]# tar rvf /backups/home.133.tar /etc/passwd
+</code></pre>
+<p>Adding a directory is similar. Here add <code>dirtoadd</code> to <code>backup_name.tar</code>:</p>
+<pre><code>$ tar rvf backup_name.tar dirtoadd
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r</code></td>
+<td>Adds one or more files at the end of a direct access media backup (hard disk).</td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>Adds one or more files at the end of a backup on sequential access media (tape).</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Note</p>
+<pre><code>It is not possible to add files or folders to a compressed backup.
+
+```
+$ tar rvfz backup.tgz filetoadd
+tar: Cannot update compressed archives
+Try `tar --help' or `tar --usage' for more information.
+```
+</code></pre>
+<p>!!! Note</p>
+<pre><code>If the backup was performed in relative mode, add files in relative mode. If the backup was done in absolute mode, add files in absolute mode.
+
+Mixing modes can cause problems when restoring.
+</code></pre>
+<h4 id="list-the-contents-of-a-backup">List the contents of a backup</h4>
+<p>Viewing the contents of a backup without extracting it is possible.</p>
+<pre><code>tar t[key(s)] [device]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td>Displays the content of a backup (compressed or not).</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<pre><code>$ tar tvf backup.tar
+$ tar tvfz backup.tar.gz
+$ tar tvfj backup.tar.bz2
+</code></pre>
+<p>When the number of files in a backup becomes large, it is possible to <em>pipe</em> the result of the <code>tar</code> command to a <em>pager</em> (<code>more</code>, <code>less</code>, <code>most</code>, etc.):</p>
+<pre><code>$ tar tvf backup.tar | less
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>To list or retrieve the contents of a backup, it is not necessary to mention the compression algorithm used when the backup was created. That is, a `tar tvf` is equivalent to `tar tvfj`, to read the contents, and a `tar xvf` is equivalent to `tar xvfj`, to extract.
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>Always check the contents of a backup.
+</code></pre>
+<h4 id="check-the-integrity-of-a-backup">Check the integrity of a backup</h4>
+<p>The integrity of a backup can be tested with the <code>W</code> key at the time of its creation:</p>
+<pre><code>$ tar cvfW file_name.tar dir/
+</code></pre>
+<p>The integrity of a backup can be tested with the key <code>d</code> after its creation:</p>
+<pre><code>$ tar vfd file_name.tar dir/
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>By adding a second `v` to the previous key, you will get the list of archived files as well as the differences between the archived files and those present in the file system.
+
+```
+$ tar vvfd  /tmp/quodlibet.tar .quodlibet/
+drwxr-x--- rockstar/rockstar     0 2021-05-21 00:11 .quodlibet/
+-rw-r--r-- rockstar/rockstar     0 2021-05-19 00:59 .quodlibet/queue
+[…]
+-rw------- rockstar/rockstar  3323 2021-05-21 00:11 .quodlibet/config
+.quodlibet/config: Mod time differs
+.quodlibet/config: Size differs
+[…]
+```
+</code></pre>
+<p>The <code>W</code> key is also used to compare the content of an archive against the filesystem:</p>
+<pre><code>$ tar tvfW file_name.tar
+Verify 1/file1
+1/file1: Mod time differs
+1/file1: Size differs
+Verify 1/file2
+Verify 1/file3
+</code></pre>
+<p>The verification with the <code>W</code> key cannot be done with a compressed archive. The key <code>d</code> must be used:</p>
+<pre><code>$ tar dfz file_name.tgz
+$ tar dfj file_name.tar.bz2
+</code></pre>
+<h4 id="extract-untar-a-backup">Extract (<em>untar</em>) a backup</h4>
+<p>Extract (<em>untar]</em>) a <code>*.tar</code> backup is done with the <code>xvf</code> keys:</p>
+<p>Extract the <code>etc/exports</code> file from the <code>/savings/etc.133.tar</code> backup into the <code>etc</code> directory of the active directory:</p>
+<pre><code>$ tar xvf /backups/etc.133.tar etc/exports
+</code></pre>
+<p>Extract all files from the compressed backup <code>/backups/home.133.tar.bz2</code> into the active directory:</p>
+<pre><code>[root]# tar xvfj /backups/home.133.tar.bz2
+</code></pre>
+<p>Extract all files from the backup <code>/backups/etc.133.P.tar</code> to their original directory:</p>
+<pre><code>$ tar xvfP /backups/etc.133.P.tar
+</code></pre>
+<p>!!! Warning</p>
+<pre><code>Go to the right place.
+
+Check the contents of the backup.
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>Extract files from the backup, compressed or not.</td>
+</tr>
+</tbody>
+</table>
+<p>Extracting a <em>tar-gzipped</em> (<code>*.tar.gz</code>) backup is done with the <code>xvfz</code> keys:</p>
+<pre><code>$ tar xvfz backup.tar.gz
+</code></pre>
+<p>Extracting a <em>tar-bzipped</em> (<code>*.tar.bz2</code>) backup is done with the <code>xvfj</code> keys:</p>
+<pre><code>$ tar xvfj backup.tar.bz2
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>To extract or list the contents of a backup, it is not necessary to mention the compression algorithm used to create the backup. That is, a `tar xvf` is equivalent to `tar xvfj`, to extract the contents, and a `tar tvf` is equivalent to `tar tvfj`, to list.
+</code></pre>
+<p>!!! Warning</p>
+<pre><code>To restore the files in their original directory (key `P` of a `tar xvf`), you must have generated the backup with the absolute path. That is, with the `P` key of a `tar cvf`.
+</code></pre>
+<h5 id="extract-only-a-file-from-a-tar-backup">Extract only a file from a <em>tar</em> backup</h5>
+<p>To extract a specific file from a <em>tar</em> backup, specify the name of that file at the end of the <code>tar xvf</code> command.</p>
+<pre><code>$ tar xvf backup.tar /path/to/file
+</code></pre>
+<p>The previous command extracts only the <code>/path/to/file</code> file from the <code>backup.tar</code> backup. This file will be restored to the <code>/path/to/</code> directory created, or already present, in the active directory.</p>
+<pre><code>$ tar xvfz backup.tar.gz /path/to/file
+$ tar xvfj backup.tar.bz2 /path/to/file
+</code></pre>
+<h5 id="extract-a-folder-from-a-backup-tar">Extract a folder from a backup <em>tar</em></h5>
+<p>To extract only one directory (including its subdirectories and files) from a backup, specify the directory name at the end of the <code>tar xvf</code> command.</p>
+<pre><code>$ tar xvf backup.tar /path/to/dir/
+</code></pre>
+<p>To extract multiple directories, specify each of the names one after the other:</p>
+<pre><code>$ tar xvf backup.tar /path/to/dir1/ /path/to/dir2/
+$ tar xvfz backup.tar.gz /path/to/dir1/ /path/to/dir2/
+$ tar xvfj backup.tar.bz2 /path/to/dir1/ /path/to/dir2/
+</code></pre>
+<h5 id="extract-a-group-of-files-from-a-tar-backup-using-regular-expressions-regex">Extract a group of files from a <em>tar</em> backup using regular expressions (<em>regex</em>)</h5>
+<p>Specify a <em>regex</em> to extract the files matching the specified selection pattern.</p>
+<p>For example, to extract all files with the extension <code>.conf</code> :</p>
+<pre><code>$ tar xvf backup.tar --wildcards '*.conf'
+</code></pre>
+<p>keys :</p>
+<ul>
+<li><strong>--wildcards *.conf</strong> corresponds to files with the extension <code>.conf</code>.</li>
+</ul>
+<h2 id="copy-input-output-cpio"><em>CoPy Input Output</em> - <code>cpio</code></h2>
+<p>The <code>cpio</code> command allows saving on several successive media without specifying any options.</p>
+<p>It is possible to extract all or part of a backup.</p>
+<p>There is no option, unlike the <code>tar</code> command, to backup and compress at the same time.
+So it is done in two steps: backup and compression.</p>
+<p>To perform a backup with <code>cpio</code>, you have to specify a list of files to backup.</p>
+<p>This list is provided with the commands <code>find</code>, <code>ls</code> or <code>cat</code>.</p>
+<ul>
+<li><code>find</code> : browse a tree, recursive or not;</li>
+<li><code>ls</code> : list a directory, recursive or not;</li>
+<li><code>cat</code> : reads a file containing the trees or files to be saved.</li>
+</ul>
+<p>!!! Note</p>
+<pre><code>`ls` cannot be used with `-l` (details) or `-R` (recursive).
+
+It requires a simple list of names.
+</code></pre>
+<h3 id="create-a-backup-with-cpio-command">Create a backup with <code>cpio</code> command</h3>
+<p>Syntax of the <code>cpio</code> command:</p>
+<pre><code>[files command |] cpio {-o| --create} [-options] [&lt;file-list] [&gt;device]
+</code></pre>
+<p>Example:</p>
+<p>With a redirection of the output of <code>cpio</code>:</p>
+<pre><code>$ find /etc | cpio -ov &gt; /backups/etc.cpio
+</code></pre>
+<p>Using the name of a backup media :</p>
+<pre><code>$ find /etc | cpio -ovF /backups/etc.cpio
+</code></pre>
+<p>The result of the <code>find</code> command is sent as input to the <code>cpio</code> command via a <em>pipe</em> (character <code>|</code>, <kbd>AltGr</kbd> + <kbd>6</kbd>).</p>
+<p>Here, the <code>find /etc</code> command returns a list of files corresponding to the contents of the <code>/etc</code> directory (recursively) to the <code>cpio</code> command, which performs the backup.</p>
+<p>Do not forget the <code>&gt;</code> sign when saving or the <code>F save_name_cpio</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-o</code></td>
+<td>Creates a backup (<em>output</em>).</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>Displays the name of the processed files.</td>
+</tr>
+<tr>
+<td><code>-F</code></td>
+<td>Designates the backup to be modified (medium).</td>
+</tr>
+</tbody>
+</table>
+<p>Backup to a media :</p>
+<pre><code>$ find /etc | cpio -ov &gt; /dev/rmt0
+</code></pre>
+<p>The support can be of several types:</p>
+<ul>
+<li>tape drive: <code>/dev/rmt0</code>  ;</li>
+<li>a partition: <code>/dev/sda5</code>, <code>/dev/hda5</code>, etc.</li>
+</ul>
+<h3 id="type-of-backup">Type of backup</h3>
+<h4 id="backup-with-relative-path">Backup with relative path</h4>
+<pre><code>$ cd /
+$ find etc | cpio -o &gt; /backups/etc.cpio
+</code></pre>
+<h4 id="backup-with-absolute-path">Backup with absolute path</h4>
+<pre><code>$ find /etc | cpio -o &gt; /backups/etc.A.cpio
+</code></pre>
+<p>!!! Warning</p>
+<pre><code>If the path specified in the `find` command is **absolute** then the backup will be performed in **absolute**.
+
+If the path indicated in the `find` command is **relative** then the backup will be done in **relative**.
+</code></pre>
+<h3 id="add-to-a-backup">Add to a backup</h3>
+<pre><code>[files command |] cpio {-o| --create} -A [-options] [&lt;fic-list] {F|&gt;device}
+</code></pre>
+<p>Example:</p>
+<pre><code>$ find /etc/shadow | cpio -o -AF SystemFiles.A.cpio
+</code></pre>
+<p>Adding files is only possible on direct access media.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-A</code></td>
+<td>Adds one or more files to a backup on disk.</td>
+</tr>
+<tr>
+<td><code>-F</code></td>
+<td>Designates the backup to be modified.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compressing-a-backup">Compressing a backup</h3>
+<ul>
+<li>Save <strong>then</strong> compress</li>
+</ul>
+<pre><code>$ find /etc | cpio  –o &gt; etc.A.cpio
+$ gzip /backups/etc.A.cpio
+$ ls /backups/etc.A.cpio*
+/backups/etc.A.cpio.gz
+</code></pre>
+<ul>
+<li>Save <strong>and</strong> compress</li>
+</ul>
+<pre><code>$ find /etc | cpio –o | gzip &gt; /backups/etc.A.cpio.gz
+</code></pre>
+<p>There is no option, unlike the <code>tar</code> command, to save and compress at the same time.
+So it is done in two steps: saving and compressing.</p>
+<p>The syntax of the first method is easier to understand and remember, because it is done in two steps.</p>
+<p>For the first method, the backup file is automatically renamed by the <code>gzip</code> utility which adds <code>.gz</code> to the end of the file name. Similarly the <code>bzip2</code> utility automatically adds <code>.bz2</code>.</p>
+<h3 id="read-the-contents-of-a-backup">Read the contents of a backup</h3>
+<p>Syntax of the <code>cpio</code> command to read the contents of a <em>cpio</em> backup:</p>
+<pre><code>cpio -t [-options] [&lt;fic-list]
+</code></pre>
+<p>Example:</p>
+<pre><code>$ cpio -tv &lt;/backups/etc.152.cpio | less
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-t</code></td>
+<td>Reads a backup.</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>Displays file attributes.</td>
+</tr>
+</tbody>
+</table>
+<p>After making a backup, you need to read its contents to be sure that there were no errors.</p>
+<p>In the same way, before performing a restore, you must read the contents of the backup that will be used.</p>
+<h3 id="restore-a-backup">Restore a backup</h3>
+<p>Syntax of the <code>cpio</code> command to restore a backup:</p>
+<pre><code>cpio {-i| --extract} [-E file] [-options] [&lt;device]
+</code></pre>
+<p>Example:</p>
+<pre><code>$ cpio -iv &lt;/backups/etc.152.cpio | less
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i</code></td>
+<td>Restore a complete backup.</td>
+</tr>
+<tr>
+<td><code>-E file</code></td>
+<td>Restores only the files whose name is contained in file.</td>
+</tr>
+<tr>
+<td><code>--make-directories</code> or <code>-d</code></td>
+<td>Rebuilds the missing tree structure.</td>
+</tr>
+<tr>
+<td><code>-u</code></td>
+<td>Replaces all files even if they exist.</td>
+</tr>
+<tr>
+<td><code>--no-absolute-filenames</code></td>
+<td>Allows to restore a backup made in absolute mode in a relative way.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! Warning</p>
+<pre><code>By default, at the time of restoration, files on the disk whose last modification date is more recent or equal to the date of the backup are not restored (in order to avoid overwriting recent information with older information).
+
+The `u` option, on the other hand, allows you to restore older versions of the files.
+</code></pre>
+<p>Examples:</p>
+<ul>
+<li>Absolute restoration of an absolute backup</li>
+</ul>
+<pre><code>$ cpio –ivF home.A.cpio
+</code></pre>
+<ul>
+<li>Absolute restoration on an existing tree structure</li>
+</ul>
+<p>The <code>u</code> option allows you to overwrite existing files at the location where the restore takes place.</p>
+<pre><code>$ cpio –iuvF home.A.cpio
+</code></pre>
+<ul>
+<li>Restore an absolute backup in relative mode</li>
+</ul>
+<p>The long option <code>no-absolute-filenames</code> allows a restoration in relative mode. Indeed the <code>/</code> at the beginning of the path will be removed.</p>
+<pre><code>$ cpio --no-absolute-filenames -divuF home.A.cpio
+</code></pre>
+<p>!!! Tip</p>
+<pre><code>The creation of directories is perhaps necessary, hence the use of the `d` option
+</code></pre>
+<ul>
+<li>Restore a relative backup</li>
+</ul>
+<pre><code>$ cpio –iv &lt;etc.cpio
+</code></pre>
+<ul>
+<li>Absolute restoration of a file or directory</li>
+</ul>
+<p>The restoration of a particular file or directory requires the creation of a list file that must then be deleted.</p>
+<pre><code>echo &quot;/etc/passwd&quot; &gt; tmp
+cpio –iuE tmp -F etc.A.cpio
+rm -f tmp
+</code></pre>
+<h2 id="compression-decompression-utilities">Compression - decompression utilities</h2>
+<p>Using compression at the time of a backup can have a number of drawbacks:</p>
+<ul>
+<li>Lengthens the backup time as well as the restore time.</li>
+<li>It makes it impossible to add files to the backup.</li>
+</ul>
+<p>!!! Note</p>
+<pre><code>It is therefore better to make a backup and compress it than to compress it during the backup.
+</code></pre>
+<h3 id="compressing-with-gzip">Compressing with <code>gzip</code></h3>
+<p>The <code>gzip</code> command compresses data.</p>
+<p>Syntax of the <code>gzip</code> command:</p>
+<pre><code>gzip [options] [file ...]
+</code></pre>
+<p>Example:</p>
+<pre><code>$ gzip usr.tar
+$ ls
+usr.tar.gz
+</code></pre>
+<p>The file receives the extension <code>.gz</code>.</p>
+<p>It keeps the same rights and the same last access and modification dates.</p>
+<h3 id="compressing-with-bunzip2">Compressing with <code>bunzip2</code></h3>
+<p>The <code>bunzip2</code> command also compresses data.</p>
+<p>Syntax of the <code>bzip2</code> command:</p>
+<pre><code>bzip2 [options] [file ...]
+</code></pre>
+<p>Example:</p>
+<pre><code>$ bzip2 usr.cpio
+$ ls
+usr.cpio.bz2
+</code></pre>
+<p>The file name is given the extension <code>.bz2</code>.</p>
+<p>Compression by <code>bzip2</code> is better than compression by <code>gzip</code> but it takes longer to execute.</p>
+<h3 id="decompressing-with-gunzip">Decompressing with <code>gunzip</code></h3>
+<p>The <code>gunzip</code> command decompresses compressed data.</p>
+<p>Syntax of the <code>gunzip</code> command:</p>
+<pre><code>gunzip [options] [file ...]
+</code></pre>
+<p>Example:</p>
+<pre><code>$ gunzip usr.tar.gz
+$ ls
+usr.tar
+</code></pre>
+<p>The file name is truncated by <code>gunzip</code> and the extension <code>.gz</code> is removed.</p>
+<p><code>gunzip</code> also decompresses files with the following extensions:</p>
+<ul>
+<li><code>.z</code> ;</li>
+<li><code>-z</code> ;</li>
+<li><code>_z</code> .</li>
+</ul>
+<h3 id="decompressing-with-bunzip2">Decompressing with <code>bunzip2</code></h3>
+<p>The <code>bunzip2</code> command decompresses compressed data.</p>
+<p>Syntax of the <code>bzip2</code> command:</p>
+<pre><code>bzip2 [options] [file ...]
+</code></pre>
+<p>Example:</p>
+<pre><code>$ bunzip2 usr.cpio.bz2
+$ ls
+usr.cpio
+</code></pre>
+<p>The file name is truncated by <code>bunzip2</code> and the extension <code>.bz2</code> is removed.</p>
+<p><code>bunzip2</code> also decompresses the file with the following extensions:</p>
+<ul>
+<li><code>-bz</code> ;</li>
+<li><code>.tbz2</code> ;</li>
+<li><code>tbz</code> .</li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../08-process/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Process Management" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Process Management
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../10-boot/" class="md-footer__link md-footer__link--next" aria-label="Next: System Startup" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              System Startup
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Achmad Fauzi Hamibowo &copy; 2022 • <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> • Made with ❤️ in Depok, West Java
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://twitter.com/achmadfhbw" target="_blank" rel="noopener" title="achmadfhbw on Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "navigation.prune", "search.share", "toc.follow"], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
