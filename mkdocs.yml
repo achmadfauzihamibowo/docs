@@ -1,0 +1,52 @@
+site_name: Linux Learning Material
+site_url: https://docs.achmadfhbw.my.id/
+theme:
+  name: 'material'
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.top
+    - navigation.prune
+    - search.share
+    - toc.follow
+  logo: assets/logo.png
+  favicon: assets/favicon.png  
+  palette:
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  font:
+    text: Quicksand
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/achmadfhbw
+      name: achmadfhbw on Twitter    
+  consent:
+    title: Cookie consent
+    actions:
+      - accept
+      - manage 
+    description: >-
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.     
+plugins:
+  - search                  
+copyright: Achmad Fauzi Hamibowo &copy; 2022 • <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> • Made with ❤️ in Depok, West Java
